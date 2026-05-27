@@ -132,11 +132,97 @@ header p{
 }
 
 .loan-card{
-    background:white;
-    border-radius:12px;
+
+    background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1200&auto=format&fit=crop');
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    border-radius:16px;
+
     padding:20px;
-    border:1px solid #e2e8f0;
+
     position:relative;
+
+    overflow:hidden;
+
+    min-height:220px;
+
+    border:none;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.18);
+
+    color:white;
+}
+
+/* Dark Overlay */
+
+.loan-card::before{
+
+    content:'';
+
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.55);
+}
+
+/* Keep Content Above Overlay */
+
+.loan-card *{
+
+    position:relative;
+
+    z-index:2;
+}
+
+/* Better Detail Boxes */
+
+.detail-item{
+
+    background:rgba(255,255,255,0.12);
+
+    padding:10px;
+
+    border-radius:10px;
+
+    backdrop-filter:blur(4px);
+}
+
+/* Better Button */
+
+.apply-btn{
+
+    display:block;
+
+    text-align:center;
+
+    background:#10b981;
+
+    color:white;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    margin-top:15px;
+
+    transition:0.3s;
+}
+
+.apply-btn:hover{
+
+    background:#059669;
+
+    transform:translateY(-2px);
 }
 
 .badge{
