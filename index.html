@@ -328,10 +328,261 @@ object-fit:contain;
 
 box-shadow:0 4px 10px rgba(0,0,0,0.15);
 }
+    /* HEADER */
+
+.top-header{
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
+background:#0f172a;
+
+padding:14px 18px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+.header-left{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+}
+
+.header-logo{
+
+width:42px;
+
+height:42px;
+
+border-radius:12px;
+
+background:white;
+
+padding:5px;
+
+object-fit:contain;
+}
+
+.app-name{
+
+color:white;
+
+font-size:18px;
+
+font-weight:700;
+}
+
+/* BOTTOM NAVIGATION */
+
+.bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+padding:10px 0;
+
+box-shadow:0 -4px 12px rgba(0,0,0,0.12);
+
+z-index:999;
+}
+
+.nav-btn{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:4px;
+
+font-size:12px;
+
+text-decoration:none;
+
+color:#64748b;
+
+font-weight:600;
+
+cursor:pointer;
+}
+
+.nav-btn.active{
+
+color:#10b981;
+}
+
+.nav-icon{
+
+font-size:22px;
+}
+
+/* SIDE MENU */
+
+.side-menu{
+
+position:fixed;
+
+top:0;
+
+left:-280px;
+
+width:260px;
+
+height:100%;
+
+background:white;
+
+z-index:1000;
+
+padding:25px 20px;
+
+transition:0.3s;
+
+box-shadow:4px 0 15px rgba(0,0,0,0.15);
+}
+
+.side-menu.active{
+
+left:0;
+}
+
+.menu-title{
+
+font-size:20px;
+
+font-weight:700;
+
+margin-bottom:20px;
+}
+
+.menu-links{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+}
+
+.menu-links a{
+
+text-decoration:none;
+
+color:#0f172a;
+
+font-weight:600;
+
+padding:12px;
+
+background:#f1f5f9;
+
+border-radius:10px;
+}
+
+/* OVERLAY */
+
+.overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,0.5);
+
+z-index:999;
+
+display:none;
+}
+
+.overlay.active{
+
+display:block;
+}
+
+/* SUPPORT PAGE */
+
+.support-page{
+
+display:none;
+
+padding:20px;
+}
+
+.support-card{
+
+background:white;
+
+padding:20px;
+
+border-radius:16px;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.support-card h2{
+
+margin-bottom:15px;
+}
+
+.support-item{
+
+margin-bottom:12px;
+
+font-size:15px;
+}
+
+/* BODY SPACE FOR NAVBAR */
+
+body{
+
+padding-bottom:85px;
+}
 </style>
 </head>
 
 <body>
+ <!-- HEADER -->
+
+<header class="top-header">
+
+<div class="header-left">
+
+<img src="https://static.truebalance.io/tb-website/images/img_logo-140.webp"
+class="header-logo">
+
+<div class="app-name">
+JaldiPay
+</div>
+
+</div>
+
+</header>   
 
 <!-- Welcome Screen -->
 <div id="welcome-screen">
@@ -855,7 +1106,35 @@ Check Offers →
 <div class="ad-space">
     Bottom Ad Space
 </div>
+<!-- SUPPORT PAGE -->
 
+<div class="support-page" id="supportPage">
+
+<div class="support-card">
+
+<h2>
+Contact Support
+</h2>
+
+<div class="support-item">
+📧 Email: support@jaldipay.in
+</div>
+
+<div class="support-item">
+📞 Phone: +91 9876543210
+</div>
+
+<div class="support-item">
+🕒 Support Timing: 9 AM - 6 PM
+</div>
+
+<div class="support-item">
+📍 India
+</div>
+
+</div>
+
+</div>
 <footer>
     Disclaimer: We are a digital aggregator platform and not a lender.
     Users are redirected to official RBI-approved lending partners.
@@ -864,6 +1143,43 @@ Check Offers →
 </div>
 
 <script>
+    function openMenu(){
+
+document.getElementById("sideMenu")
+.classList.add("active");
+
+document.getElementById("overlay")
+.classList.add("active");
+}
+
+function closeMenu(){
+
+document.getElementById("sideMenu")
+.classList.remove("active");
+
+document.getElementById("overlay")
+.classList.remove("active");
+}
+
+function showSupport(){
+
+document.querySelector(".loan-list")
+.style.display = "none";
+
+document.getElementById("supportPage")
+.style.display = "block";
+}
+
+function showHome(){
+
+document.querySelector(".loan-list")
+.style.display = "flex";
+
+document.getElementById("supportPage")
+.style.display = "none";
+}
+
+    
 function showOffers() {
     document.getElementById("welcome-screen").style.display = "none";
     document.getElementById("main-content").style.display = "block";
@@ -894,7 +1210,89 @@ function filterLoans(category, activeBtnId) {
         .classList.add("active");
 }
 </script>
+<!-- OVERLAY -->
 
+<div class="overlay" id="overlay"
+onclick="closeMenu()"></div>
+
+<!-- SIDE MENU -->
+
+<div class="side-menu" id="sideMenu">
+
+<div class="menu-title">
+Menu
+</div>
+
+<div class="menu-links">
+
+<a href="#">
+🏠 Home
+</a>
+
+<a href="#">
+📊 EMI Calculator
+</a>
+
+<a href="#">
+🔒 Privacy Policy
+</a>
+
+<a href="#">
+📄 Terms & Conditions
+</a>
+
+<a href="#">
+☎ Contact Support
+</a>
+
+</div>
+
+</div>
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<div class="nav-btn"
+onclick="openMenu()">
+
+<div class="nav-icon">
+☰
+</div>
+
+<div>
+Menu
+</div>
+
+</div>
+
+<div class="nav-btn active"
+onclick="showHome()">
+
+<div class="nav-icon">
+🏠
+</div>
+
+<div>
+Home
+</div>
+
+</div>
+
+<div class="nav-btn"
+onclick="showSupport()">
+
+<div class="nav-icon">
+☎
+</div>
+
+<div>
+Support
+</div>
+
+</div>
+
+</div>
+    
 </body>
 </html>
 
