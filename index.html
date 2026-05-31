@@ -128,7 +128,7 @@ header p{
 
 .loan-list{
     display:grid;
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(2,1fr);
     gap:20px;
 }
 
@@ -838,10 +838,10 @@ D-LOAN OFFERS
 <script>(function(s){s.dataset.zone='11057430',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
    <script src="https://pl29552341.effectivecpmnetwork.com/a7/0d/98/a70d987442af107bfcabc5e333b702db.js"></script>
 
-</div>
+
 <!-- Loan Cards -->
 <div class="loan-list">
-
+</div>
 <!-- CARD 1 -->
 <div class="loan-card bg1 Instant High-Amount">
 
@@ -1520,9 +1520,16 @@ document.querySelector(".bottom-nav .nav-btn:last-child")
 
 function showHome(){
 
-document.querySelector(".loan-list").style.display = "flex";
-document.getElementById("supportPage").style.display = "none";
+document.getElementById("main-content")
+.style.display = "block";
 
+document.querySelector(".loan-list")
+.style.display = "grid";
+
+document.getElementById("supportPage")
+.style.display = "none";
+
+}
 document.querySelectorAll(".nav-btn")
 .forEach(btn=>btn.classList.remove("active"));
 
