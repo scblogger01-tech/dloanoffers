@@ -142,7 +142,7 @@ header p{
     border-radius:16px;
     padding:18px;
 
-    min-height:220px;
+    min-height:280px;
 
     position:relative;
     overflow:hidden;
@@ -395,13 +395,23 @@ object-fit:contain;
 }
 
 .app-name{
-
- color:white;
-    font-size:32px;
+    color:white;
+    font-size:24px;
     font-weight:900;
     letter-spacing:1px;
 }
 
+@media(max-width:480px){
+
+.app-name{
+    font-size:18px;
+}
+
+.header-logo{
+    width:36px;
+    height:36px;
+}
+}
 /* BOTTOM NAVIGATION */
 
 .bottom-nav{
@@ -591,7 +601,7 @@ padding-bottom:85px;
 
 <div class="header-left">
 
-<img src="logo.png">
+<img src="logo.png" class="header-logo" alt="D-LOAN OFFERS Logo">
 <class="header-logo">
 
 <div class="app-name">
@@ -679,7 +689,7 @@ D-LOAN OFFERS
 <div class="loan-list">
 
 <!-- CARD 1 -->
-<div class="loan-card Instant High-Amount">
+<div class="loan-card bg1 Instant High-Amount">
 
 <span class="badge">Quick Processing</span>
 
@@ -721,7 +731,7 @@ Check Eligibility →
 </div>
 
 <!-- CARD 2 -->
-<div class="loan-card Instant Low-Interest">
+<div class="loan-card bg2 Instant Low-Interest">
 
 <span class="badge">Low Interest</span>
 
@@ -765,7 +775,7 @@ Check Eligibility →
 </div>
 
 <!-- CARD 3 -->
-<div class="loan-card Instant">
+<div class="loan-card bg3 Instant">
 
 <span class="badge">Fast Approval</span>
 
@@ -809,7 +819,7 @@ Check Eligibility →
 </div>
 
 <!-- CARD 4 -->
-<div class="loan-card Instant High-Amount">
+<div class="loan-card bg4 Instant High-Amount">
 
 <span class="badge">Trusted Partner</span>
 
@@ -853,7 +863,7 @@ Check Eligibility →
 </div>
 
 <!-- CARD 5 -->
-<div class="loan-card Low-Interest">
+<div class="loan-card bg5 Low-Interest">
 
 <span class="badge">Popular</span>
 
@@ -897,7 +907,7 @@ Check Eligibility →
 </div>
 
 <!-- CARD 6 -->
-<div class="loan-card Instant">
+<div class="loan-card bg6 Instant">
 
 <span class="badge">Safe & Secure</span>
 
@@ -941,7 +951,7 @@ Check Eligibility →
 </div>
 
 <!-- CARD 7 -->
-<div class="loan-card Instant">
+<div class="loan-card bg7 Instant">
 
 <span class="badge">Top Rated</span>
 
@@ -985,7 +995,7 @@ Check Eligibility →
 </div>
 
 <!-- CARD 8 -->
-<div class="loan-card Instant">
+<div class="loan-card bg8 Instant">
 
 <span class="badge">Easy EMI</span>
 
@@ -1029,7 +1039,7 @@ Check Eligibility →
 </div>
 
 <!-- CARD 9 -->
-<div class="loan-card Instant">
+<div class="loan-card bg9 Instant">
 
 <span class="badge">Digital Process</span>
 
@@ -1073,7 +1083,7 @@ Check Eligibility →
 </div>
 
 <!-- CARD 10 -->
-<div class="loan-card Instant">
+<div class="loan-card bg10 Instant">
 
 <span class="badge">Trusted App</span>
 
@@ -1111,22 +1121,15 @@ class="apply-btn"
 target="_blank">
 
 Check Eligibility →
-
 </a>
-
 </div>
-
 </div>
 <!-- Bottom Ad -->
 <div class="ad-space">
     Bottom Ad Space
-</div>
 <!-- SUPPORT PAGE -->
-
 <div class="support-page" id="supportPage">
-
 <div class="support-card">
-
 <h2>
 Contact Support
 </h2>
@@ -1178,20 +1181,26 @@ document.getElementById("overlay")
 
 function showSupport(){
 
-document.querySelector(".loan-list")
-.style.display = "none";
+document.querySelector(".loan-list").style.display = "none";
+document.getElementById("supportPage").style.display = "block";
 
-document.getElementById("supportPage")
-.style.display = "block";
+document.querySelectorAll(".nav-btn")
+.forEach(btn=>btn.classList.remove("active"));
+
+document.querySelector(".bottom-nav .nav-btn:last-child")
+.classList.add("active");
 }
 
 function showHome(){
 
-document.querySelector(".loan-list")
-.style.display = "flex";
+document.querySelector(".loan-list").style.display = "flex";
+document.getElementById("supportPage").style.display = "none";
 
-document.getElementById("supportPage")
-.style.display = "none";
+document.querySelectorAll(".nav-btn")
+.forEach(btn=>btn.classList.remove("active"));
+
+document.querySelector(".bottom-nav .nav-btn:nth-child(2)")
+.classList.add("active");
 }
 
     
@@ -1244,7 +1253,7 @@ Menu
 🏠 Home
 </a>
 
-<a href="#">
+<a href="emi.html">
 📊 LOAN EMI Calculator
 </a>
 
