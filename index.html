@@ -1521,22 +1521,17 @@ document.querySelector(".bottom-nav .nav-btn:last-child")
 
 function showHome(){
 
-document.querySelector(".loan-list")
-.style.display = "grid";
+    document.querySelector(".loan-list").style.display = "grid";
 
-document.getElementById("supportPage")
-.style.display = "none";
+    document.getElementById("supportPage").style.display = "none";
+
+    document.querySelectorAll(".nav-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+    document.querySelector(".bottom-nav .nav-btn:nth-child(2)")
+    .classList.add("active");
 }
 
-}
-document.querySelectorAll(".nav-btn")
-.forEach(btn=>btn.classList.remove("active"));
-
-document.querySelector(".bottom-nav .nav-btn:nth-child(2)")
-.classList.add("active");
-}
-
-    
 function showOffers(){
 
     document.getElementById("welcome-screen").style.display = "none";
@@ -1544,8 +1539,6 @@ function showOffers(){
     document.getElementById("main-content").style.display = "block";
 
     document.getElementById("supportPage").style.display = "none";
-
-}
 }
 
 function filterLoans(category, activeBtnId) {
