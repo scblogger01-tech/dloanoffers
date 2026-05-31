@@ -127,9 +127,18 @@ header p{
 /* ================= LOAN CARDS ================= */
 
 .loan-list{
-    display:flex;
-    flex-direction:column;
-    gap:25px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+}
+
+/* Tablet/Desktop */
+@media(min-width:768px){
+
+.loan-list{
+    grid-template-columns:1fr 1fr;
+}
+
 }
 
 /* Main Card */
