@@ -179,7 +179,9 @@ header p{
     z-index:1;
 }
 .loan-card{
-    background:linear-gradient(1E40AF,#1E40AF,
+    background:linear-gradient(
+        135deg,
+        #1E40AF,
         #2563EB
     );
 }
@@ -1450,7 +1452,7 @@ No. We are a loan comparison and aggregation platform.
 </div>  
 </div>
 <!-- Bottom Ad -->
-<div class="ad-space">
+<div class="ad-space"> </div>
     Bottom Ad Space
 <!-- SUPPORT PAGE -->
 <div class="support-page" id="supportPage">
@@ -1528,7 +1530,6 @@ function showHome(){
     document.querySelector(".bottom-nav .nav-btn:nth-child(2)")
     .classList.add("active");
 }
-
 function showOffers(){
 
     document.getElementById("welcome-screen").style.display = "none";
