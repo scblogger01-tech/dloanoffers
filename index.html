@@ -600,6 +600,79 @@ body{
 
 padding-bottom:85px;
 }
+    /* ========================= */
+/* TOOLS SECTION */
+/* ========================= */
+
+.tool-card{
+    background:white;
+    padding:20px;
+    border-radius:16px;
+    margin-top:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.tool-card h2{
+    margin-bottom:10px;
+}
+
+.emi-preview{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    text-align:center;
+    margin:15px 0;
+}
+
+.emi-preview div{
+    background:#f1f5f9;
+    padding:12px;
+    border-radius:10px;
+}
+
+.tool-btn{
+    display:block;
+    text-align:center;
+    background:#10b981;
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.eligibility-list{
+    display:grid;
+    gap:10px;
+    margin-top:15px;
+}
+
+.eligibility-list div{
+    background:#f8fafc;
+    padding:10px;
+    border-radius:10px;
+}
+
+.faq-section{
+    margin-top:30px;
+}
+
+.faq-section h2{
+    margin-bottom:15px;
+}
+
+.faq-section details{
+    background:white;
+    margin-bottom:10px;
+    border-radius:10px;
+    padding:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+.faq-section summary{
+    cursor:pointer;
+    font-weight:600;
+}
 </style>
 </head>
 
@@ -1132,6 +1205,156 @@ target="_blank">
 Check Eligibility →
 </a>
 </div>
+<!-- ========================= -->
+<!-- EMI CALCULATOR PREVIEW -->
+<!-- ========================= -->
+
+<div class="tool-card">
+
+<h2>📊 EMI Calculator</h2>
+
+<p>
+Calculate your monthly EMI instantly before applying.
+</p>
+
+<div class="emi-preview">
+
+<div>
+Loan Amount
+<br>
+<strong>₹1,00,000</strong>
+</div>
+
+<div>
+Tenure
+<br>
+<strong>12 Months</strong>
+</div>
+
+<div>
+EMI
+<br>
+<strong>₹8,884</strong>
+</div>
+
+</div>
+
+<a href="emi.html" class="tool-btn">
+Open Full EMI Calculator →
+</a>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- ELIGIBILITY CHECKER -->
+<!-- ========================= -->
+
+<div class="tool-card">
+
+<h2>✅ Loan Eligibility Checker</h2>
+
+<p>Check basic eligibility instantly.</p>
+
+<div class="eligibility-list">
+
+<div>✔ Age: 21 - 60 Years</div>
+
+<div>✔ Indian Resident</div>
+
+<div>✔ PAN Card Required</div>
+
+<div>✔ Aadhaar Required</div>
+
+<div>✔ Monthly Income ₹10,000+</div>
+
+<div>✔ Active Mobile Number</div>
+
+</div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- FAQ SECTION -->
+<!-- ========================= -->
+
+<div class="faq-section">
+
+<h2>❓ Frequently Asked Questions</h2>
+
+<details>
+<summary>1. What is an instant personal loan?</summary>
+<p>
+An instant personal loan is a digital loan that can be approved and disbursed quickly through mobile apps or websites.
+</p>
+</details>
+
+<details>
+<summary>2. How much loan can I get?</summary>
+<p>
+Loan amount depends on income, credit profile and lender policies.
+</p>
+</details>
+
+<details>
+<summary>3. Is PAN card mandatory?</summary>
+<p>
+Yes, most lenders require PAN verification.
+</p>
+</details>
+
+<details>
+<summary>4. Is Aadhaar required?</summary>
+<p>
+Yes, Aadhaar is generally required for KYC verification.
+</p>
+</details>
+
+<details>
+<summary>5. How long does approval take?</summary>
+<p>
+Many apps provide approval within minutes.
+</p>
+</details>
+
+<details>
+<summary>6. Can students apply?</summary>
+<p>
+Some apps provide loans for students, subject to eligibility.
+</p>
+</details>
+
+<details>
+<summary>7. Do I need a salary account?</summary>
+<p>
+Not always. Many lenders accept regular bank accounts.
+</p>
+</details>
+
+<details>
+<summary>8. What is the minimum credit score?</summary>
+<p>
+Requirements vary by lender. Some apps also lend to new borrowers.
+</p>
+</details>
+
+<details>
+<summary>9. Can I repay early?</summary>
+<p>
+Many lenders allow foreclosure or early repayment.
+</p>
+</details>
+
+<details>
+<summary>10. Is D-LOAN OFFERS a lender?</summary>
+<p>
+No. We are a loan comparison and aggregation platform.
+</p>
+</details>
+
+</div>
+    
 </div>
 <!-- Bottom Ad -->
 <div class="ad-space">
@@ -1242,6 +1465,35 @@ function filterLoans(category, activeBtnId) {
     document.getElementById(activeBtnId)
         .classList.add("active");
 }
+function calculateEMI(){
+
+let P = parseFloat(document.getElementById("loanAmount").value);
+
+let R = parseFloat(document.getElementById("interestRate").value)/12/100;
+
+let N = parseFloat(document.getElementById("loanMonths").value);
+
+let EMI =
+(P*R*Math.pow(1+R,N))/
+(Math.pow(1+R,N)-1);
+
+document.getElementById("emiResult").innerHTML =
+"Monthly EMI: ₹"+EMI.toFixed(0);
+
+}
+
+function checkEligibility(){
+
+let salary =
+parseFloat(document.getElementById("salary").value);
+
+let eligible = salary*20;
+
+document.getElementById("eligibilityResult").innerHTML =
+"Estimated Eligibility: ₹"+eligible.toLocaleString();
+
+}
+    
 </script>
 <!-- OVERLAY -->
 
