@@ -730,6 +730,12 @@ padding-bottom:85px;
 }
     
 </style>
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#08122c">
+
+<link rel="apple-touch-icon" href="logo.png">
+    
 </head>
 
 <body>
@@ -749,6 +755,9 @@ D-LOAN OFFERS
 </div>
 
 </header>   
+    <button id="installBtn" style="display:none;">
+📲 Install App
+</button>
 
 <!-- Welcome Screen -->
 <div id="welcome-screen">
@@ -1596,8 +1605,40 @@ document.getElementById("eligibilityResult").innerHTML =
     function openCreditScore(){
     window.location.href="credit-score.html";
 }
+
     
+    
+</script> <script>
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+
+    e.preventDefault();
+
+    deferredPrompt = e;
+
+    document.getElementById('installBtn').style.display = 'block';
+});
+
+document.getElementById('installBtn').addEventListener('click', async () => {
+
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+
+    await deferredPrompt.userChoice;
+
+    deferredPrompt = null;
+
+    document.getElementById('installBtn').style.display = 'none';
+});
 </script>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+}
+</script>
+    
 <!-- OVERLAY -->
 
 <div class="overlay" id="overlay"
