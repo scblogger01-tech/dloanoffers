@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Credit Score Estimator</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:16px;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+
+h1{
+text-align:center;
+color:#1E40AF;
+}
+
+input,select{
+
+width:100%;
+padding:12px;
+margin-top:8px;
+margin-bottom:15px;
+
+border:1px solid #ddd;
+border-radius:10px;
+}
+
+button{
+
+width:100%;
+padding:15px;
+
+border:none;
+
+background:#1E40AF;
+color:white;
+
+font-size:16px;
+
+border-radius:10px;
+
+font-weight:bold;
+
+cursor:pointer;
+}
+
+.score-box{
+
+display:none;
+
+text-align:center;
+}
+
+.score{
+
+font-size:60px;
+font-weight:bold;
+color:#1E40AF;
+}
+
+.approval{
+
+font-size:24px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.loan-grid{
+
+display:none;
+
+grid-template-columns:1fr;
+gap:15px;
+}
+
+.loan-card{
+
+background:white;
+
+padding:15px;
+
+border-radius:14px;
+
+box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+
+.loan-card h3{
+margin-bottom:10px;
+}
+
+.loan-card a{
+
+display:block;
+
+background:#10b981;
+
+color:white;
+
+text-decoration:none;
+
+padding:12px;
+
+text-align:center;
+
+border-radius:10px;
+
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>📈 Credit Score Estimator</h1>
+
+<label>Age</label>
+<input id="age" type="number">
+
+<label>Monthly Net Income</label>
+<input id="income" type="number">
+
+<label>Existing Loan Amount</label>
+<input id="loanAmount" type="number">
+
+<label>Current EMI</label>
+<input id="emi" type="number">
+
+<label>Occupation</label>
+<select id="occupation">
+<option>Salaried</option>
+<option>Business</option>
+<option>Self Employed</option>
+<option>Student</option>
+</select>
+
+<label>Work Experience</label>
+<select id="experience">
+<option>0-1</option>
+<option>1-3</option>
+<option>3-5</option>
+<option>5+</option>
+</select>
+
+<label>City</label>
+<input id="city">
+
+<label>Country</label>
+<input id="country" value="India">
+
+<label>Have Credit Card?</label>
+<select id="card">
+<option value="yes">Yes</option>
+<option value="no">No</option>
+</select>
+
+<label>Any EMI Missed?</label>
+<select id="missed">
+<option value="no">No</option>
+<option value="yes">Yes</option>
+</select>
+
+<button onclick="generateScore()">
+Generate Credit Score
+</button>
+
+</div>
+
+<div class="card score-box" id="resultBox">
+
+<div class="score" id="score">
+750
+</div>
+
+<div class="approval" id="approval">
+85% Approval Chance
+</div>
+
+<p>
+Estimated score only. Not official CIBIL.
+</p>
+
+</div>
+
+<div id="offers">
+
+<h2 style="display:none;" id="matchedTitle">
+🎯 Specially Matched For You
+</h2>
+
+<div class="loan-grid" id="loanGrid">
+
+<div class="loan-card">
+<h3>Navi Personal Loan</h3>
+<p>Up to ₹20 Lakh</p>
+<a href="#">Apply Now</a>
+</div>
+
+<div class="loan-card">
+<h3>MoneyView</h3>
+<p>Up to ₹10 Lakh</p>
+<a href="#">Apply Now</a>
+</div>
+
+<div class="loan-card">
+<h3>True Balance</h3>
+<p>Instant Approval</p>
+<a href="#">Apply Now</a>
+</div>
+
+<div class="loan-card">
+<h3>KreditBee</h3>
+<p>Fast Disbursal</p>
+<a href="#">Apply Now</a>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function generateScore(){
+
+let score=650;
+
+let age=
+parseInt(document.getElementById("age").value)||0;
+
+let income=
+parseInt(document.getElementById("income").value)||0;
+
+let loan=
+parseInt(document.getElementById("loanAmount").value)||0;
+
+let emi=
+parseInt(document.getElementById("emi").value)||0;
+
+let card=
+document.getElementById("card").value;
+
+let missed=
+document.getElementById("missed").value;
+
+let exp=
+document.getElementById("experience").value;
+
+if(age>=25) score+=20;
+
+if(age>=30) score+=20;
+
+if(income>30000) score+=30;
+
+if(income>50000) score+=40;
+
+if(card==="yes") score+=30;
+
+if(exp==="3-5") score+=20;
+
+if(exp==="5+") score+=40;
+
+if(loan>500000) score-=40;
+
+if(emi>20000) score-=30;
+
+if(missed==="yes") score-=100;
+
+if(score>900) score=900;
+
+if(score<300) score=300;
+
+let approval=
+Math.round((score/900)*100);
+
+document.getElementById("score").innerHTML=score;
+
+document.getElementById("approval").innerHTML=
+approval+"% Loan Approval Chance";
+
+document.getElementById("resultBox")
+.style.display="block";
+
+document.getElementById("matchedTitle")
+.style.display="block";
+
+document.getElementById("loanGrid")
+.style.display="grid";
+
+window.scrollTo({
+top:500,
+behavior:'smooth'
+});
+
+}
+
+</script>
+
+</body>
+</html>
