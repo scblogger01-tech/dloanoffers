@@ -454,6 +454,9 @@ let y=0;
 let a=setInterval(()=>{y+=5;d.style.top=y+"px";if(y>innerHeight){clearInterval(a);d.remove();}},20);
 }
 }
+      function openCreditScore(){
+    window.location.href = "credit-score.html";
+}
 </script>
 <!-- OVERLAY -->
 
@@ -495,7 +498,7 @@ Menu
 <!-- BOTTOM NAV -->
 
 <div class="bottom-nav">
-
+<div class="nav-btn active">
 <div class="nav-btn"
 onclick="openMenu()">
 
@@ -536,6 +539,11 @@ Support
 </div>
 
 </div>
-  
+  <div class="nav-btn"
+onclick="openCreditScore()">
+<div class="nav-icon">📈</div>
+<div>CIBIL</div>
+</div>
+
 </body>
 </html>
