@@ -1,7 +1,7 @@
 {
   "name": "D-LOAN OFFERS",
   "short_name": "DLOAN",
-  "start_url": "/",
+  "start_url": "dloanoffers/index.html",
   "display": "standalone",
   "background_color": "#08122c",
   "theme_color": "#08122c",
