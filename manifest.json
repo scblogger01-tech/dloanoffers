@@ -1,19 +1,20 @@
 {
   "name": "D-LOAN OFFERS",
   "short_name": "DLOAN",
-  "start_url": "dloanoffers/index.html",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#08122c",
   "theme_color": "#08122c",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "./logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "logo.png",
+      "src": "./logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }
