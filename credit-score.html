@@ -113,7 +113,7 @@ let cur=0;
 let anim=setInterval(()=>{
 cur+=5;
 if(cur>=scoreVal){cur=scoreVal;clearInterval(anim);confetti();}
-document.getElementById("score").innerText = cur;
+document.getElementById("score").textContent = cur;
 let p=(cur-300)/600;
 gauge.style.strokeDashoffset=252-(252*p);
 },15);
