@@ -113,7 +113,7 @@ let cur=0;
 let anim=setInterval(()=>{
 cur+=5;
 if(cur>=scoreVal){cur=scoreVal;clearInterval(anim);confetti();}
-score.innerText=cur;
+document.getElementById("score").innerText = cur;
 let p=(cur-300)/600;
 gauge.style.strokeDashoffset=252-(252*p);
 },15);
@@ -172,7 +172,7 @@ window.print();
 }
 
 function confetti(){
-if(parseInt(score.innerText)<750) return;
+if(parseInt(document.getElementById("score").innerText)<750) return;
 for(let i=0;i<80;i++){
 let d=document.createElement('div');
 d.style.cssText='position:fixed;width:8px;height:8px;background:hsl('+Math.random()*360+',100%,50%);left:'+Math.random()*100+'%;top:-10px;z-index:9999';
