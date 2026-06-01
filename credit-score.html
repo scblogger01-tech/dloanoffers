@@ -3,178 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Professional Credit Score Estimator</title>
+<title>Premium Credit Score Assessment</title>
 <style>
+:root{--bg:#0f172a;--glass:rgba(255,255,255,.08);--text:#fff;--accent:#22c55e}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}
-.container{max-width:900px;margin:auto;padding:20px}
-.card{background:#fff;border-radius:18px;padding:20px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
-h1{text-align:center;color:#1E40AF}
-label{display:block;margin-top:12px;font-weight:bold}
-input,select,button{width:100%;padding:12px;border-radius:10px}
-input,select{border:1px solid #d6d6d6}
-button{border:none;background:#1E40AF;color:#fff;font-weight:bold;cursor:pointer;margin-top:15px}
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#0f172a,#1e293b);color:var(--text)}
+.container{max-width:1000px;margin:auto;padding:20px}
+.glass{background:var(--glass);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px}
+h1{text-align:center}
+label{display:block;margin:10px 0 5px}
+input,select,button{width:100%;padding:12px;border-radius:10px;border:none}
+button{background:#2563eb;color:#fff;font-weight:bold;cursor:pointer;margin-top:12px}
 #resetBtn{display:none;background:#dc2626}
-#resultBox,#offers,#meterWrap{display:none}
-.meter{width:200px;height:200px;border-radius:50%;margin:20px auto;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:bold;color:#1E40AF;background:conic-gradient(#10b981 0deg,#e5e7eb 0deg)}
-.approval{text-align:center;font-size:24px;font-weight:bold}
-.loan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
-.loan-card{background:#fff;padding:15px;border-radius:14px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
-.loan-card a{display:block;text-align:center;background:#10b981;color:#fff;text-decoration:none;padding:10px;border-radius:8px}
-#loadingScreen{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:9999}
-.loading-box{background:#fff;padding:25px;border-radius:15px;text-align:center;width:90%;max-width:400px}
-.spinner{width:60px;height:60px;border:5px solid #ddd;border-top:5px solid #1E40AF;border-radius:50%;margin:auto;animation:spin 1s linear infinite}
-@keyframes spin{100%{transform:rotate(360deg)}}
-.date{text-align:center;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+#result,#offers,#leadBox{display:none}
+.offer{background:rgba(255,255,255,.08);padding:15px;border-radius:15px}
+.offer a{display:block;background:#22c55e;color:white;text-decoration:none;padding:10px;border-radius:8px;text-align:center}
+.center{text-align:center}
+#loading{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);justify-content:center;align-items:center;z-index:999}
+.loaderbox{background:#fff;color:#000;padding:25px;border-radius:15px;text-align:center}
+svg{max-width:260px}
+@media(max-width:600px){h1{font-size:24px}}
 </style>
 </head>
 <body>
+<div id="loading"><div class="loaderbox"><h2>Analyzing...</h2><p id="ltxt">Checking Profile...</p></div></div>
+
 <div class="container">
-<div class="card">
-<h1>📈 Credit Score Estimator</h1>
+<div class="glass">
+<h1>💳 Premium Credit Score Assessment</h1>
 
-<label>Age</label><input id="age" type="number" required>
-<label>Monthly Net Income</label><input id="income" type="number" required>
-<label>Existing Loan Amount</label><input id="loanAmount" type="number" required>
-<label>Current EMI</label><input id="emi" type="number" required>
-<label>Occupation</label>
-<select id="occupation" required>
-<option value="">Select</option><option>Salaried</option><option>Business</option><option>Self Employed</option><option>Student</option>
-</select>
-<label>Work Experience</label>
-<select id="experience" required>
-<option value="">Select</option><option>0-1</option><option>1-3</option><option>3-5</option><option>5+</option>
-</select>
-<label>City</label><input id="city" required>
-<label>Country</label><input id="country" value="India" required>
-<label>Have Credit Card?</label><select id="card" required><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select>
-<label>Any EMI Missed?</label><select id="missed" required><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select>
-
-<button id="submitBtn" onclick="generateScore()">Generate Credit Score</button>
-<button id="resetBtn" onclick="resetAssessment()">🔄 Start New Assessment</button>
-
-<div id="resultBox">
-<div id="meterWrap"><div class="meter" id="meter"><span id="scoreNumber">0</span></div></div>
-<div class="approval" id="approval"></div>
-<div class="date" id="assessmentDate"></div>
+<div class="grid">
+<div><label>Age</label><input id="age"></div>
+<div><label>Income</label><input id="income"></div>
+<div><label>Loan Amount</label><input id="loan"></div>
+<div><label>EMI</label><input id="emi"></div>
+<div><label>City</label><input id="city"></div>
+<div><label>Country</label><input id="country" value="India"></div>
+<div><label>Credit Card</label><select id="card"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+<div><label>Missed EMI</label><select id="missed"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select></div>
 </div>
+
+<button id="submitBtn" onclick="generate()">Generate Score</button>
+<button id="resetBtn" onclick="resetAssessment()">Start New Assessment</button>
+
+<div id="result" class="center">
+<svg viewBox="0 0 200 120">
+<path d="M20 100 A80 80 0 0 1 180 100" stroke="#334155" stroke-width="16" fill="none"/>
+<path id="gauge" d="M20 100 A80 80 0 0 1 180 100" stroke="#22c55e" stroke-width="16" fill="none" stroke-dasharray="252" stroke-dashoffset="252"/>
+<text x="100" y="95" text-anchor="middle" fill="white" font-size="26" id="score">0</text>
+</svg>
+<h2 id="approval"></h2>
+<p id="date"></p>
+<button onclick="downloadPDF()">Download PDF Report</button>
 </div>
 
 <div id="offers">
-<h2>🎯 Matched Loan Offers</h2>
-<div class="loan-grid" id="loanGrid"></div>
-</div>
+<h2>🏦 Recommended Loan Offers</h2>
+<div class="grid" id="offerGrid"></div>
 </div>
 
-<div id="loadingScreen">
-<div class="loading-box">
-<div class="spinner"></div>
-<h3>Analyzing Your Financial Profile...</h3>
-<p id="loadingText">Checking Income Stability...</p>
+<div id="leadBox" class="center">
+<h3>WhatsApp Consultation</h3>
+<input id="mobile" placeholder="Enter WhatsApp Number">
+<button onclick="sendWhatsApp()">Get Expert Call</button>
+</div>
+
 </div>
 </div>
 
 <script>
-function validateFields(){
- let fields=document.querySelectorAll('input,select');
- for(let f of fields){
-   if(!f.value.trim()){ alert('Please fill all fields'); return false; }
- }
- return true;
+function validate(){
+for(let el of document.querySelectorAll('input,select')){
+if(el.id==='mobile') continue;
+if(!el.value.trim()){alert('All fields are mandatory');return false;}
+}
+return true;
 }
 
-function generateScore(){
- if(!validateFields()) return;
+function generate(){
+if(!validate()) return;
 
- let score=650;
- let age=+age.value, income=+income.value, loan=+loanAmount.value, emiVal=+emi.value;
- if(age>=25) score+=20;
- if(age>=30) score+=20;
- if(income>30000) score+=30;
- if(income>50000) score+=40;
- if(card.value==='yes') score+=30;
- if(experience.value==='3-5') score+=20;
- if(experience.value==='5+') score+=40;
- if(loan>500000) score-=40;
- if(emiVal>20000) score-=30;
- if(missed.value==='yes') score-=100;
- score=Math.max(300,Math.min(900,score));
+loading.style.display='flex';
+let msgs=['Checking Income Stability','Analyzing Repayment Capacity','Evaluating Credit Behaviour','Generating Report'];
+let i=0;
+let t=setInterval(()=>{ltxt.innerText=msgs[i%msgs.length];i++;},1000);
 
- loadingScreen.style.display='flex';
- const msgs=['Checking Income Stability...','Analyzing Repayment Capacity...','Evaluating Credit Behaviour...','Generating Financial Profile...'];
- let i=0;
- let t=setInterval(()=>{loadingText.innerText=msgs[i++]||msgs[3]},1000);
+setTimeout(()=>{
+clearInterval(t);
+loading.style.display='none';
 
- setTimeout(()=>{
- clearInterval(t);
- loadingScreen.style.display='none';
- showResult(score);
- },4000);
+let score=650;
+if(+age.value>30) score+=40;
+if(+income.value>50000) score+=50;
+if(card.value==='yes') score+=30;
+if(missed.value==='yes') score-=120;
+score=Math.max(300,Math.min(900,score));
+
+show(score);
+},4000);
 }
 
-function showResult(score){
- resultBox.style.display='block';
- meterWrap.style.display='block';
- offers.style.display='block';
+function show(scoreVal){
+result.style.display='block';
+offers.style.display='block';
+leadBox.style.display='block';
 
- let approval=Math.round(score/900*100);
- let current=0;
- let anim=setInterval(()=>{
- current+=5;
- if(current>=score){current=score;clearInterval(anim)}
- scoreNumber.innerText=current;
- let deg=(current/900)*360;
- meter.style.background='conic-gradient(#10b981 '+deg+'deg,#e5e7eb '+deg+'deg)';
- },15);
+let cur=0;
+let anim=setInterval(()=>{
+cur+=5;
+if(cur>=scoreVal){cur=scoreVal;clearInterval(anim);confetti();}
+score.innerText=cur;
+let p=(cur-300)/600;
+gauge.style.strokeDashoffset=252-(252*p);
+},15);
 
- approval.innerHTML=approval+'% Loan Approval Chance';
- document.getElementById('approval').innerText=approval+'% Loan Approval Chance';
+let app=Math.round(scoreVal/900*100);
+approval.innerText=app+'% Loan Approval Chance';
+date.innerText='Assessment Date: '+new Date().toLocaleDateString();
 
- let date=new Date().toLocaleDateString();
- assessmentDate.innerText='Assessment Date: '+date;
-
- saveAssessment(score,approval,date);
- renderOffers(score);
- lockForm();
+localStorage.setItem('creditData',JSON.stringify({score:scoreVal,app,date:date.innerText}));
+renderOffers(scoreVal);
+lockForm();
 }
 
-function renderOffers(score){
- let data = score>=750 ?
- ['Premium Personal Loan','Home Loan','Business Loan','Pre-approved Credit Card'] :
- ['Navi Loan','MoneyView','True Balance','KreditBee'];
-
- loanGrid.innerHTML=data.map(x=>`<div class="loan-card"><h3>${x}</h3><p>Eligible Offer</p><a href="#">Apply Now</a></div>`).join('');
-}
-
-function saveAssessment(score,approval,date){
- localStorage.setItem('creditAssessment',JSON.stringify({score,approval,date}));
+function renderOffers(s){
+let premium=s>=750;
+offerGrid.innerHTML=(premium?[
+'HDFC Personal Loan','ICICI Instant Loan','Axis Bank Loan','Kotak Pre-Approved'
+]:['Navi','MoneyView','KreditBee','True Balance'])
+.map(x=>`<div class="offer"><h3>${x}</h3><p>Eligible Offer</p><a href="#">Apply Now</a></div>`).join('');
 }
 
 function lockForm(){
- document.querySelectorAll('input,select').forEach(x=>x.disabled=true);
- submitBtn.style.display='none';
- resetBtn.style.display='block';
-}
-
-window.onload=function(){
- let saved=localStorage.getItem('creditAssessment');
- if(!saved) return;
- let d=JSON.parse(saved);
- resultBox.style.display='block';
- meterWrap.style.display='block';
- offers.style.display='block';
- scoreNumber.innerText=d.score;
- let deg=(d.score/900)*360;
- meter.style.background='conic-gradient(#10b981 '+deg+'deg,#e5e7eb '+deg+'deg)';
- document.getElementById('approval').innerText=d.approval+'% Loan Approval Chance';
- assessmentDate.innerText='Assessment Date: '+d.date;
- renderOffers(d.score);
- lockForm();
+document.querySelectorAll('input,select').forEach(e=>{if(e.id!=='mobile')e.disabled=true;});
+submitBtn.style.display='none';
+resetBtn.style.display='block';
 }
 
 function resetAssessment(){
- localStorage.removeItem('creditAssessment');
- location.reload();
+localStorage.removeItem('creditData');
+location.reload();
+}
+
+window.onload=()=>{
+let d=localStorage.getItem('creditData');
+if(!d) return;
+d=JSON.parse(d);
+result.style.display='block';
+offers.style.display='block';
+leadBox.style.display='block';
+score.innerText=d.score;
+approval.innerText=d.app+'% Loan Approval Chance';
+date.innerText=d.date;
+gauge.style.strokeDashoffset=252-(252*((d.score-300)/600));
+renderOffers(d.score);
+lockForm();
+}
+
+function sendWhatsApp(){
+let n=document.getElementById('mobile').value;
+if(!n){alert('Enter number');return;}
+window.open('https://wa.me/'+n,'_blank');
+}
+
+function downloadPDF(){
+window.print();
+}
+
+function confetti(){
+if(parseInt(score.innerText)<750) return;
+for(let i=0;i<80;i++){
+let d=document.createElement('div');
+d.style.cssText='position:fixed;width:8px;height:8px;background:hsl('+Math.random()*360+',100%,50%);left:'+Math.random()*100+'%;top:-10px;z-index:9999';
+document.body.appendChild(d);
+let y=0;
+let a=setInterval(()=>{y+=5;d.style.top=y+"px";if(y>innerHeight){clearInterval(a);d.remove();}},20);
+}
 }
 </script>
 </body>
