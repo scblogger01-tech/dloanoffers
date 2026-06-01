@@ -90,47 +90,57 @@ object-fit:contain;
 }
 }
 /* BOTTOM NAVIGATION */
-
 .bottom-nav{
 position:fixed;
 bottom:0;
 left:0;
 width:100%;
-background:white;
+height:70px;
+
+background:#fff;
+
 display:flex;
-justify-content:space-evenly;
+flex-wrap:nowrap;
+
 align-items:center;
-padding:8px 0;
-box-shadow:0 -4px 12px rgba(0,0,0,0.12);
+justify-content:space-evenly;
+
+box-shadow:0 -4px 12px rgba(0,0,0,.12);
+
 z-index:999;
 }
 
 .nav-btn{
 flex:1;
+
 display:flex;
 flex-direction:column;
+
 align-items:center;
 justify-content:center;
-gap:3px;
-font-size:11px;
+
 text-decoration:none;
-color:#64748b;
+
+font-size:11px;
+
 font-weight:600;
-cursor:pointer;
+
+color:#64748b;
+
 white-space:nowrap;
+
+min-width:0;
 }
 
-  
-
+.nav-icon{
+font-size:20px;
+margin-bottom:3px;
+}
 .nav-btn.active{
 
 color:#10b981;
 }
 
-.nav-icon{
-
-font-size:22px;
-}
 
 /* SIDE MENU */
 
@@ -481,53 +491,28 @@ Menu
 </div>
   
 <!-- BOTTOM NAV -->
-
 <div class="bottom-nav">
-<div class="nav-btn active">
-<div class="nav-btn"
-onclick="openMenu()">
 
-<div class="nav-icon">
-☰
+<div class="nav-btn" onclick="openMenu()">
+<div class="nav-icon">☰</div>
+<div>Menu</div>
 </div>
 
-<div>
-Menu
+<div class="nav-btn active" onclick="showHome()">
+<div class="nav-icon">🏠</div>
+<div>Home</div>
 </div>
 
-</div>
-
-<div class="nav-btn active"
-onclick="showHome()">
-
-<div class="nav-icon">
-🏠
-</div>
-
-<div>
-Home
-</div>
-
-</div>
-
-<div class="nav-btn"
-onclick="showSupport()">
-
-<div class="nav-icon">
-☎
-</div>
-
-<div>
-Support
-</div>
-
-</div>
-
-</div>
-  <div class="nav-btn"
-onclick="openCreditScore()">
+<div class="nav-btn" onclick="openCreditScore()">
 <div class="nav-icon">📈</div>
-<div>CIBIL</div>
+<div>Score</div>
+</div>
+
+<div class="nav-btn" onclick="showSupport()">
+<div class="nav-icon">☎</div>
+<div>Support</div>
+</div>
+
 </div>
 
 </body>
