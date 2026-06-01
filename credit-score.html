@@ -221,51 +221,47 @@ color:#1E40AF;
 <h1>📈 Credit Score Estimator</h1>
 
 <label>Age</label>
-<input id="age" type="number" required>
+<input id="age" type="number">
 
 <label>Monthly Net Income</label>
-<input id="income" type="number" required>
+<input id="income" type="number">
 
 <label>Existing Loan Amount</label>
-<input id="loanAmount" type="number" required>
+<input id="loanAmount" type="number">
 
 <label>Current EMI</label>
-<input id="emi" type="number" required>
+<input id="emi" type="number">
 
 <label>Occupation</label>
-<select id="occupation" required>
-<option value="">Select Occupation</option>
-<option value="Salaried">Salaried</option>
-<option value="Business">Business</option>
-<option value="Self Employed">Self Employed</option>
-<option value="Student">Student</option>
+<select id="occupation">
+<option>Salaried</option>
+<option>Business</option>
+<option>Self Employed</option>
+<option>Student</option>
 </select>
 
 <label>Work Experience</label>
-<select id="experience" required>
-<option value="">Select Experience</option>
-<option value="0-1">0-1 Years</option>
-<option value="1-3">1-3 Years</option>
-<option value="3-5">3-5 Years</option>
-<option value="5+">5+ Years</option>
+<select id="experience">
+<option>0-1</option>
+<option>1-3</option>
+<option>3-5</option>
+<option>5+</option>
 </select>
 
 <label>City</label>
-<input id="city" required>
+<input id="city">
 
 <label>Country</label>
-<input id="country" value="India" required>
+<input id="country" value="India">
 
 <label>Have Credit Card?</label>
-<select id="card" required>
-<option value="">Select Option</option>
+<select id="card">
 <option value="yes">Yes</option>
 <option value="no">No</option>
 </select>
 
 <label>Any EMI Missed?</label>
-<select id="missed" required>
-<option value="">Select Option</option>
+<select id="missed">
 <option value="no">No</option>
 <option value="yes">Yes</option>
 </select>
@@ -284,6 +280,7 @@ margin-top:10px;">
 🔄 Start New Assessment
 </button>
 </div>
+<div id="resultBox" class="score-box">
 <div class="meter-wrapper">
 
     <div class="meter-circle">
@@ -303,6 +300,8 @@ margin-top:10px;">
 <p>
 Estimated score only. Not official CIBIL.
 </p>
+
+</div>
 
 </div>
 
@@ -346,28 +345,6 @@ Estimated score only. Not official CIBIL.
 <p id="assessmentDate"> </p>
 <script>
 function generateScore(){
-
-let age=document.getElementById("age").value.trim();
-let income=document.getElementById("income").value.trim();
-let loanField=document.getElementById("loanAmount").value.trim();
-let emiField=document.getElementById("emi").value.trim();
-let city=document.getElementById("city").value.trim();
-let country=document.getElementById("country").value.trim();
-let occupation=document.getElementById("occupation").value;
-let experience=document.getElementById("experience").value;
-let cardValue=document.getElementById("card").value;
-let missedValue=document.getElementById("missed").value;
-
-if(age===""||income===""||loanField===""||emiField===""||city===""||country===""||occupation===""||experience===""||cardValue===""||missedValue===""){
-alert("Please fill all fields before generating your credit score.");
-return;
-}
-
-if(Number(age)<=0||Number(income)<=0||Number(loanField)<0||Number(emiField)<0){
-alert("Please enter valid numeric values.");
-return;
-}
-
 
 let score=650;
 
