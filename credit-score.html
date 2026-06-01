@@ -125,6 +125,89 @@ border-radius:10px;
 
 margin-top:10px;
 }
+  /* LOADING SCREEN */
+
+#loadingScreen{
+
+position:fixed;
+inset:0;
+
+background:rgba(0,0,0,0.85);
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+z-index:99999;
+}
+
+.loading-box{
+
+background:white;
+
+padding:30px;
+
+border-radius:20px;
+
+text-align:center;
+
+width:90%;
+max-width:400px;
+}
+
+.spinner{
+
+width:60px;
+height:60px;
+
+margin:auto;
+
+border:5px solid #ddd;
+border-top:5px solid #1E40AF;
+
+border-radius:50%;
+
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+
+100%{
+transform:rotate(360deg);
+}
+}
+  .meter-wrapper{
+
+display:flex;
+justify-content:center;
+
+margin-bottom:20px;
+}
+
+.meter-circle{
+
+width:180px;
+height:180px;
+
+border-radius:50%;
+
+background:
+conic-gradient(
+#10b981 0deg,
+#10b981 280deg,
+#e5e7eb 280deg
+);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:42px;
+font-weight:bold;
+
+color:#1E40AF;
+}
 
 </style>
 </head>
@@ -133,7 +216,7 @@ margin-top:10px;
 
 <div class="container">
 
-<div class="card">
+<div class="card" id="formCard">
 
 <h1>📈 Credit Score Estimator</h1>
 
@@ -183,16 +266,30 @@ margin-top:10px;
 <option value="yes">Yes</option>
 </select>
 
-<button onclick="generateScore()">
+<button id="submitBtn" onclick="generateScore()">
 Generate Credit Score
 </button>
-
+  
+<button
+id="resetBtn"
+onclick="resetAssessment()"
+style="
+display:none;
+background:#ef4444;
+margin-top:10px;">
+🔄 Start New Assessment
+</button>
 </div>
+<div class="meter-wrapper">
 
-<div class="card score-box" id="resultBox">
+    <div class="meter-circle">
 
-<div class="score" id="score">
-750
+        <span id="scoreNumber">
+            0
+        </span>
+
+    </div>
+
 </div>
 
 <div class="approval" id="approval">
@@ -242,65 +339,80 @@ Estimated score only. Not official CIBIL.
 </div>
 
 </div>
-
+<p id="assessmentDate"> </p>
 <script>
-
 function generateScore(){
 
 let score=650;
 
-let age=
-parseInt(document.getElementById("age").value)||0;
+let age=parseInt(document.getElementById("age").value)||0;
+let income=parseInt(document.getElementById("income").value)||0;
+let loan=parseInt(document.getElementById("loanAmount").value)||0;
+let emi=parseInt(document.getElementById("emi").value)||0;
 
-let income=
-parseInt(document.getElementById("income").value)||0;
-
-let loan=
-parseInt(document.getElementById("loanAmount").value)||0;
-
-let emi=
-parseInt(document.getElementById("emi").value)||0;
-
-let card=
-document.getElementById("card").value;
-
-let missed=
-document.getElementById("missed").value;
-
-let exp=
-document.getElementById("experience").value;
+let card=document.getElementById("card").value;
+let missed=document.getElementById("missed").value;
+let exp=document.getElementById("experience").value;
 
 if(age>=25) score+=20;
-
 if(age>=30) score+=20;
 
 if(income>30000) score+=30;
-
 if(income>50000) score+=40;
 
 if(card==="yes") score+=30;
 
 if(exp==="3-5") score+=20;
-
 if(exp==="5+") score+=40;
 
 if(loan>500000) score-=40;
-
 if(emi>20000) score-=30;
 
 if(missed==="yes") score-=100;
 
 if(score>900) score=900;
-
 if(score<300) score=300;
 
-let approval=
-Math.round((score/900)*100);
+document.getElementById("loadingScreen")
+.style.display="flex";
 
-document.getElementById("score").innerHTML=score;
+let messages=[
+"Checking Income Stability...",
+"Analyzing Repayment Capacity...",
+"Evaluating Credit Behaviour...",
+"Generating Financial Profile..."
+];
 
-document.getElementById("approval").innerHTML=
-approval+"% Loan Approval Chance";
+let i=0;
+
+let loader=setInterval(()=>{
+
+document.getElementById("loadingText")
+.innerHTML=messages[i];
+
+i++;
+
+if(i>=messages.length){
+clearInterval(loader);
+}
+
+},1000);
+
+setTimeout(()=>{
+
+document.getElementById("loadingScreen")
+.style.display="none";
+
+showResult(score);
+
+},4000);
+
+}
+  function showResult(score){
+
+let approval=Math.round(
+(score/900)*100
+);
 
 document.getElementById("resultBox")
 .style.display="block";
@@ -311,14 +423,133 @@ document.getElementById("matchedTitle")
 document.getElementById("loanGrid")
 .style.display="grid";
 
-window.scrollTo({
-top:500,
-behavior:'smooth'
-});
+let count=0;
+
+let anim=setInterval(()=>{
+
+count+=5;
+
+document.getElementById("scoreNumber")
+.innerHTML=count;
+
+if(count>=score){
+
+clearInterval(anim);
+
+document.getElementById("scoreNumber")
+.innerHTML=score;
 
 }
 
+},20);
+
+document.getElementById("approval")
+.innerHTML=
+approval+"% Loan Approval Chance";
+
+saveAssessment(score,approval);
+
+lockForm();
+}
+  function saveAssessment(score,approval){
+
+let data={
+
+score:score,
+approval:approval,
+
+date:new Date().toLocaleDateString()
+
+};
+
+localStorage.setItem(
+"creditAssessment",
+JSON.stringify(data)
+);
+
+}
+  function lockForm(){
+
+document
+.querySelectorAll("input,select")
+.forEach(el=>{
+
+el.disabled=true;
+
+});
+
+document.getElementById("submitBtn")
+.style.display="none";
+
+document.getElementById("resetBtn")
+.style.display="block";
+}
+  window.onload=function(){
+
+let saved=
+localStorage.getItem(
+"creditAssessment"
+);
+
+if(saved){
+
+let data=JSON.parse(saved);
+
+document.getElementById("resultBox")
+.style.display="block";
+
+document.getElementById("matchedTitle")
+.style.display="block";
+
+document.getElementById("loanGrid")
+.style.display="grid";
+
+document.getElementById("scoreNumber")
+.innerHTML=data.score;
+
+document.getElementById("approval")
+.innerHTML=
+data.approval+
+"% Loan Approval Chance";
+
+lockForm();
+
+}
+
+}
+  function resetAssessment(){
+
+if(
+confirm(
+"Start a new credit assessment?"
+)
+){
+
+localStorage.removeItem(
+"creditAssessment"
+);
+
+location.reload();
+
+}
+
+}
 </script>
 
+ <div id="loadingScreen" style="display:none;">
+
+<div class="loading-box">
+
+<div class="spinner"></div>
+
+<h2>Analyzing Your Financial Profile...</h2>
+
+<p id="loadingText">
+Checking Income Stability...
+</p>
+
+</div>
+
+</div>
 </body>
 </html>
