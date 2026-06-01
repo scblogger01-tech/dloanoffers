@@ -24,9 +24,262 @@ button{background:#2563eb;color:#fff;font-weight:bold;cursor:pointer;margin-top:
 .loaderbox{background:#fff;color:#000;padding:25px;border-radius:15px;text-align:center}
 svg{max-width:260px}
 @media(max-width:600px){h1{font-size:24px}}
+      /* HEADER */
+
+.top-header{
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
+background:#0f172a;
+
+padding:14px 18px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+.header-left{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+}
+
+.header-logo{
+
+width:42px;
+
+height:42px;
+
+border-radius:12px;
+
+background:white;
+
+padding:5px;
+
+object-fit:contain;
+}
+
+.app-name{
+    color:white;
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+@media(max-width:480px){
+
+.app-name{
+    font-size:18px;
+}
+
+.header-logo{
+    width:36px;
+    height:36px;
+}
+}
+/* BOTTOM NAVIGATION */
+
+.bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+padding:10px 0;
+
+box-shadow:0 -4px 12px rgba(0,0,0,0.12);
+
+z-index:999;
+}
+
+.nav-btn{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:4px;
+
+font-size:12px;
+
+text-decoration:none;
+
+color:#64748b;
+
+font-weight:600;
+
+cursor:pointer;
+}
+
+.nav-btn.active{
+
+color:#10b981;
+}
+
+.nav-icon{
+
+font-size:22px;
+}
+
+/* SIDE MENU */
+
+.side-menu{
+
+position:fixed;
+
+top:0;
+
+left:-280px;
+
+width:260px;
+
+height:100%;
+
+background:white;
+
+z-index:1000;
+
+padding:25px 20px;
+
+transition:0.3s;
+
+box-shadow:4px 0 15px rgba(0,0,0,0.15);
+}
+
+.side-menu.active{
+
+left:0;
+}
+
+.menu-title{
+
+font-size:20px;
+
+font-weight:700;
+
+margin-bottom:20px;
+}
+
+.menu-links{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+}
+
+.menu-links a{
+
+text-decoration:none;
+
+color:#0f172a;
+
+font-weight:600;
+
+padding:12px;
+
+background:#f1f5f9;
+
+border-radius:10px;
+}
+
+/* OVERLAY */
+
+.overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,0.5);
+
+z-index:999;
+
+display:none;
+}
+
+.overlay.active{
+
+display:block;
+}
+
+/* SUPPORT PAGE */
+
+.support-page{
+
+display:none;
+
+padding:20px;
+}
+
+.support-card{
+
+background:white;
+
+padding:20px;
+
+border-radius:16px;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.support-card h2{
+
+margin-bottom:15px;
+}
+
+.support-item{
+
+margin-bottom:12px;
+
+font-size:15px;
+}
+
+/* BODY SPACE FOR NAVBAR */
+
+body{
+
+padding-bottom:85px;
+}
 </style>
 </head>
-<body>
+<body> <header class="top-header">
+<div class="header-left">
+<img src="logo.png" class="header-logo" alt="D-LOAN OFFERS Logo">
+<class="header-logo">
+<div class="app-name">
+D-LOAN OFFERS
+</div>
+</div>
+</header>   
+  
 <div id="loading"><div class="loaderbox"><h2>Analyzing...</h2><p id="ltxt">Checking Profile...</p></div></div>
 
 <div class="container">
@@ -75,6 +328,24 @@ Estimated score only. Not official CIBIL.
 </div>
 
 <script>
+  function openMenu(){
+
+document.getElementById("sideMenu")
+.classList.add("active");
+
+document.getElementById("overlay")
+.classList.add("active");
+}
+
+function closeMenu(){
+
+document.getElementById("sideMenu")
+.classList.remove("active");
+
+document.getElementById("overlay")
+.classList.remove("active");
+}
+
 function validate(){
 for(let el of document.querySelectorAll('input,select')){
 if(el.id==='mobile') continue;
@@ -184,5 +455,87 @@ let a=setInterval(()=>{y+=5;d.style.top=y+"px";if(y>innerHeight){clearInterval(a
 }
 }
 </script>
+<!-- OVERLAY -->
+
+<div class="overlay" id="overlay"
+onclick="closeMenu()"></div>
+
+<!-- SIDE MENU -->
+
+<div class="side-menu" id="sideMenu">
+
+<div class="menu-title">
+Menu
+</div>
+
+<div class="menu-links">
+
+<a href="#">
+🏠 Home
+</a>
+
+<a href="emi.html">
+📊 LOAN EMI Calculator
+</a>
+
+<a href="#">
+🔒 Privacy Policy
+</a>
+
+<a href="#">
+📄 Terms & Conditions
+</a>
+
+<a href="#">
+☎ Contact Support
+</a>
+
+</div>
+  
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<div class="nav-btn"
+onclick="openMenu()">
+
+<div class="nav-icon">
+☰
+</div>
+
+<div>
+Menu
+</div>
+
+</div>
+
+<div class="nav-btn active"
+onclick="showHome()">
+
+<div class="nav-icon">
+🏠
+</div>
+
+<div>
+Home
+</div>
+
+</div>
+
+<div class="nav-btn"
+onclick="showSupport()">
+
+<div class="nav-icon">
+☎
+</div>
+
+<div>
+Support
+</div>
+
+</div>
+
+</div>
+  
 </body>
 </html>
