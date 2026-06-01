@@ -432,61 +432,43 @@ object-fit:contain;
 }
 }
 /* BOTTOM NAVIGATION */
-
 .bottom-nav{
-
 position:fixed;
-
 bottom:0;
-
 left:0;
-
 width:100%;
-
-background:white;
-
+height:70px;
+background:#fff;
 display:flex;
-
-justify-content:space-around;
-
+flex-wrap:nowrap;
 align-items:center;
-
-padding:10px 0;
-
-box-shadow:0 -4px 12px rgba(0,0,0,0.12);
-
+justify-content:space-evenly;
+box-shadow:0 -4px 12px rgba(0,0,0,.12);
 z-index:999;
 }
 
 .nav-btn{
-
+flex:1;
 display:flex;
-
 flex-direction:column;
-
 align-items:center;
-
-gap:4px;
-
-font-size:12px;
-
+justify-content:center;
 text-decoration:none;
-
-color:#64748b;
-
+font-size:11px;
 font-weight:600;
-
+color:#64748b;
+white-space:nowrap;
+min-width:0;
 cursor:pointer;
 }
 
 .nav-btn.active{
-
 color:#10b981;
 }
 
 .nav-icon{
-
-font-size:22px;
+font-size:20px;
+margin-bottom:3px;
 }
 
 /* SIDE MENU */
@@ -1611,6 +1593,9 @@ document.getElementById("eligibilityResult").innerHTML =
 "Estimated Eligibility: ₹"+eligible.toLocaleString();
 
 }
+    function openCreditScore(){
+    window.location.href="credit-score.html";
+}
     
 </script>
 <!-- OVERLAY -->
@@ -1652,46 +1637,26 @@ Menu
 
 </div>
 <!-- BOTTOM NAV -->
-
 <div class="bottom-nav">
 
-<div class="nav-btn"
-onclick="openMenu()">
-
-<div class="nav-icon">
-☰
+<div class="nav-btn" onclick="openMenu()">
+<div class="nav-icon">☰</div>
+<div>Menu</div>
 </div>
 
-<div>
-Menu
+<div class="nav-btn active" onclick="showHome()">
+<div class="nav-icon">🏠</div>
+<div>Home</div>
 </div>
 
+<div class="nav-btn" onclick="openCreditScore()">
+<div class="nav-icon">📈</div>
+<div>Score</div>
 </div>
 
-<div class="nav-btn active"
-onclick="showHome()">
-
-<div class="nav-icon">
-🏠
-</div>
-
-<div>
-Home
-</div>
-
-</div>
-
-<div class="nav-btn"
-onclick="showSupport()">
-
-<div class="nav-icon">
-☎
-</div>
-
-<div>
-Support
-</div>
-
+<div class="nav-btn" onclick="showSupport()">
+<div class="nav-icon">☎</div>
+<div>Support</div>
 </div>
 
 </div>
