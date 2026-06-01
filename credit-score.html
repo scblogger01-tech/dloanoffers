@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Credit Score Assessment</title>
+<title>Credit Score Assessment</title>
 <style>
 :root{--bg:#0f172a;--glass:rgba(255,255,255,.08);--text:#fff;--accent:#22c55e}
 *{box-sizing:border-box}
@@ -31,17 +31,17 @@ svg{max-width:260px}
 
 <div class="container">
 <div class="glass">
-<h1>💳 Premium Credit Score Assessment</h1>
+<h1> Credit Score Assessment</h1>
 
 <div class="grid">
 <div><label>Age</label><input id="age"></div>
-<div><label>Income</label><input id="income"></div>
-<div><label>Loan Amount</label><input id="loan"></div>
-<div><label>EMI</label><input id="emi"></div>
+<div><label>Monthly Income</label><input id="income"></div>
+<div><label>Runing Loan Amount</label><input id="loan"></div>
+<div><label>Current EMI</label><input id="emi"></div>
 <div><label>City</label><input id="city"></div>
 <div><label>Country</label><input id="country" value="India"></div>
-<div><label>Credit Card</label><select id="card"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
-<div><label>Missed EMI</label><select id="missed"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select></div>
+<div><label>Have Credit Card</label><select id="card"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+<div><label>Have you Missed EMI</label><select id="missed"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select></div>
 </div>
 
 <button id="submitBtn" onclick="generate()">Generate Score</button>
@@ -57,9 +57,11 @@ svg{max-width:260px}
 <p id="date"></p>
 <button onclick="downloadPDF()">Download PDF Report</button>
 </div>
-
+<h2>
+Estimated score only. Not official CIBIL.
+</h2>
 <div id="offers">
-<h2>🏦 Recommended Loan Offers</h2>
+<h2>🏦 Eligible Loan Offers</h2>
 <div class="grid" id="offerGrid"></div>
 </div>
 
