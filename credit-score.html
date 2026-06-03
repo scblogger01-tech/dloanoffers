@@ -2,59 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Score Assessment | D-LOAN OFFERS</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Credit Report | D-LOAN OFFERS</title>
     <style>
-        .overlay{
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,.5);
-            display:none;
-            z-index:998;
-        }
-        .overlay.active{
-            display:block;
-        }
-        .side-menu{
-            position:fixed;
-            top:0;
-            left:-280px;
-            width:260px;
-            height:100%;
-            background:white;
-            padding:25px 20px;
-            transition:.3s;
-            z-index:999;
-            box-shadow:4px 0 15px rgba(0,0,0,.15);
-        }
-        .side-menu.active{
-            left:0;
-        }
-        .menu-title{
-            font-size:22px;
-            font-weight:bold;
-            margin-bottom:20px;
-        }
-        .menu-links{
-            display:flex;
-            flex-direction:column;
-            gap:12px;
-        }
-        .menu-links a{
-            text-decoration:none;
-            background:#f1f5f9;
-            padding:12px;
-            border-radius:10px;
-            color:#0f172a;
-            font-weight:600;
-        }
         :root{
             --primary:#1E40AF;
             --secondary:#2563EB;
             --success:#10b981;
-            --dark:#0f172a;
             --light:#f8fafc;
-            --text:#334155;
+            --dark:#0f172a;
         }
         *{
             margin:0;
@@ -66,7 +22,6 @@
             background:#f8fafc;
             padding-bottom:90px;
         }
-        /* HEADER */
         .top-header{
             position:sticky;
             top:0;
@@ -85,10 +40,9 @@
         .header-logo{
             width:42px;
             height:42px;
-            border-radius:12px;
             background:white;
+            border-radius:12px;
             padding:5px;
-            object-fit:contain;
         }
         .app-name{
             color:white;
@@ -96,118 +50,114 @@
             font-weight:900;
         }
         .container{
-            max-width:1100px;
+            max-width:1200px;
             margin:auto;
             padding:20px;
         }
-        .hero-card{
-            background:linear-gradient(135deg,#1E40AF,#2563EB);
-            color:white;
-            padding:30px;
+        .report-card{
+            background:white;
             border-radius:20px;
+            padding:25px;
             margin-bottom:20px;
-            box-shadow:0 10px 25px rgba(0,0,0,.15);
+            box-shadow:0 5px 20px rgba(0,0,0,.08);
         }
-        .hero-card h1{
-            font-size:32px;
+        .report-header{
+            text-align:center;
+        }
+        .report-header h1{
+            color:#1E40AF;
             margin-bottom:10px;
         }
-        .hero-card p{
-            opacity:.9;
+        .score-section{
+            text-align:center;
+            padding:20px 0;
         }
-        .form-card{
-            background:white;
-            padding:25px;
-            border-radius:18px;
-            box-shadow:0 5px 20px rgba(0,0,0,.08);
+        .score-circle{
+            width:220px;
+            height:220px;
+            margin:auto;
+            border-radius:50%;
+            background:linear-gradient(135deg,#1E40AF,#2563EB);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            color:white;
+            box-shadow:0 10px 30px rgba(37,99,235,.3);
+        }
+        .score-number{
+            font-size:58px;
+            font-weight:900;
+        }
+        .score-text{
+            font-size:16px;
+        }
+        .rating{
+            font-size:28px;
+            font-weight:700;
+            margin-top:20px;
+            color:#1E40AF;
+        }
+        .approval{
+            margin-top:10px;
+            font-size:18px;
+            color:#10b981;
+            font-weight:700;
         }
         .grid{
             display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
             gap:15px;
         }
-        .field{
-            display:flex;
-            flex-direction:column;
-        }
-        .field label{
-            font-weight:600;
-            margin-bottom:6px;
-            color:#334155;
-        }
-        .field input,
-        .field select{
-            padding:13px;
-            border:1px solid #dbeafe;
-            border-radius:12px;
-            font-size:15px;
-            outline:none;
-        }
-        .field input:focus,
-        .field select:focus{
-            border-color:#2563EB;
-        }
-        .generate-btn{
-            width:100%;
-            padding:16px;
-            margin-top:25px;
-            border:none;
-            border-radius:14px;
-            background:#10b981;
-            color:white;
-            font-size:18px;
-            font-weight:700;
-            cursor:pointer;
-        }
-        .generate-btn:hover{
-            background:#059669;
-        }
         .info-box{
-            margin-top:20px;
-            background:#eff6ff;
+            background:#f1f5f9;
             padding:15px;
             border-radius:12px;
-            color:#1e40af;
-            font-size:14px;
         }
-        /* LOADER */
-        #loading{
-            display:none;
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,.85);
-            z-index:9999;
-            justify-content:center;
-            align-items:center;
-        }
-        .loader-box{
-            background:white;
-            padding:30px;
-            border-radius:20px;
-            text-align:center;
-            width:320px;
-        }
-        .loader-circle{
-            width:70px;
-            height:70px;
-            border:6px solid #dbeafe;
-            border-top:6px solid #2563EB;
-            border-radius:50%;
-            margin:auto;
-            animation:spin 1s linear infinite;
-        }
-        @keyframes spin{
-            100%{ transform:rotate(360deg); }
-        }
-        .loader-box h2{
-            margin-top:15px;
-            color:#1e40af;
-        }
-        .loader-box p{
-            margin-top:8px;
+        .info-label{
+            font-size:13px;
             color:#64748b;
+            margin-bottom:5px;
         }
-        /* BOTTOM NAV */
+        .info-value{
+            font-size:16px;
+            font-weight:700;
+            color:#0f172a;
+        }
+        .btn-row{
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+            margin-top:20px;
+        }
+        .btn{
+            border:none;
+            padding:14px 18px;
+            border-radius:12px;
+            cursor:pointer;
+            font-weight:700;
+        }
+        .btn-primary{
+            background:#1E40AF;
+            color:white;
+        }
+        .btn-success{
+            background:#10b981;
+            color:white;
+        }
+        .section-title{
+            font-size:24px;
+            margin-bottom:15px;
+            color:#1E40AF;
+        }
+        .loan-list{
+            display:grid;
+            grid-template-columns:1fr;
+            gap:20px;
+        }
+        @media(min-width:768px){
+            .loan-list{ grid-template-columns:1fr 1fr; }
+        }
         .bottom-nav{
             position:fixed;
             bottom:0;
@@ -223,22 +173,115 @@
         }
         .nav-btn{
             flex:1;
-            text-align:center;
-            font-size:12px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            font-size:11px;
+            font-weight:600;
             color:#64748b;
             cursor:pointer;
+        }
+        .nav-icon{
+            font-size:20px;
+            margin-bottom:3px;
         }
         .nav-btn.active{
             color:#10b981;
         }
-        .nav-icon{
-            font-size:22px;
+        .back-btn{
             display:block;
-            margin-bottom:4px;
+            text-align:center;
+            background:#2563eb;
+            color:#fff;
+            padding:14px;
+            border-radius:12px;
+            text-decoration:none;
+            font-weight:700;
+            margin-top:20px;
         }
-        @media(max-width:768px){
-            .hero-card h1{ font-size:26px; }
-            .app-name{ font-size:18px; }
+        /* CARD CSS FROM HOMEPAGE */
+        .loan-card{
+            background:linear-gradient(135deg, #1E40AF, #2563EB);
+            border-radius:16px;
+            padding:18px;
+            min-height:280px;
+            position:relative;
+            overflow:hidden;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+            box-shadow:0 8px 20px rgba(0,0,0,0.20);
+            color:white;
+        }
+        .badge{
+            position:absolute;
+            top:12px;
+            right:12px;
+            background:#d1fae5;
+            color:#065f46;
+            padding:5px 10px;
+            border-radius:20px;
+            font-size:11px;
+            font-weight:bold;
+        }
+        .logo-row{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            margin-bottom:15px;
+        }
+        .logo-row img{
+            width:45px;
+            height:45px;
+            border-radius:10px;
+            background:white;
+            padding:5px;
+            object-fit:contain;
+        }
+        .nbfc-name{
+            font-size:24px;
+            font-weight:800;
+            color:white;
+        }
+        .details-grid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:10px;
+            margin:15px 0;
+        }
+        .detail-item{
+            text-align:center;
+            background:rgba(255,255,255,.15);
+            padding:10px;
+            border-radius:10px;
+        }
+        .detail-label{
+            font-size:13px;
+            color:#e2e8f0;
+        }
+        .detail-value{
+            font-size:15px;
+            font-weight:bold;
+            color:white;
+        }
+        .apply-btn{
+            display:block;
+            text-align:center;
+            background:#10b981;
+            color:white;
+            padding:14px;
+            border-radius:10px;
+            text-decoration:none;
+            font-weight:700;
+            margin-top:10px;
+        }
+        .apply-btn:hover{ background:#059669; }
+        #validity {
+            text-align: center;
+            font-weight: bold;
+            color: #1e40af;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -251,294 +294,187 @@
     </div>
 </header>
 
-<div id="loading">
-    <div class="loader-box">
-        <div class="loader-circle"></div>
-        <h2>Generating Report...</h2>
-        <p id="loadingText">Checking Credit Profile...</p>
-    </div>
-</div>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const pan = params.get("user");
+    const reportData = JSON.parse(localStorage.getItem("REPORT_" + pan));
+
+    if(!reportData){
+        alert("No report found");
+        window.location.href = "credit-score.html";
+    }
+</script>
 
 <div class="container">
-    <div class="hero-card">
-        <h1>📈 Credit Score Assessment</h1>
-        <p>Check your estimated credit profile and get personalised loan offers instantly.</p>
+    <div class="report-card">
+        <div class="report-header">
+            <h1>Credit Assessment Report</h1>
+            <h1 id="reportScore"></h1>
+            <p>Generated Report</p>
+        </div>
+        <div id="validity"></div>
+        
+        <div class="score-section">
+            <div class="score-circle">
+                <div class="score-number" id="score">0</div>
+                <div class="score-text">Credit Score</div>
+            </div>
+            <div class="rating" id="rating">Good</div>
+            <div class="approval" id="approval">80% Approval Chance</div>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn btn-primary" onclick="window.print()">Print Report</button>
+            <button class="btn btn-success" onclick="window.location.href='credit-score.html'">New Assessment</button>
+        </div>
     </div>
 
-    <div class="form-card">
+    <div class="report-card">
+        <h2 class="section-title">Applicant Details</h2>
         <div class="grid">
-            <div class="field">
-                <label>First Name</label>
-                <input type="text" id="firstName">
+            <div class="info-box">
+                <div class="info-label">Full Name</div>
+                <div class="info-value" id="fullName"></div>
             </div>
-            <div class="field">
-                <label>Last Name</label>
-                <input type="text" id="lastName">
+            <div class="info-box">
+                <div class="info-label">Mobile</div>
+                <div class="info-value" id="mobile"></div>
             </div>
-            <div class="field">
-                <label>Mobile Number</label>
-                <input type="tel" id="mobile">
+            <div class="info-box">
+                <div class="info-label">PAN</div>
+                <div class="info-value" id="pan"></div>
             </div>
-            <div class="field">
-                <label>PAN Card Number</label>
-                <input id="pan" placeholder="ABCDE1234F">
+            <div class="info-box">
+                <div class="info-label">City</div>
+                <div class="info-value" id="city"></div>
             </div>
-            <div class="field">
-                <label>Age</label>
-                <input type="number" id="age">
+            <div class="info-box">
+                <div class="info-label">Monthly Income</div>
+                <div class="info-value" id="income"></div>
             </div>
-            <div class="field">
-                <label>City</label>
-                <input type="text" id="city">
-            </div>
-            <div class="field">
-                <label>Monthly Income</label>
-                <input type="number" id="income">
-            </div>
-            <div class="field">
-                <label>Current Loan Amount</label>
-                <input type="number" id="loanAmount">
-            </div>
-            <div class="field">
-                <label>Current EMI</label>
-                <input type="number" id="emi">
-            </div>
-            <div class="field">
-                <label>Employment Type</label>
-                <select id="employment">
-                    <option value="">Select</option>
-                    <option>Salaried</option>
-                    <option>Self Employed</option>
-                    <option>Business Owner</option>
-                    <option>Student</option>
-                </select>
-            </div>
-            <div class="field">
-                <label>Credit Card Available?</label>
-                <select id="card">
-                    <option value="">Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-            <div class="field">
-                <label>Any EMI Missed?</label>
-                <select id="missed">
-                    <option value="">Select</option>
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
-                </select>
+            <div class="info-box">
+                <div class="info-label">Employment</div>
+                <div class="info-value" id="employment"></div>
             </div>
         </div>
+    </div>
 
-        <button class="generate-btn" onclick="generateScore()">Generate Credit Report</button>
-
-        <div class="info-box">
-            ⚠ This is an estimated credit assessment and not an official CIBIL report.
+    <div class="report-card">
+        <h2 class="section-title">Credit Analysis Summary</h2>
+        <div class="grid">
+            <div class="info-box">
+                <div class="info-label">Current Loan Amount</div>
+                <div class="info-value" id="loanAmount"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Current EMI</div>
+                <div class="info-value" id="emi"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Credit Card</div>
+                <div class="info-value" id="card"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Missed EMI</div>
+                <div class="info-value" id="missed"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Report Date</div>
+                <div class="info-value" id="reportDate"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Assessment Status</div>
+                <div class="info-value" id="assessmentStatus">Eligible</div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-<div class="side-menu" id="sideMenu">
-    <div class="menu-title">Menu</div>
-    <div class="menu-links">
-        <a href="index.html">🏠 Home</a>
-        <a href="emi.html">📊 EMI Calculator</a>
-        <a href="credit-score.html">📈 Credit Score</a>
-        <a href="#">🔒 Privacy Policy</a>
-        <a href="#">📄 Terms & Conditions</a>
-        <a href="#">☎ Contact Support</a>
+    <div class="report-card">
+        <h2 class="section-title">Recommended Loan Offers</h2>
+        <div id="loanOffers" class="loan-list">
+            </div>
     </div>
-</div>
 
-<div class="bottom-nav">
-    <div class="nav-btn" onclick="openMenu()">
-        <span class="nav-icon">☰</span>Menu
-    </div>
-    <div class="nav-btn" onclick="showHome()">
-        <span class="nav-icon">🏠</span>Home
-    </div>
-    <div class="nav-btn active" onclick="openCreditScore()">
-        <span class="nav-icon">📈</span>Score
-    </div>
-    <div class="nav-btn">
-        <span class="nav-icon">📄</span>Report
-    </div>
+    <a href="credit-score.html" class="back-btn">🔄 Check Another Credit Score</a>
 </div>
 
 <script>
-function showHome(){ window.location.href="index.html"; }
-function openCreditScore(){ window.location.href="credit-score.html"; }
-function openMenu(){
-    document.getElementById("sideMenu").classList.add("active");
-    document.getElementById("overlay").classList.add("active");
-}
-function closeMenu(){
-    document.getElementById("sideMenu").classList.remove("active");
-    document.getElementById("overlay").classList.remove("active");
-}
+if (reportData) {
+    /* Populate UI safely */
+    document.getElementById("fullName").innerText = (reportData.firstName || '') + " " + (reportData.lastName || '');
+    document.getElementById("mobile").innerText = reportData.mobile || 'N/A';
+    document.getElementById("pan").innerText = reportData.pan || 'N/A';
+    document.getElementById("city").innerText = reportData.city || 'N/A';
+    document.getElementById("income").innerText = "₹" + Number(reportData.income || 0).toLocaleString();
+    document.getElementById("employment").innerText = reportData.employment || 'N/A';
+    document.getElementById("loanAmount").innerText = "₹" + Number(reportData.loanAmount || 0).toLocaleString();
+    document.getElementById("emi").innerText = "₹" + Number(reportData.emi || 0).toLocaleString();
+    document.getElementById("card").innerText = reportData.card ? reportData.card.toUpperCase() : 'N/A';
+    document.getElementById("missed").innerText = reportData.missed ? reportData.missed.toUpperCase() : 'N/A';
+    document.getElementById("reportDate").innerText = reportData.reportDate || 'N/A';
+    document.getElementById("score").innerText = reportData.score || 0;
+    document.getElementById("rating").innerText = reportData.rating || 'Fair';
+    document.getElementById("approval").innerText = (reportData.approval || 50) + "% Approval Chance";
+    document.getElementById("reportScore").innerText = reportData.score || 0;
 
-/* VALIDATION */
-function validateForm(){
-    const required = ["firstName", "lastName", "mobile", "pan", "age", "city", "income", "loanAmount", "emi", "employment", "card", "missed"];
-    for(let id of required){
-        const value = document.getElementById(id).value.trim();
-        if(!value){
-            alert("Please fill all fields");
-            document.getElementById(id).focus();
-            return false;
-        }
-    }
-    if(document.getElementById("mobile").value.length < 10){
-        alert("Enter valid mobile number");
-        return false;
-    }
-    return true;
-}
-
-/* GENERATE SCORE */
-function generateScore(){
-    const PAN = document.getElementById("pan").value.trim().toUpperCase();
-    if(!PAN || !validatePAN(PAN)) {
-        alert("Please enter a valid PAN number");
-        return;
-    }
-
-    const USER_KEY = "REPORT_" + PAN;
-    let existing = localStorage.getItem(USER_KEY);
-
-    if(existing){
-        let data = JSON.parse(existing);
-        let created = new Date(data.createdAt);
-        let now = new Date();
-        let days = (now - created) / (1000*60*60*24);
-
-        if(days < 30){
-            alert("Report already generated. Same report available for 30 days.");
-            window.location.href = "credit-report.html?user=" + encodeURIComponent(PAN);
-            return;
+    /* Circle Color Logic */
+    const scoreBox = document.querySelector(".score-circle");
+    if(scoreBox) {
+        if(reportData.score >= 750){
+            scoreBox.style.background = "linear-gradient(135deg,#10b981,#059669)";
+        } else if(reportData.score >= 650){
+            scoreBox.style.background = "linear-gradient(135deg,#2563EB,#1E40AF)";
+        } else{
+            scoreBox.style.background = "linear-gradient(135deg,#f59e0b,#d97706)";
         }
     }
 
-    if(!validateForm()) return;
+    /* Expiry Calculation */
+    const created = new Date(reportData.createdAt);
+    const expiry = new Date(created);
+    expiry.setDate(expiry.getDate() + 30);
+    const remaining = Math.ceil((expiry - new Date()) / (1000*60*60*24));
+    document.getElementById("validity").innerHTML = "🔒 Report Locked For " + (remaining > 0 ? remaining : 0) + " Days";
 
-    document.getElementById("loading").style.display = "flex";
+    /* Fetch Loan Cards from index.html */
+    fetch("index.html")
+    .then(response => response.text())
+    .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const cards = doc.querySelectorAll(".loan-card");
+        const loanOffers = document.getElementById("loanOffers");
 
-    const messages = [
-        "Checking Income Stability...",
-        "Verifying Credit Behaviour...",
-        "Calculating Risk Profile...",
-        "Checking Repayment Capacity...",
-        "Generating Credit Report..."
-    ];
-    let i = 0;
-    const loadingInterval = setInterval(()=>{
-        document.getElementById("loadingText").innerText = messages[i % messages.length];
-        i++;
-    }, 1000);
+        let maxCards = 4;
+        if(reportData.score >= 750) maxCards = 8;
+        else if(reportData.score >= 650) maxCards = 6;
 
-    setTimeout(()=>{
-        clearInterval(loadingInterval);
-
-        const age = parseInt(document.getElementById("age").value);
-        const income = parseInt(document.getElementById("income").value);
-        const loanAmount = parseInt(document.getElementById("loanAmount").value);
-        const emi = parseInt(document.getElementById("emi").value);
-        const card = document.getElementById("card").value;
-        const missed = document.getElementById("missed").value;
-        const employment = document.getElementById("employment").value;
-
-        let score = 620;
-
-        if(age >= 25 && age <= 45) score += 40;
-        if(income >= 30000) score += 30;
-        if(income >= 50000) score += 40;
-        if(income >= 100000) score += 50;
-
-        if(employment === "Salaried") score += 40;
-        if(employment === "Business Owner") score += 25;
-        if(employment === "Self Employed") score += 20;
-
-        if(card === "yes") score += 30;
-        if(missed === "yes") score -= 120;
-
-        const emiRatio = (emi / income) * 100;
-        if(emiRatio < 20) score += 30;
-        else if(emiRatio > 50) score -= 40;
-
-        if(loanAmount > 1000000) score -= 30;
-
-        score = Math.max(300, Math.min(900, score));
-
-        let approval = 55;
-        if(score >= 750) approval = 95;
-        else if(score >= 700) approval = 85;
-        else if(score >= 650) approval = 75;
-        else if(score >= 600) approval = 65;
-
-        let rating = "Fair";
-        if(score >= 800) rating = "Excellent";
-        else if(score >= 750) rating = "Very Good";
-        else if(score >= 700) rating = "Good";
-        else if(score >= 650) rating = "Average";
-        else rating = "Needs Improvement";
-
-        /* Cleaned Up & Combined Object to prevent redeclaration crash */
-        const reportData = {
-            pan: PAN,
-            firstName: document.getElementById("firstName").value,
-            lastName: document.getElementById("lastName").value,
-            mobile: document.getElementById("mobile").value,
-            age: age,
-            city: document.getElementById("city").value,
-            income: income,
-            loanAmount: loanAmount,
-            emi: emi,
-            employment: employment,
-            card: card,
-            missed: missed,
-            score: score,
-            approval: approval,
-            rating: rating,
-            createdAt: new Date().toISOString(),
-            reportDate: new Date().toLocaleDateString()
-        };
-
-        localStorage.setItem(USER_KEY, JSON.stringify(reportData));
-        document.getElementById("loading").style.display = "none";
-
-        window.location.href = "credit-report.html?user=" + encodeURIComponent(PAN);
-    }, 5000);
-}
-
-/* EVENT LISTENERS & VALIDATION */
-const panField = document.getElementById("pan");
-if(panField){
-    panField.addEventListener("input", function(){
-        this.value = this.value.toUpperCase();
+        if(cards.length === 0) {
+            loanOffers.innerHTML = `<div style="background:#eff6ff; padding:20px; border-radius:12px; color:#1e40af;">Offers will show here when live.</div>`;
+        } else {
+            for(let i=0; i<Math.min(cards.length, maxCards); i++){
+                loanOffers.innerHTML += cards[i].outerHTML;
+            }
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        document.getElementById("loanOffers").innerHTML = `<div style="background:#fff4e5; padding:20px; border-radius:12px; color:#b45309;">Unable to load loan offers right now.</div>`;
     });
-    panField.addEventListener("blur", function(){
-        if(this.value && !validatePAN(this.value)){
-            alert("Please enter a valid PAN number");
-        }
-    });
-}
-
-const mobileField = document.getElementById("mobile");
-if(mobileField){
-    mobileField.addEventListener("input", function(){
-        this.value = this.value.replace(/\D/g,'');
-        if(this.value.length > 10){
-            this.value = this.value.slice(0,10);
-        }
-    });
-}
-
-function validatePAN(pan){
-    const regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    return regex.test(pan);
 }
 </script>
+
+<div class="bottom-nav">
+    <div class="nav-btn" onclick="window.location.href='index.html'">
+        <div class="nav-icon">🏠</div><div>Home</div>
+    </div>
+    <div class="nav-btn" onclick="window.location.href='credit-score.html'">
+        <div class="nav-icon">📈</div><div>Score</div>
+    </div>
+    <div class="nav-btn active">
+        <div class="nav-icon">📄</div><div>Report</div>
+    </div>
+</div>
+
 </body>
 </html>
