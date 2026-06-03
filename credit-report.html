@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Official Credit Report | D-LOAN OFFERS</title>
+    <title>Official Bureau Report | D-LOAN OFFERS</title>
     <style>
         :root {
             --primary-blue: #1E40AF;
@@ -24,7 +24,7 @@
         body {
             background-color: var(--pure-white);
             color: var(--primary-blue);
-            padding: 30px 20px;
+            padding: 30px 20px 90px;
         }
 
         .container {
@@ -32,7 +32,7 @@
             margin: auto;
         }
 
-        /* Top Navigation Header */
+        /* Premium Header Block */
         .report-header {
             display: flex;
             justify-content: space-between;
@@ -49,29 +49,34 @@
         }
 
         .logo-area p {
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-top: 2px;
+            margin-top: 3px;
             font-weight: bold;
-            color: #64748b;
+            color: #4b5563;
         }
 
-        /* Action Buttons */
+        .action-header-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Buttons matching system: Blue BG, White Text */
         .btn-action {
             background-color: var(--primary-blue);
             color: var(--pure-white);
             border: 2px solid var(--primary-blue);
-            padding: 12px 24px;
+            padding: 12px 20px;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .btn-action:hover {
@@ -79,7 +84,19 @@
             color: var(--primary-blue);
         }
 
-        /* Core Section Grid */
+        /* 30-Day Sticky Validity Banner */
+        .validity-strip {
+            background-color: var(--light-blue-bg);
+            border: 1px dashed var(--primary-blue);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* Main Structured Layout Grid */
         .main-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -87,12 +104,10 @@
         }
 
         @media(min-width: 768px) {
-            .main-grid {
-                grid-template-columns: 350px 1fr;
-            }
+            .main-grid { grid-template-columns: 340px 1fr; }
         }
 
-        /* Score Dashboard Sidebar */
+        /* Left Score Panel */
         .score-panel {
             border: 2px solid var(--primary-blue);
             border-radius: 16px;
@@ -101,151 +116,138 @@
             background: var(--pure-white);
         }
 
-        .score-badge-title {
-            font-size: 14px;
+        .panel-heading-label {
+            font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        .radial-score-container {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 8px solid var(--light-blue-bg);
-            border-top-color: var(--primary-blue);
-            margin: 0 auto 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            animation: spinCircle 1.5s ease-out forwards;
-        }
-
-        .score-number {
-            font-size: 46px;
-            font-weight: 900;
-        }
-
-        .score-rating {
-            font-size: 20px;
-            font-weight: 700;
+            letter-spacing: 0.5px;
             margin-bottom: 15px;
-            text-transform: uppercase;
         }
 
-        /* Progress Bar Range Indicator */
-        .range-slider-container {
-            margin: 20px 0 10px;
-        }
-
-        .range-track {
-            height: 8px;
-            background: linear-gradient(to right, var(--warning-red), #eab308, var(--success-green));
-            border-radius: 4px;
+        /* CIBIL Like Gauge Setup Canvas Container */
+        .canvas-gauge-holder {
             position: relative;
+            width: 220px;
+            height: 130px;
+            margin: 0 auto;
         }
-
-        .range-labels {
-            display: flex;
-            justify-content: space-between;
+        #gaugeCanvas {
+            width: 100%;
+            height: 100%;
+        }
+        .score-text-absolute {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        .score-text-absolute h2 {
+            font-size: 38px;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .score-text-absolute p {
             font-size: 11px;
-            margin-top: 6px;
             font-weight: bold;
+            margin-top: 2px;
         }
 
-        /* Profile Details Panel */
+        .rating-indicator-title {
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 15px 0 5px;
+        }
+
+        .approval-badge-bar {
+            background-color: var(--light-blue-bg);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* Right Panel Structure */
         .profile-panel {
             border: 2px solid var(--primary-blue);
             border-radius: 16px;
             padding: 25px;
         }
 
-        .panel-title {
-            font-size: 18px;
+        .section-sub-title {
+            font-size: 16px;
             font-weight: 800;
-            margin-bottom: 20px;
-            padding-bottom: 8px;
+            margin-bottom: 15px;
+            padding-bottom: 6px;
             border-bottom: 2px dashed var(--border-color);
             text-transform: uppercase;
         }
 
-        .info-grid {
+        .metadata-info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        .info-box {
+        .meta-data-box {
             background-color: var(--light-blue-bg);
-            padding: 15px;
-            border-radius: 10px;
+            padding: 12px 15px;
+            border-radius: 8px;
             border-left: 4px solid var(--primary-blue);
         }
 
-        .info-label {
-            font-size: 11px;
+        .meta-label {
+            font-size: 10px;
             text-transform: uppercase;
             font-weight: bold;
             color: #4b5563;
-            margin-bottom: 4px;
         }
 
-        .info-value {
-            font-size: 16px;
+        .meta-value {
+            font-size: 15px;
             font-weight: 700;
-        }
-
-        /* Factor Analysis Cards */
-        .factors-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .factor-card {
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            background: var(--light-blue-bg);
-        }
-
-        .factor-icon {
-            font-size: 24px;
-        }
-
-        .factor-details h4 {
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .factor-details p {
-            font-size: 12px;
-            color: #4b5563;
             margin-top: 2px;
         }
 
-        /* Recommendations Section */
-        .offers-section {
-            margin-top: 35px;
+        /* Analysis Grid Elements */
+        .factors-container-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .factor-card-component {
+            border: 1px solid var(--border-color);
+            background-color: var(--light-blue-bg);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .factor-details h5 { font-size: 13px; font-weight: 700; }
+        .factor-details p { font-size: 11px; color: #4b5563; }
+
+        /* Dynamic Offers Catalog Modules styling wrappers */
+        .recommended-offers-block {
+            margin-top: 30px;
             border: 2px solid var(--primary-blue);
             border-radius: 16px;
             padding: 25px;
         }
 
-        .loan-grid-wrapper {
+        .loan-grid-wrapper-layout {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
-        /* Inherited Sync Cards Layout from index.html (Modified dynamically to match theme style guides) */
+        /* Standardized Institutional Micro Cards */
         .loan-card {
             border: 2px solid var(--primary-blue);
             background: var(--pure-white);
@@ -255,20 +257,17 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 250px;
             position: relative;
-            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.05);
         }
 
         .badge {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 12px; right: 12px;
             background: var(--light-blue-bg);
             color: var(--primary-blue);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 10px;
             font-weight: bold;
             border: 1px solid var(--primary-blue);
         }
@@ -276,57 +275,46 @@
         .logo-row {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-            font-size: 20px;
+            gap: 10px;
+            font-size: 18px;
             font-weight: 800;
+            margin-bottom: 15px;
         }
 
         .logo-row img {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
+            width: 35px; height: 35px;
+            border-radius: 6px;
             object-fit: contain;
             border: 1px solid var(--border-color);
-            background: white;
-            padding: 2px;
         }
 
         .details-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 5px;
             margin: 15px 0;
             text-align: center;
         }
 
         .detail-item {
             background: var(--light-blue-bg);
-            padding: 8px;
-            border-radius: 8px;
+            padding: 6px;
+            border-radius: 6px;
         }
 
-        .detail-label {
-            font-size: 10px;
-            font-weight: bold;
-            color: #4b5563;
-        }
-
-        .detail-value {
-            font-size: 13px;
-            font-weight: bold;
-        }
+        .detail-label { font-size: 9px; font-weight: bold; color: #4b5563; }
+        .detail-value { font-size: 11px; font-weight: bold; }
 
         .apply-btn {
             display: block;
             text-align: center;
             background-color: var(--primary-blue);
             color: var(--pure-white);
-            padding: 12px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             border: 2px solid var(--primary-blue);
             transition: all 0.3s ease;
         }
@@ -336,244 +324,309 @@
             color: var(--primary-blue);
         }
 
-        .footer-note {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 12px;
-            color: #64748b;
-            font-weight: 500;
+        /* Fixed Bottom Tab Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: var(--pure-white);
+            border-top: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 1000;
         }
 
-        /* Print Settings Optimization */
+        .nav-item {
+            text-decoration: none;
+            color: #64748b; font-size: 11px; font-weight: 700;
+            text-transform: uppercase;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+        }
+
+        .nav-item.active { color: var(--primary-blue); }
+        .nav-item span { font-size: 20px; }
+
+        /* Print Media Level Setup overrides */
         @media print {
-            body {
-                padding: 0;
-                background: #fff;
-            }
-            .btn-action, .apply-btn, .badge {
-                display: none !important;
-            }
-            .score-panel, .profile-panel, .offers-section {
-                border: 1px solid var(--primary-blue) !important;
-                page-break-inside: avoid;
-            }
+            body { padding: 0; }
+            .action-header-btns, .apply-btn, .bottom-nav, .badge { display: none !important; }
+            .score-panel, .profile-panel, .recommended-offers-block { border: 1px solid var(--primary-blue) !important; page-break-inside: avoid; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    
+    <!-- Top Configuration Brand Ribbon -->
     <header class="report-header">
         <div class="logo-area">
             <h1>D-LOAN OFFERS</h1>
-            <p>Verification Bureau Report</p>
+            <p>Verification Bureau Risk Assessment Analysis</p>
         </div>
-        <div>
-            <button class="btn-action" onclick="window.print()">🖨 Print / Download PDF</button>
+        <div class="action-header-btns">
+            <a href="credit-score.html" class="btn-action">⬅ Back / Edit</a>
+            <button class="btn-action" onclick="window.print()">🖨 Print Report</button>
         </div>
     </header>
 
+    <!-- Validity Countdown Strip Bar -->
+    <div class="validity-strip" id="validityExpiryStrip">
+        Report Verification Data Active Module Monitoring System Mapped.
+    </div>
+
+    <!-- Core Analytical Metrics Grid Block -->
     <div class="main-grid">
         
+        <!-- Score Visualization Gauge Side Matrix -->
         <div class="score-panel">
-            <h3 class="score-badge-title">Bureau Credit Score</h3>
+            <h4 class="panel-heading-label">Equifax-CIBIL Scale Index</h4>
             
-            <div class="radial-score-container">
-                <span class="score-number" id="score">---</span>
-                <span style="font-size: 12px; font-weight: bold; opacity: 0.8;">CIBIL Status</span>
-            </div>
-
-            <div class="score-rating" id="rating">Analyzing</div>
-
-            <div class="range-slider-container">
-                <div class="range-track"></div>
-                <div class="range-labels">
-                    <span>300 (Poor)</span>
-                    <span>750 (Excellent)</span>
-                    <span>900</span>
+            <div class="canvas-gauge-holder">
+                <canvas id="gaugeCanvas" width="220" height="130"></canvas>
+                <div class="score-text-absolute">
+                    <h2 id="reportScore">---</h2>
+                    <p>SCORE VALUE</p>
                 </div>
             </div>
 
-            <div style="font-size: 12px; margin-top: 15px; font-weight: 600; line-height: 1.4;" id="approval-chance">
-                Calculating matching algorithm probability parameters...
+            <div class="rating-indicator-title" id="reportRating">Loading Index</div>
+            
+            <div class="approval-badge-bar">
+                Approval Probability: <span id="reportApprovalChance">0%</span>
+            </div>
+            
+            <div style="font-size: 11px; color:#4b5563; margin-top:15px; font-weight: 600; line-height: 1.4;" id="scoreSummaryTip">
+                Analyzing factor weights limits metrics values rules configuration framework...
             </div>
         </div>
 
+        <!-- Meta Verification Summary Profiler -->
         <div class="profile-panel">
-            <h3 class="panel-title">Verified Profile Summary</h3>
+            <h4 class="section-sub-title">Applicant Metadata Profiles</h4>
             
-            <div class="info-grid">
-                <div class="info-box">
-                    <div class="info-label">Full Name</div>
-                    <div class="info-value" id="name">Loading...</div>
+            <div class="metadata-info-grid">
+                <div class="meta-data-box">
+                    <div class="meta-label">Verified Account Holder</div>
+                    <div class="meta-value" id="profName">-</div>
                 </div>
-                <div class="info-box">
-                    <div class="info-label">Mobile Reference</div>
-                    <div class="info-value" id="mobile">-</div>
+                <div class="meta-data-box">
+                    <div class="meta-label">PAN Reference Identification</div>
+                    <div class="meta-value" id="profPan" style="text-transform: uppercase;">-</div>
                 </div>
-                <div class="info-box">
-                    <div class="info-label">PAN Identifier</div>
-                    <div class="info-value" id="pan">-</div>
+                <div class="meta-data-box">
+                    <div class="meta-label">Associated Contact Reference</div>
+                    <div class="meta-value" id="profMobile">-</div>
                 </div>
-                <div class="info-box">
-                    <div class="info-label">Current Location</div>
-                    <div class="info-value" id="city">-</div>
+                <div class="meta-data-box">
+                    <div class="meta-label">Location Framework Parameter</div>
+                    <div class="meta-value" id="profCity">-</div>
                 </div>
-                <div class="info-box">
-                    <div class="info-label">Declared Monthly Income</div>
-                    <div class="info-value" id="income">-</div>
+                <div class="meta-data-box">
+                    <div class="meta-label">Calculated Revenue Inflow</div>
+                    <div class="meta-value" id="profIncome">-</div>
                 </div>
-                <div class="info-box">
-                    <div class="info-label">Generation Timestamp</div>
-                    <div class="info-value" id="reportDate">-</div>
+                <div class="meta-data-box">
+                    <div class="meta-label">Assessment Verification Date</div>
+                    <div class="meta-value" id="profDate">-</div>
                 </div>
             </div>
 
-            <h3 class="panel-title" style="margin-top: 30px;">Credit Factor Analysis</h3>
-            <div class="factors-container" id="factorsGrid">
-                </div>
+            <h4 class="section-sub-title">Algorithmic Risk Drivers Trackers</h4>
+            <div class="factors-container-grid" id="riskGridFactors">
+                <!-- System factors load dynamically here -->
+            </div>
         </div>
     </div>
 
-    <div class="offers-section">
-        <h3 class="panel-title" style="border-bottom: none; margin-bottom: 0;">🎯 Recommended Pre-Approved Loan Matches</h3>
-        <p style="font-size: 13px; margin-bottom: 20px; font-weight: 500;">Based on your current generated credit risk profile framework variables:</p>
-        <div id="loanOffers">
-            </div>
+    <!-- Dynamic Auto-fetch Target Wrapper Elements Container Section -->
+    <div class="recommended-offers-block">
+        <h4 class="section-sub-title" style="border: none; margin-bottom: 0;">🎯 Customized Strategic Pre-Approved Loans</h4>
+        <p style="font-size: 12px; margin-bottom: 10px; font-weight: 600;">Personalized match recommendations filtered dynamically from system configurations parameters rules:</p>
+        
+        <div id="offersDynamicContainer">
+            <!-- Sync automation layer fallback loading anchors -->
+        </div>
     </div>
 
-    <div class="footer-note">
-        This generated profile model evaluation is simulated via platform configurations metrics. Data synchronized securely under standard local caching policies.
-    </div>
 </div>
 
+<!-- Navigation Universal Element Setup -->
+<nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><span>🏠</span>Home</a>
+    <a href="credit-score.html" class="nav-item"><span>📊</span>Credit Score</a>
+    <a href="credit-report.html" class="nav-item active"><span>📋</span>Report</a>
+</nav>
+
 <script>
-// LocalStorage Pipeline Pipeline Extraction Logic
-const data = JSON.parse(localStorage.getItem("creditReportData"));
+    // Data Sync Pipeline Recovery Procedures
+    const activePan = localStorage.getItem("active_session_pan");
+    const activeReport = activePan ? JSON.parse(localStorage.getItem(`bureau_report_${activePan}`)) : null;
 
-if(!data) {
-    alert("No report data records detected. Redirecting to execution assessment pipeline wizard matrix.");
-    window.location.href = "credit-score.html";
-} else {
-    // Injecting core metadata profiles securely
-    document.getElementById("name").innerText = (data.firstName || "") + " " + (data.lastName || "");
-    document.getElementById("mobile").innerText = data.mobile || "-";
-    document.getElementById("pan").innerText = (data.pan || "-").toUpperCase();
-    document.getElementById("city").innerText = data.city || "-";
-    document.getElementById("income").innerText = "₹" + parseFloat(data.income || 0).toLocaleString('en-IN');
-    document.getElementById("reportDate").innerText = data.reportDate || new Date().toLocaleDateString();
-    
-    // Smooth dynamic counting system generation tracking sequence module script framework
-    const finalScore = parseInt(data.score || 650);
-    let currentScore = 300;
-    const counterInterval = setInterval(() => {
-        if (currentScore >= finalScore) {
-            currentScore = finalScore;
-            clearInterval(counterInterval);
-        }
-        document.getElementById("score").innerText = currentScore;
-        currentScore += 10;
-    }, 15);
-
-    // Rating engine validation switch architecture criteria
-    let rating = "Fair";
-    let message = "";
-    let factorsHTML = "";
-
-    if(finalScore >= 800) {
-        rating = "Excellent";
-        message = "🎉 High probability of instant approvals at lowest available market rates.";
-        factorsHTML = `
-            <div class="factor-card"><span class="factor-icon">🟢</span><div class="factor-details"><h4>Repayment Ratio</h4><p>Excellent zero delay configurations record pipeline.</p></div></div>
-            <div class="factor-card"><span class="factor-icon">🟢</span><div class="factor-details"><h4>Credit Mix</h4><p>Optimal balancing parameters detected.</p></div></div>
-        `;
-    } else if(finalScore >= 740) {
-        rating = "Very Good";
-        message = "⚡ Strong approval indices for major institutional lending programs framework.";
-        factorsHTML = `
-            <div class="factor-card"><span class="factor-icon">🟢</span><div class="factor-details"><h4>Inquiry Volumes</h4><p>Low dynamic request density limits active risks metrics.</p></div></div>
-            <div class="factor-card"><span class="factor-icon">🟢</span><div class="factor-details"><h4>Income Stability</h4><p>Sufficient coverage indexes matching current requirements.</p></div></div>
-        `;
-    } else if(finalScore >= 680) {
-        rating = "Good / Average";
-        message = "👍 Eligible for structural secondary instant fintech loan catalogs programs.";
-        factorsHTML = `
-            <div class="factor-card"><span class="factor-icon">🟡</span><div class="factor-details"><h4>Utilization Ratio</h4><p>Moderate limit load usage detected across instruments.</p></div></div>
-            <div class="factor-card"><span class="factor-icon">🟢</span><div class="factor-details"><h4>Account Age</h4><p>Mature portfolio history track establishes basic trust.</p></div></div>
-        `;
+    if(!activeReport) {
+        alert("Session verification reference parameters missing. Redirecting to initialization score framework wizard.");
+        window.location.href = "credit-score.html";
     } else {
-        rating = "Needs Improvement";
-        message = "⚠️ Risk parameters elevated. Selective micro-finance applications prioritized.";
-        factorsHTML = `
-            <div class="factor-card"><span class="factor-icon">🔴</span><div class="factor-details"><h4>Delinquency Alert</h4><p>Recent anomalies or missed parameters flags affect data profiles.</p></div></div>
-            <div class="factor-card"><span class="factor-icon">🟡</span><div class="factor-details"><h4>Risk Index</h4><p>High relative leverage load tracking against parameters limits.</p></div></div>
-        `;
+        // Hydrate Core Profiles interface data fields
+        document.getElementById("profName").innerText = activeReport.firstName;
+        document.getElementById("profPan").innerText = activeReport.pan;
+        document.getElementById("profMobile").innerText = activeReport.mobile;
+        document.getElementById("profCity").innerText = activeReport.city;
+        document.getElementById("profIncome").innerText = "₹" + parseFloat(activeReport.income).toLocaleString('en-IN');
+        document.getElementById("profDate").innerText = activeReport.assessmentDate;
+        
+        document.getElementById("reportScore").innerText = activeReport.score;
+        document.getElementById("reportApprovalChance").innerText = activeReport.approvalPercentage + "%";
+
+        // Expiry lock tracker configuration logic calculations
+        const today = new Date();
+        const expiryDate = new Date(activeReport.lockExpiryDate);
+        const remDays = Math.ceil(Math.abs(expiryDate - today) / (1000 * 60 * 60 * 24));
+        document.getElementById("validityExpiryStrip").innerHTML = `🛡️ This report signature is strictly verified and locked under system rules parameters. Remaining validity: <b>${remDays} Days</b>. Renewal Date: ${expiryDate.toLocaleDateString('en-IN')}`;
+
+        // Initialize Dynamic Factor components matrices
+        processFactorGridSystems(activeReport.score);
+        
+        // Render CIBIL Animated Arch Speedometer Gauge
+        drawAnimatedBureauGauge(activeReport.score);
+
+        // Fetch Matching Loan Matrix catalog pipelines
+        syncInstitutionalOffers(activeReport.score);
     }
 
-    document.getElementById("rating").innerText = rating;
-    document.getElementById("approval-chance").innerText = message;
-    document.getElementById("factorsGrid").innerHTML = factorsHTML;
-}
-
-// Graceful layout sync interface pipeline matching modules
-async function loadLoanOffers() {
-    try {
-        const response = await fetch("index.html");
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
+    function drawAnimatedBureauGauge(targetScore) {
+        const canvas = document.getElementById("gaugeCanvas");
+        const ctx = canvas.getContext("2d");
         
-        // Target dynamic institutional elements rows directly
-        const standardCards = doc.querySelectorAll(".loan-card");
-        
-        if(standardCards && standardCards.length > 0) {
-            let outputHTML = '<div class="loan-grid-wrapper">';
+        let initialScoreTrack = 300;
+        const animationStep = setInterval(() => {
+            if(initialScoreTrack >= targetScore) {
+                initialScoreTrack = targetScore;
+                clearInterval(animationStep);
+            }
             
-            // Render premium filter metrics sorting rules dynamically
-            standardCards.forEach((card, index) => {
-                if(index < 3) { // Top 3 optimized conversions models recommendation limits layout structure parameters
-                    const badgeText = card.querySelector(".badge") ? card.querySelector(".badge").innerText : "Pre-Approved Match";
-                    const logoImgSrc = card.querySelector(".logo-row img") ? card.querySelector(".logo-row img").src : "";
-                    const providerName = card.querySelector(".nbfc-name") ? card.querySelector(".nbfc-name").innerText : "Fintech Partner";
-                    
-                    // Parse inner items
-                    const detailItems = card.querySelectorAll(".detail-item");
-                    let detailsHTML = "";
-                    detailItems.forEach(item => {
-                        detailsHTML += `<div class="detail-item">${item.innerHTML}</div>`;
-                    });
-
-                    const redirectLink = card.querySelector(".apply-btn") ? card.querySelector(".apply-btn").getAttribute("href") : "#";
-
-                    outputHTML += `
-                        <div class="loan-card">
-                            <span class="badge">${badgeText}</span>
-                            <div class="logo-row">
-                                <img src="${logoImgSrc}" alt="${providerName}" onerror="this.style.display='none'">
-                                <div>${providerName}</div>
-                            </div>
-                            <div class="details-grid">
-                                ${detailsHTML}
-                            </div>
-                            <a href="${redirectLink}" class="apply-btn" target="_blank">Instant Apply Now →</a>
-                        </div>
-                    `;
-                }
-            });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            outputHTML += '</div>';
-            document.getElementById("loanOffers").innerHTML = outputHTML;
+            // Build Base Background Dial Multi-color gradients Arc
+            ctx.beginPath();
+            ctx.arc(110, 110, 85, Math.PI, 2 * Math.PI, false);
+            ctx.lineWidth = 14;
+            ctx.strokeStyle = '#eff6ff';
+            ctx.stroke();
+
+            // Active Track filling computation
+            const scorePercentageFraction = (initialScoreTrack - 300) / 600;
+            const endAngleValue = Math.PI + (scorePercentageFraction * Math.PI);
+            
+            ctx.beginPath();
+            ctx.arc(110, 110, 85, Math.PI, endAngleValue, false);
+            ctx.lineWidth = 14;
+            
+            // Dynamic grading system coloring selector values
+            if(targetScore >= 750) ctx.strokeStyle = '#10b981';
+            else if(targetScore >= 650) ctx.strokeStyle = '#eab308';
+            else ctx.strokeStyle = '#ef4444';
+            
+            ctx.stroke();
+            initialScoreTrack += 12;
+        }, 15);
+    }
+
+    function processFactorGridSystems(score) {
+        let ratingText = "Fair";
+        let tipText = "";
+        let factorsHTML = "";
+
+        if(score >= 750) {
+            ratingText = "Excellent Tier";
+            tipText = "Premium Profile. Optimization strategies indicate matching high credit lines limits with lowest processing setup benchmarks.";
+            factorsHTML = `
+                <div class="factor-card_component" style="display:flex;gap:10px;background:var(--light-blue-bg);padding:12px;border-radius:10px;"><span>🟢</span><div class="factor-details"><h5>Repayment History</h5><p>100% On-time transaction execution indices parameters.</p></div></div>
+                <div class="factor-card_component" style="display:flex;gap:10px;background:var(--light-blue-bg);padding:12px;border-radius:10px;"><span>🟢</span><div class="factor-details"><h5>Credit Utilization</h5><p>Optimal range alignment limits detected below 30% baseline.</p></div></div>
+            `;
+        } else if(score >= 650) {
+            ratingText = "Standard Average";
+            tipText = "Healthy framework verification parameters match. Maintaining consistent card limits payouts profiles will scale parameters swiftly.";
+            factorsHTML = `
+                <div class="factor-card_component" style="display:flex;gap:10px;background:var(--light-blue-bg);padding:12px;border-radius:10px;"><span>🟡</span><div class="factor-details"><h5>Credit Balances Mix</h5><p>High relative concentrations active uncollateralized instruments tracks.</p></div></div>
+                <div class="factor-card_component" style="display:flex;gap:10px;background:var(--light-blue-bg);padding:12px;border-radius:10px;"><span>🟢</span><div class="factor-details"><h5>Portfolio Account Age</h5><p>Historical operational track data shows mature tenure profiles references.</p></div></div>
+            `;
         } else {
-            document.getElementById("loanOffers").innerHTML = "<p style='padding: 20px; font-weight: bold;'>No strategic lending structures catalogs configurations mapped currently.</p>";
+            ratingText = "Critical Risk Profile";
+            tipText = "Elevated critical flags observed. Focus priority channels over structural balance corrections and avoid applying for multi-vendor files.";
+            factorsHTML = `
+                <div class="factor-card_component" style="display:flex;gap:10px;background:var(--light-blue-bg);padding:12px;border-radius:10px;"><span>🔴</span><div class="factor-details"><h5>Delinquency Tracker Flags</h5><p>Structural transaction performance delays spotted inside evaluation cycle windows.</p></div></div>
+                <div class="factor-card_component" style="display:flex;gap:10px;background:var(--light-blue-bg);padding:12px;border-radius:10px;"><span>🟡</span><div class="factor-details"><h5>Recent Enquiries Density</h5><p>High search patterns index logs flags multiple instant request vulnerabilities.</p></div></div>
+            `;
         }
-    } catch(err) {
-        document.getElementById("loanOffers").innerHTML = "<p style='padding: 20px; font-weight: bold;'>Dynamic match processing channels currently optimization modes active.</p>";
-        console.error("Layout content parser sync failure: ", err);
-    }
-}
 
-// Initialize runtime sequence tracking operations
-window.addEventListener("DOMContentLoaded", loadLoanOffers);
+        document.getElementById("reportRating").innerText = ratingText;
+        document.getElementById("scoreSummaryTip").innerText = tipText;
+        document.getElementById("riskGridFactors").innerHTML = factorsHTML;
+    }
+
+    // Advanced Content Fetch Extraction Level Module Automation Matrix
+    async function syncInstitutionalOffers(score) {
+        try {
+            const response = await fetch("index.html");
+            const htmlString = await response.text();
+            const domParser = new DOMParser();
+            const sourceDoc = domParser.parseFromString(htmlString, "text/html");
+            
+            const universalCards = sourceDoc.querySelectorAll(".loan-card");
+            
+            if(universalCards && universalCards.length > 0) {
+                let dynamicFilterTargetLimit = 1; // Default limited baseline
+                
+                // Score-Based Filter Logic Assignments Core Rules
+                if(score >= 750) dynamicFilterTargetLimit = 4;      // Max visibility allocation matching profiles rules
+                else if(score >= 650) dynamicFilterTargetLimit = 2; // Mid tier threshold visibility limits
+                else dynamicFilterTargetLimit = 1;                 // Highly critical restricted allocation filters
+                
+                let renderOutputHTML = '<div class="loan-grid-wrapper-layout">';
+                let mappedCountTrack = 0;
+
+                universalCards.forEach((card) => {
+                    if(mappedCountTrack < dynamicFilterTargetLimit) {
+                        const originalBadge = card.querySelector(".badge") ? card.querySelector(".badge").innerText : "Pre-Approved Match";
+                        const originalLogo = card.querySelector(".logo-row img") ? card.querySelector(".logo-row img").getAttribute("src") : "";
+                        const originalNbfc = card.querySelector(".logo-row div") ? card.querySelector(".logo-row div").innerText : card.innerText.split('\n')[0];
+                        
+                        const extractedDetails = card.querySelectorAll(".detail-item");
+                        let processedDetailsHTML = "";
+                        extractedDetails.forEach(det => {
+                            processedDetailsHTML += `<div class="detail-item">${det.innerHTML}</div>`;
+                        });
+
+                        const destinationLink = card.querySelector(".apply-btn") ? card.querySelector(".apply-btn").getAttribute("href") : "#";
+
+                        renderOutputHTML += `
+                            <div class="loan-card">
+                                <span class="badge">${originalBadge}</span>
+                                <div class="logo-row">
+                                    <img src="${originalLogo}" alt="logo" onerror="this.style.display='none'">
+                                    <div>${originalNbfc}</div>
+                                </div>
+                                <div class="details-grid">
+                                    ${processedDetailsHTML}
+                                </div>
+                                <a href="${destinationLink}" class="apply-btn" target="_blank">Claim Approved Offer →</a>
+                            </div>
+                        `;
+                        mappedCountTrack++;
+                    }
+                });
+
+                renderOutputHTML += '</div>';
+                document.getElementById("offersDynamicContainer").innerHTML = renderOutputHTML;
+            } else {
+                document.getElementById("offersDynamicContainer").innerHTML = "<p style='padding:15px; font-weight:700;'>No synchronized partner catalogs mapping distributions channels discovered.</p>";
+            }
+        } catch (error) {
+            console.error("Critical extraction operational pipeline fault logs:", error);
+            document.getElementById("offersDynamicContainer").innerHTML = "<p style='padding:15px; font-weight:700;'>Data sync pipeline optimizations optimization ongoing.</p>";
+        }
+    }
 </script>
 </body>
 </html>
