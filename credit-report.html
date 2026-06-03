@@ -2,223 +2,306 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Credit Report | D-LOAN OFFERS</title>
 
 <style>
+
 :root{
-    --primary:#1E40AF;
-    --success:#10b981;
-    --bg:#f8fafc;
+--primary:#1E40AF;
+--secondary:#2563EB;
+--success:#10b981;
+--light:#f8fafc;
+--dark:#0f172a;
 }
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
 body{
-    background:var(--bg);
-    padding:20px;
+background:#f8fafc;
+padding-bottom:90px;
 }
 
-.container{
-    max-width:1200px;
-    margin:auto;
+.top-header{
+position:sticky;
+top:0;
+z-index:999;
+background:#0f172a;
+padding:14px 18px;
+display:flex;
+align-items:center;
+box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
-.report-card{
-    background:white;
-    border-radius:18px;
-    padding:25px;
-    margin-bottom:20px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-}
-
-.header{
-    text-align:center;
-    margin-bottom:20px;
-}
-
-.header h1{
-    color:var(--primary);
-}
-
-.score-box{
-    text-align:center;
-    padding:25px;
-}
-
-.score-circle{
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#1E40AF,#2563EB);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    margin:auto;
-}
-
-.score-number{
-    font-size:48px;
-    font-weight:bold;
-}
-
-.score-label{
-    font-size:14px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
-}
-
-.info{
-    background:#f1f5f9;
-    padding:15px;
-    border-radius:12px;
-}
-
-.info strong{
-    display:block;
-    margin-bottom:5px;
-}
-
-.btn{
-    display:inline-block;
-    background:var(--success);
-    color:white;
-    text-decoration:none;
-    padding:12px 18px;
-    border-radius:10px;
-    margin-top:15px;
-    border:none;
-    cursor:pointer;
-}
-
-.section-title{
-    margin:25px 0 15px;
-    color:var(--primary);
-}
-
-/* loan cards from index */
-
-.loan-list{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:20px;
-}
-
-@media(min-width:768px){
-.loan-list{
-grid-template-columns:1fr 1fr;
-}
-}
-
-.loan-card{
-background:linear-gradient(135deg,#1E40AF,#2563EB);
-border-radius:16px;
-padding:18px;
-color:white;
-position:relative;
-overflow:hidden;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-}
-
-.badge{
-position:absolute;
-top:12px;
-right:12px;
-background:#d1fae5;
-color:#065f46;
-padding:5px 10px;
-border-radius:20px;
-font-size:11px;
-font-weight:bold;
-}
-
-.logo-row{
+.header-left{
 display:flex;
 align-items:center;
 gap:12px;
-margin-bottom:15px;
 }
 
-.logo-row img{
-width:45px;
-height:45px;
-border-radius:10px;
+.header-logo{
+width:42px;
+height:42px;
 background:white;
+border-radius:12px;
 padding:5px;
-object-fit:contain;
 }
 
-.nbfc-name{
+.app-name{
+color:white;
 font-size:24px;
-font-weight:800;
+font-weight:900;
 }
 
-.details-grid{
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.report-card{
+background:white;
+border-radius:20px;
+padding:25px;
+margin-bottom:20px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.report-header{
+text-align:center;
+}
+
+.report-header h1{
+color:#1E40AF;
+margin-bottom:10px;
+}
+
+.score-section{
+text-align:center;
+padding:20px 0;
+}
+
+.score-circle{
+width:220px;
+height:220px;
+margin:auto;
+border-radius:50%;
+background:linear-gradient(135deg,#1E40AF,#2563EB);
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+color:white;
+box-shadow:0 10px 30px rgba(37,99,235,.3);
+}
+
+.score-number{
+font-size:58px;
+font-weight:900;
+}
+
+.score-text{
+font-size:16px;
+}
+
+.rating{
+font-size:28px;
+font-weight:700;
+margin-top:20px;
+color:#1E40AF;
+}
+
+.approval{
+margin-top:10px;
+font-size:18px;
+color:#10b981;
+font-weight:700;
+}
+
+.grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.info-box{
+background:#f1f5f9;
+padding:15px;
+border-radius:12px;
+}
+
+.info-label{
+font-size:13px;
+color:#64748b;
+margin-bottom:5px;
+}
+
+.info-value{
+font-size:16px;
+font-weight:700;
+color:#0f172a;
+}
+
+.btn-row{
+display:flex;
 gap:10px;
-margin:15px 0;
+flex-wrap:wrap;
+margin-top:20px;
 }
 
-.detail-item{
-background:rgba(255,255,255,.15);
-padding:10px;
-border-radius:10px;
-text-align:center;
+.btn{
+border:none;
+padding:14px 18px;
+border-radius:12px;
+cursor:pointer;
+font-weight:700;
 }
 
-.apply-btn{
-display:block;
-text-align:center;
+.btn-primary{
+background:#1E40AF;
+color:white;
+}
+
+.btn-success{
 background:#10b981;
 color:white;
-padding:14px;
-border-radius:10px;
-text-decoration:none;
-font-weight:bold;
 }
 
-@media print{
-button{
-display:none;
+.section-title{
+font-size:24px;
+margin-bottom:15px;
+color:#1E40AF;
 }
+
+.loan-list{
+display:grid;
+grid-template-columns:1fr;
+gap:20px;
 }
+
+@media(min-width:768px){
+
+.loan-list{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:white;
+display:flex;
+justify-content:space-evenly;
+align-items:center;
+box-shadow:0 -4px 12px rgba(0,0,0,.12);
+z-index:999;
+}
+
+.nav-btn{
+flex:1;
+text-align:center;
+font-size:12px;
+cursor:pointer;
+color:#64748b;
+}
+
+.nav-btn.active{
+color:#10b981;
+}
+
+.nav-icon{
+display:block;
+font-size:22px;
+margin-bottom:4px;
+}
+
 </style>
 </head>
 
 <body>
 
+<header class="top-header">
+
+<div class="header-left">
+
+<img src="logo.png"
+class="header-logo">
+
+<div class="app-name">
+D-LOAN OFFERS
+</div>
+
+</div>
+
+</header>
+
 <div class="container">
 
 <div class="report-card">
 
-<div class="header">
-<h1>D-LOAN OFFERS</h1>
-<p>Credit Assessment Report</p>
+<div class="report-header">
+
+<h1>Credit Assessment Report</h1>
+
+<p>
+Generated Report
+</p>
+
 </div>
 
-<div class="score-box">
+<div class="score-section">
 
 <div class="score-circle">
-<div class="score-number" id="score">0</div>
-<div class="score-label">Credit Score</div>
+
+<div class="score-number"
+id="score">
+0
 </div>
 
-<h2 id="rating"></h2>
+<div class="score-text">
+Credit Score
+</div>
 
-<button class="btn" onclick="window.print()">
-🖨 Print / Save PDF
+</div>
+
+<div class="rating"
+id="rating">
+Good
+</div>
+
+<div class="approval"
+id="approval">
+80% Approval Chance
+</div>
+
+</div>
+
+<div class="btn-row">
+
+<button
+class="btn btn-primary"
+onclick="window.print()">
+
+Print Report
+
+</button>
+
+<button
+class="btn btn-success"
+onclick="window.location.href='credit-score.html'">
+
+New Assessment
+
 </button>
 
 </div>
@@ -227,38 +310,106 @@ display:none;
 
 <div class="report-card">
 
-<h2>User Information</h2>
+<h2 class="section-title">
+Applicant Details
+</h2>
 
 <div class="grid">
 
-<div class="info">
-<strong>Name</strong>
-<span id="name"></span>
+<div class="info-box">
+<div class="info-label">Full Name</div>
+<div class="info-value" id="fullName"></div>
 </div>
 
-<div class="info">
-<strong>Mobile</strong>
-<span id="mobile"></span>
+<div class="info-box">
+<div class="info-label">Mobile</div>
+<div class="info-value" id="mobile"></div>
 </div>
 
-<div class="info">
-<strong>PAN</strong>
-<span id="pan"></span>
+<div class="info-box">
+<div class="info-label">PAN</div>
+<div class="info-value" id="pan"></div>
 </div>
 
-<div class="info">
-<strong>City</strong>
-<span id="city"></span>
+<div class="info-box">
+<div class="info-label">City</div>
+<div class="info-value" id="city"></div>
 </div>
 
-<div class="info">
-<strong>Income</strong>
-<span id="income"></span>
+<div class="info-box">
+<div class="info-label">Monthly Income</div>
+<div class="info-value" id="income"></div>
 </div>
 
-<div class="info">
-<strong>Report Date</strong>
-<span id="reportDate"></span>
+<div class="info-box">
+<div class="info-label">Employment</div>
+<div class="info-value" id="employment"></div>
+</div>
+
+</div>
+
+</div>
+<div class="report-card">
+
+<h2 class="section-title">
+Credit Analysis Summary
+</h2>
+
+<div class="grid">
+
+<div class="info-box">
+<div class="info-label">
+Current Loan Amount
+</div>
+<div class="info-value"
+id="loanAmount">
+</div>
+</div>
+
+<div class="info-box">
+<div class="info-label">
+Current EMI
+</div>
+<div class="info-value"
+id="emi">
+</div>
+</div>
+
+<div class="info-box">
+<div class="info-label">
+Credit Card
+</div>
+<div class="info-value"
+id="card">
+</div>
+</div>
+
+<div class="info-box">
+<div class="info-label">
+Missed EMI
+</div>
+<div class="info-value"
+id="missed">
+</div>
+</div>
+
+<div class="info-box">
+<div class="info-label">
+Report Date
+</div>
+<div class="info-value"
+id="reportDate">
+</div>
+</div>
+
+<div class="info-box">
+<div class="info-label">
+Assessment Status
+</div>
+<div class="info-value"
+id="assessmentStatus">
+Eligible
+</div>
 </div>
 
 </div>
@@ -268,10 +419,15 @@ display:none;
 <div class="report-card">
 
 <h2 class="section-title">
-🏦 Recommended Loan Offers
+Recommended Loan Offers
 </h2>
 
-<div id="loanOffers"></div>
+<div id="loanOffers"
+class="loan-list">
+
+<!-- Auto Loaded Offers -->
+
+</div>
 
 </div>
 
@@ -279,104 +435,429 @@ display:none;
 
 <script>
 
-/* Load User Data */
+/* =====================
+   LOAD REPORT DATA
+===================== */
 
-const data = JSON.parse(
-localStorage.getItem("creditReportData")
+const reportData =
+JSON.parse(
+localStorage.getItem(
+"creditReportData"
+)
 );
 
-if(!data){
-alert("No report data found");
-window.location.href="credit-score.html";
+if(!reportData){
+
+alert(
+"No report found. Please generate score first."
+);
+
+window.location.href =
+"credit-score.html";
+
 }
 
-document.getElementById("name").innerText =
-(data.firstName || "") + " " + (data.lastName || "");
+/* =====================
+   BASIC DETAILS
+===================== */
 
-document.getElementById("mobile").innerText =
-data.mobile || "-";
+document.getElementById("fullName")
+.innerText =
+reportData.firstName +
+" " +
+reportData.lastName;
 
-document.getElementById("pan").innerText =
-data.pan || "-";
+document.getElementById("mobile")
+.innerText =
+reportData.mobile;
 
-document.getElementById("city").innerText =
-data.city || "-";
+document.getElementById("pan")
+.innerText =
+reportData.pan;
 
-document.getElementById("income").innerText =
-"₹" + (data.income || 0);
+document.getElementById("city")
+.innerText =
+reportData.city;
 
-document.getElementById("reportDate").innerText =
-data.reportDate || "-";
+document.getElementById("income")
+.innerText =
+"₹" +
+Number(
+reportData.income
+).toLocaleString();
 
-document.getElementById("score").innerText =
-data.score || 650;
+document.getElementById("employment")
+.innerText =
+reportData.employment;
 
-const score = parseInt(data.score || 650);
+document.getElementById("loanAmount")
+.innerText =
+"₹" +
+Number(
+reportData.loanAmount
+).toLocaleString();
 
-let rating = "Fair";
+document.getElementById("emi")
+.innerText =
+"₹" +
+Number(
+reportData.emi
+).toLocaleString();
 
-if(score >= 800){
-rating = "Excellent";
+document.getElementById("card")
+.innerText =
+reportData.card;
+
+document.getElementById("missed")
+.innerText =
+reportData.missed;
+
+document.getElementById("reportDate")
+.innerText =
+reportData.reportDate;
+
+/* =====================
+   SCORE DATA
+===================== */
+
+document.getElementById("score")
+.innerText =
+reportData.score;
+
+document.getElementById("rating")
+.innerText =
+reportData.rating;
+
+document.getElementById("approval")
+.innerText =
+reportData.approval +
+"% Approval Chance";
+
+/* =====================
+   SCORE COLOR
+===================== */
+
+const scoreBox =
+document.querySelector(
+".score-circle"
+);
+
+if(reportData.score >= 750){
+
+scoreBox.style.background =
+"linear-gradient(135deg,#10b981,#059669)";
+
 }
-else if(score >= 750){
-rating = "Very Good";
-}
-else if(score >= 700){
-rating = "Good";
-}
-else if(score >= 650){
-rating = "Average";
+else if(reportData.score >= 650){
+
+scoreBox.style.background =
+"linear-gradient(135deg,#2563EB,#1E40AF)";
+
 }
 else{
-rating = "Needs Improvement";
-}
 
-document.getElementById("rating").innerText =
-rating;
-
-
-/* Load Loan Cards Automatically */
-
-async function loadLoanOffers(){
-
-try{
-
-const response = await fetch("index.html");
-const html = await response.text();
-
-const parser = new DOMParser();
-
-const doc =
-parser.parseFromString(html,"text/html");
-
-const loanList =
-doc.querySelector(".loan-list");
-
-if(loanList){
-
-document.getElementById("loanOffers")
-.innerHTML =
-'<div class="loan-list">' +
-loanList.innerHTML +
-'</div>';
+scoreBox.style.background =
+"linear-gradient(135deg,#f59e0b,#d97706)";
 
 }
-
-}catch(err){
-
-document.getElementById("loanOffers")
-.innerHTML =
-"<p>Unable to load loan offers.</p>";
-
-console.error(err);
-
-}
-
-}
-
-loadLoanOffers();
 
 </script>
+<script>
+
+/* ===========================
+   FETCH OFFERS FROM INDEX.HTML
+=========================== */
+
+fetch("index.html")
+
+.then(response => response.text())
+
+.then(html => {
+
+const parser =
+new DOMParser();
+
+const doc =
+parser.parseFromString(
+html,
+"text/html"
+);
+
+const cards =
+doc.querySelectorAll(
+".loan-card"
+);
+
+const loanOffers =
+document.getElementById(
+"loanOffers"
+);
+
+/* HIGH SCORE */
+let maxCards = 6;
+
+if(reportData.score >= 750){
+
+maxCards = 8;
+
+}
+else if(reportData.score >= 650){
+
+maxCards = 6;
+
+}
+else{
+
+maxCards = 4;
+
+}
+
+for(
+let i=0;
+i<Math.min(cards.length,maxCards);
+i++
+){
+
+loanOffers.innerHTML +=
+cards[i].outerHTML;
+
+}
+
+})
+
+.catch(error=>{
+
+console.log(error);
+
+document.getElementById(
+"loanOffers"
+).innerHTML =
+
+`
+<div style="
+background:#fff4e5;
+padding:20px;
+border-radius:12px;
+color:#b45309;
+">
+
+Unable to load loan offers.
+
+</div>
+`;
+
+});
+
+</script>
+
+<style>
+
+/* ===========================
+   CARD CSS FROM HOMEPAGE
+=========================== */
+
+.loan-card{
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+
+border-radius:16px;
+padding:18px;
+
+min-height:280px;
+
+position:relative;
+overflow:hidden;
+
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+
+box-shadow:0 8px 20px rgba(0,0,0,0.20);
+
+color:white;
+}
+
+.loan-card::before{
+
+content:"";
+
+position:absolute;
+inset:0;
+
+background:linear-gradient(
+135deg,
+rgba(30,64,175,0.80),
+rgba(37,99,235,0.60)
+);
+
+z-index:1;
+}
+
+.loan-card > *{
+
+position:relative;
+z-index:2;
+
+}
+
+.loan-card{
+
+background:linear-gradient(
+135deg,
+#1E40AF,
+#2563EB
+);
+
+}
+
+.badge{
+
+position:absolute;
+
+top:12px;
+right:12px;
+
+background:#d1fae5;
+color:#065f46;
+
+padding:5px 10px;
+
+border-radius:20px;
+
+font-size:11px;
+font-weight:bold;
+}
+
+.logo-row{
+
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:15px;
+}
+
+.logo-row img{
+
+width:45px;
+height:45px;
+
+border-radius:10px;
+
+background:white;
+
+padding:5px;
+
+object-fit:contain;
+}
+
+.nbfc-name{
+
+font-size:24px;
+font-weight:800;
+color:white;
+}
+
+.details-grid{
+
+display:grid;
+grid-template-columns:repeat(3,1fr);
+
+gap:10px;
+margin:15px 0;
+}
+
+.detail-item{
+
+text-align:center;
+
+background:rgba(255,255,255,.15);
+
+padding:10px;
+
+border-radius:10px;
+}
+
+.detail-label{
+
+font-size:13px;
+color:#e2e8f0;
+}
+
+.detail-value{
+
+font-size:15px;
+font-weight:bold;
+color:white;
+}
+
+.apply-btn{
+
+display:block;
+
+text-align:center;
+
+background:#10b981;
+
+color:white;
+
+padding:14px;
+
+border-radius:10px;
+
+text-decoration:none;
+
+font-weight:700;
+
+margin-top:10px;
+}
+
+.apply-btn:hover{
+
+background:#059669;
+
+}
+
+</style>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<div class="nav-btn"
+onclick="window.location.href='index.html'">
+
+<span class="nav-icon">
+🏠
+</span>
+
+Home
+
+</div>
+
+<div class="nav-btn"
+onclick="window.location.href='credit-score.html'">
+
+<span class="nav-icon">
+📈
+</span>
+
+Score
+
+</div>
+
+<div class="nav-btn active">
+
+<span class="nav-icon">
+📄
+</span>
+
+Report
+
+</div>
+
+</div>
 
 </body>
 </html>
