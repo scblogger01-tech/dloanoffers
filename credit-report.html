@@ -309,14 +309,13 @@ localStorage.getItem(
 )
 );
 
-if(!report){
-
-document.write(
-"<h2>No Report Found</h2>"
+if(!reportData){
+alert(
+"No report found"
 );
-
+window.location.href =
+"credit-score.html";
 }
-
 </script>
 <div class="container">
 
@@ -326,14 +325,7 @@ document.write(
 
 <h1>Credit Assessment Report</h1>
 <h1 id="reportScore"></h1>
-   <script>
-
-document.getElementById(
-"reportScore"
-).innerText =
-reportData.score;
-
-</script>
+ 
 <p>
 Generated Report
 </p>
@@ -520,14 +512,6 @@ class="loan-list">
    LOAD REPORT DATA
 ===================== */
 
-const params =
-new URLSearchParams(
-window.location.search
-);
-
-const pan =
-params.get("user");
-
 const reportData =
 JSON.parse(
 localStorage.getItem(
@@ -621,7 +605,10 @@ document.getElementById("approval")
 .innerText =
 reportData.approval +
 "% Approval Chance";
-
+document.getElementById(
+"reportScore"
+).innerText =
+reportData.score;
 /* =====================
    SCORE COLOR
 ===================== */
