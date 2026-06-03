@@ -2,286 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Credit Report | D-LOAN OFFERS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Report Summary | D-LOAN OFFERS</title>
     <style>
-        :root{
-            --primary:#1E40AF;
-            --secondary:#2563EB;
-            --success:#10b981;
-            --light:#f8fafc;
-            --dark:#0f172a;
+        :root {
+            --bg: #0f172a;
+            --glass: rgba(255, 255, 255, .08);
+            --text: #fff;
+            --accent: #22c55e;
+            --primary: #2563eb;
         }
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial,sans-serif;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: var(--text);
+            padding-bottom: 90px;
         }
-        body{
-            background:#f8fafc;
-            padding-bottom:90px;
+        .top-header {
+            position: sticky; top: 0; z-index: 999; background: #0f172a;
+            padding: 14px 18px; display: flex; align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .top-header{
-            position:sticky;
-            top:0;
-            z-index:999;
-            background:#0f172a;
-            padding:14px 18px;
-            display:flex;
-            align-items:center;
-            box-shadow:0 4px 12px rgba(0,0,0,.15);
+        .header-logo { width: 42px; height: 42px; border-radius: 12px; background: white; padding: 5px; }
+        .app-name { color: white; font-size: 24px; font-weight: 900; margin-left: 12px; }
+        
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        .glass {
+            background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, .1); border-radius: 20px; padding: 25px; margin-bottom: 20px;
         }
-        .header-left{
-            display:flex;
-            align-items:center;
-            gap:12px;
+        
+        .center { text-align: center; }
+        svg { max-width: 240px; margin: 20px 0; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px; }
+        .info-card { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .info-label { font-size: 12px; color: #94a3b8; margin-bottom: 4px; text-transform: uppercase; }
+        .info-val { font-size: 16px; font-weight: bold; }
+        
+        .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px; }
+        .offer { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        .offer h3 { margin-bottom: 10px; font-size: 18px; color: #60a5fa; }
+        .offer a { display: block; background: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 8px; margin-top: 12px; font-weight: bold; }
+        
+        .action-btns { display: flex; gap: 15px; margin-top: 20px; }
+        .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 15px; }
+        .btn-print { background: #64748b; color: white; }
+        .btn-new { background: var(--primary); color: white; }
+        
+        /* BOTTOM NAV */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #fff;
+            display: flex; align-items: center; justify-content: space-evenly;
+            box-shadow: 0 -4px 12px rgba(0,0,0,.12); z-index: 999;
         }
-        .header-logo{
-            width:42px;
-            height:42px;
-            background:white;
-            border-radius:12px;
-            padding:5px;
-        }
-        .app-name{
-            color:white;
-            font-size:24px;
-            font-weight:900;
-        }
-        .container{
-            max-width:1200px;
-            margin:auto;
-            padding:20px;
-        }
-        .report-card{
-            background:white;
-            border-radius:20px;
-            padding:25px;
-            margin-bottom:20px;
-            box-shadow:0 5px 20px rgba(0,0,0,.08);
-        }
-        .report-header{
-            text-align:center;
-        }
-        .report-header h1{
-            color:#1E40AF;
-            margin-bottom:10px;
-        }
-        .score-section{
-            text-align:center;
-            padding:20px 0;
-        }
-        .score-circle{
-            width:220px;
-            height:220px;
-            margin:auto;
-            border-radius:50%;
-            background:linear-gradient(135deg,#1E40AF,#2563EB);
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            flex-direction:column;
-            color:white;
-            box-shadow:0 10px 30px rgba(37,99,235,.3);
-        }
-        .score-number{
-            font-size:58px;
-            font-weight:900;
-        }
-        .score-text{
-            font-size:16px;
-        }
-        .rating{
-            font-size:28px;
-            font-weight:700;
-            margin-top:20px;
-            color:#1E40AF;
-        }
-        .approval{
-            margin-top:10px;
-            font-size:18px;
-            color:#10b981;
-            font-weight:700;
-        }
-        .grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-            gap:15px;
-        }
-        .info-box{
-            background:#f1f5f9;
-            padding:15px;
-            border-radius:12px;
-        }
-        .info-label{
-            font-size:13px;
-            color:#64748b;
-            margin-bottom:5px;
-        }
-        .info-value{
-            font-size:16px;
-            font-weight:700;
-            color:#0f172a;
-        }
-        .btn-row{
-            display:flex;
-            gap:10px;
-            flex-wrap:wrap;
-            margin-top:20px;
-        }
-        .btn{
-            border:none;
-            padding:14px 18px;
-            border-radius:12px;
-            cursor:pointer;
-            font-weight:700;
-        }
-        .btn-primary{
-            background:#1E40AF;
-            color:white;
-        }
-        .btn-success{
-            background:#10b981;
-            color:white;
-        }
-        .section-title{
-            font-size:24px;
-            margin-bottom:15px;
-            color:#1E40AF;
-        }
-        .loan-list{
-            display:grid;
-            grid-template-columns:1fr;
-            gap:20px;
-        }
-        @media(min-width:768px){
-            .loan-list{ grid-template-columns:1fr 1fr; }
-        }
-        .bottom-nav{
-            position:fixed;
-            bottom:0;
-            left:0;
-            width:100%;
-            height:70px;
-            background:#fff;
-            display:flex;
-            justify-content:space-evenly;
-            align-items:center;
-            box-shadow:0 -4px 12px rgba(0,0,0,.12);
-            z-index:999;
-        }
-        .nav-btn{
-            flex:1;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
-            font-size:11px;
-            font-weight:600;
-            color:#64748b;
-            cursor:pointer;
-        }
-        .nav-icon{
-            font-size:20px;
-            margin-bottom:3px;
-        }
-        .nav-btn.active{
-            color:#10b981;
-        }
-        .back-btn{
-            display:block;
-            text-align:center;
-            background:#2563eb;
-            color:#fff;
-            padding:14px;
-            border-radius:12px;
-            text-decoration:none;
-            font-weight:700;
-            margin-top:20px;
-        }
-        /* CARD CSS FROM HOMEPAGE */
-        .loan-card{
-            background:linear-gradient(135deg, #1E40AF, #2563EB);
-            border-radius:16px;
-            padding:18px;
-            min-height:280px;
-            position:relative;
-            overflow:hidden;
-            display:flex;
-            flex-direction:column;
-            justify-content:space-between;
-            box-shadow:0 8px 20px rgba(0,0,0,0.20);
-            color:white;
-        }
-        .badge{
-            position:absolute;
-            top:12px;
-            right:12px;
-            background:#d1fae5;
-            color:#065f46;
-            padding:5px 10px;
-            border-radius:20px;
-            font-size:11px;
-            font-weight:bold;
-        }
-        .logo-row{
-            display:flex;
-            align-items:center;
-            gap:12px;
-            margin-bottom:15px;
-        }
-        .logo-row img{
-            width:45px;
-            height:45px;
-            border-radius:10px;
-            background:white;
-            padding:5px;
-            object-fit:contain;
-        }
-        .nbfc-name{
-            font-size:24px;
-            font-weight:800;
-            color:white;
-        }
-        .details-grid{
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:10px;
-            margin:15px 0;
-        }
-        .detail-item{
-            text-align:center;
-            background:rgba(255,255,255,.15);
-            padding:10px;
-            border-radius:10px;
-        }
-        .detail-label{
-            font-size:13px;
-            color:#e2e8f0;
-        }
-        .detail-value{
-            font-size:15px;
-            font-weight:bold;
-            color:white;
-        }
-        .apply-btn{
-            display:block;
-            text-align:center;
-            background:#10b981;
-            color:white;
-            padding:14px;
-            border-radius:10px;
-            text-decoration:none;
-            font-weight:700;
-            margin-top:10px;
-        }
-        .apply-btn:hover{ background:#059669; }
-        #validity {
-            text-align: center;
-            font-weight: bold;
-            color: #1e40af;
-            margin-top: 10px;
+        .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; font-size: 11px; font-weight: 600; color: #64748b; }
+        .nav-icon { font-size: 20px; margin-bottom: 3px; }
+        .nav-btn.active { color: #10b981; }
+        
+        @media print {
+            .bottom-nav, .action-btns, .top-header { display: none !important; }
+            body { background: white; color: black; }
+            .glass { border: none; background: none; color: black; }
+            .info-card { border: 1px solid #ccc; color: black; }
         }
     </style>
 </head>
@@ -290,91 +74,110 @@
 <header class="top-header">
     <div class="header-left">
         <img src="logo.png" class="header-logo" alt="Logo">
-        <div class="app-name">D-LOAN OFFERS</div>
+        <span class="app-name">D-LOAN OFFERS</span>
     </div>
 </header>
 
+<div class="container">
+    <div class="glass center">
+        <h2 style="font-size: 24px;">Your Credit Assessment Report</h2>
+        
+        <svg viewBox="0 0 200 120">
+            <path d="M20 100 A80 80 0 0 1 180 100" stroke="#334155" stroke-width="16" fill="none" stroke-linecap="round"/>
+            <path id="gauge" d="M20 100 A80 80 0 0 1 180 100" stroke="#22c55e" stroke-width="16" fill="none" stroke-dasharray="252" stroke-dashoffset="252" stroke-linecap="round" style="transition: stroke-dashoffset 1s ease-out;"/>
+            <text x="100" y="95" text-anchor="middle" fill="white" font-size="28" font-weight="bold" id="scoreDisplay">300</text>
+        </svg>
+
+        <h3 id="approvalDisplay" style="color: var(--accent); margin-bottom: 5px;">0% Loan Approval Chance</h3>
+        <p id="dateDisplay" style="font-size: 13px; opacity: 0.6;"></p>
+
+        <div class="action-btns">
+            <button class="btn btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
+            <a href="credit-score.html" class="btn btn-new">🔄 New Check</a>
+        </div>
+    </div>
+
+    <div class="glass">
+        <h3 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">📋 Applicant Profile</h3>
+        <div class="grid">
+            <div class="info-card"><div class="info-label">Name</div><div class="info-val" id="valName">N/A</div></div>
+            <div class="info-card"><div class="info-label">Mobile</div><div class="info-val" id="valMobile">N/A</div></div>
+            <div class="info-card"><div class="info-label">PAN Card</div><div class="info-val" id="valPan">N/A</div></div>
+            <div class="info-card"><div class="info-label">City</div><div class="info-val" id="valCity">N/A</div></div>
+            <div class="info-card"><div class="info-label">Monthly Income</div><div class="info-val" id="valIncome">N/A</div></div>
+            <div class="info-card"><div class="info-label">Existing Loan EMI</div><div class="info-val" id="valEmi">N/A</div></div>
+        </div>
+    </div>
+
+    <div class="glass">
+        <h3>🏦 Recommended Loan Offers For You</h3>
+        <div class="offer-grid" id="offerGrid"></div>
+    </div>
+</div>
+
+<div class="bottom-nav">
+    <div class="nav-btn" onclick="window.location.href='index.html'"><div class="nav-icon">🏠</div><div>Home</div></div>
+    <div class="nav-btn" onclick="window.location.href='credit-score.html'"><div class="nav-icon">📈</div><div>Score</div></div>
+    <div class="nav-btn active"><div class="nav-icon">📄</div><div>Report</div></div>
+</div>
+
 <script>
+window.onload = function() {
     const params = new URLSearchParams(window.location.search);
     const pan = params.get("user");
-    const reportData = JSON.parse(localStorage.getItem("REPORT_" + pan));
+    
+    if(!pan) { alert("User profile target missing!"); window.location.href="credit-score.html"; return; }
+    
+    const dataString = localStorage.getItem("REPORT_" + pan.toUpperCase());
+    if(!dataString) { alert("No stored session report found for this PAN!"); window.location.href="credit-score.html"; return; }
+    
+    const data = JSON.parse(dataString);
+    
+    // UI mapping
+    document.getElementById("valName").innerText = data.firstName + " " + data.lastName;
+    document.getElementById("valMobile").innerText = data.mobile;
+    document.getElementById("valPan").innerText = data.pan;
+    document.getElementById("valCity").innerText = data.city;
+    document.getElementById("valIncome").innerText = "₹" + Number(data.income).toLocaleString('en-IN');
+    document.getElementById("valEmi").innerText = "₹" + Number(data.emi).toLocaleString('en-IN');
+    document.getElementById("dateDisplay").innerText = "Assessment Date: " + data.date;
+    document.getElementById("approvalDisplay").innerText = data.app + "% Loan Approval Chance";
+    
+    // Gauge Animation logic 
+    let currentScore = 300;
+    let targetScore = data.score;
+    let interval = setInterval(() => {
+        if(currentScore >= targetScore) {
+            clearInterval(interval);
+        } else {
+            currentScore += 5;
+            if(currentScore > targetScore) currentScore = targetScore;
+        }
+        document.getElementById("scoreDisplay").textContent = currentScore;
+        let percentage = (currentScore - 300) / 600;
+        document.getElementById("gauge").style.strokeDashoffset = 252 - (252 * percentage);
+    }, 15);
+    
+    // Colorful Gauge Logic based on target 
+    const gauge = document.getElementById("gauge");
+    if(targetScore >= 750) gauge.style.stroke = "#22c55e"; // Green
+    else if(targetScore >= 650) gauge.style.stroke = "#3b82f6"; // Blue
+    else gauge.style.stroke = "#f59e0b"; // Yellow/Orange
 
-    if(!reportData){
-        alert("No report found");
-        window.location.href = "credit-score.html";
-    }
-</script>
-
-<div class="container">
-    <div class="report-card">
-        <div class="report-header">
-            <h1>Credit Assessment Report</h1>
-            <h1 id="reportScore"></h1>
-            <p>Generated Report</p>
-        </div>
-        <div id="validity"></div>
+    // Offers Mapping logic
+    let offers = targetScore >= 700 ? 
+        ['HDFC Bank Personal Loan', 'ICICI Instant Digital Credit', 'Axis Financial Loan', 'Kotak Pre-Approved Offer'] : 
+        ['Navi Instant Loan', 'MoneyView Personal Credit', 'KreditBee Quick Loan', 'TrueBalance Credit'];
         
-        <div class="score-section">
-            <div class="score-circle">
-                <div class="score-number" id="score">0</div>
-                <div class="score-text">Credit Score</div>
-            </div>
-            <div class="rating" id="rating">Good</div>
-            <div class="approval" id="approval">80% Approval Chance</div>
+    const offerGrid = document.getElementById("offerGrid");
+    offerGrid.innerHTML = offers.map(provider => `
+        <div class="offer">
+            <h3>${provider}</h3>
+            <p style="font-size:13px; opacity:0.7;">Pre-evaluated Match</p>
+            <a href="#">Apply Now</a>
         </div>
-
-        <div class="btn-row">
-            <button class="btn btn-primary" onclick="window.print()">Print Report</button>
-            <button class="btn btn-success" onclick="window.location.href='credit-score.html'">New Assessment</button>
-        </div>
-    </div>
-
-    <div class="report-card">
-        <h2 class="section-title">Applicant Details</h2>
-        <div class="grid">
-            <div class="info-box">
-                <div class="info-label">Full Name</div>
-                <div class="info-value" id="fullName"></div>
-            </div>
-            <div class="info-box">
-                <div class="info-label">Mobile</div>
-                <div class="info-value" id="mobile"></div>
-            </div>
-            <div class="info-box">
-                <div class="info-label">PAN</div>
-                <div class="info-value" id="pan"></div>
-            </div>
-            <div class="info-box">
-                <div class="info-label">City</div>
-                <div class="info-value" id="city"></div>
-            </div>
-            <div class="info-box">
-                <div class="info-label">Monthly Income</div>
-                <div class="info-value" id="income"></div>
-            </div>
-            <div class="info-box">
-                <div class="info-label">Employment</div>
-                <div class="info-value" id="employment"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="report-card">
-        <h2 class="section-title">Credit Analysis Summary</h2>
-        <div class="grid">
-            <div class="info-box">
-                <div class="info-label">Current Loan Amount</div>
-                <div class="info-value" id="loanAmount"></div>
-            </div>
-            <div class="info-box">
-                <div class="info-label">Current EMI</div>
-                <div class="info-value" id="emi"></div>
-            </div>
-            <div class="info-box">
-                <div class="info-label">Credit Card</div>
-                <div class="info-value" id="card"></div>
-            </div>
-            <div class="info-box">
-                <div class="info-label">Missed EMI</div>
-                <div class="info-value" id="missed"></div>
-            </div>
+    `).join('');
+};
+</script>
+</body>
+</html>
