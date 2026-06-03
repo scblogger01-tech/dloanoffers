@@ -1,310 +1,507 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Credit Score Assessment</title>
-<style>
-:root{--bg:#0f172a;--glass:rgba(255,255,255,.08);--text:#fff;--accent:#22c55e;--primary:#1E40AF}
-*{box-sizing:border-box; margin:0; padding:0;}
-body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#0f172a,#1e293b);color:var(--text);padding-bottom:85px;}
-.container{max-width:1000px;margin:auto;padding:20px}
-.glass{background:var(--glass);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px}
-h1{text-align:center; margin-bottom: 20px;}
-label{display:block;margin:10px 0 5px}
-input,select,button{width:100%;padding:12px;border-radius:10px;border:none; outline:none;}
-input, select { background: rgba(255,255,255,0.1); color: #fff; }
-option { background: #1e293b; color: #fff; }
-button{background:#2563eb;color:#fff;font-weight:bold;cursor:pointer;margin-top:12px}
-#resetBtn{display:none;background:#dc2626}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-#result,#offers,#leadBox{display:none}
-.offer{background:rgba(255,255,255,.08);padding:15px;border-radius:15px; margin-top:10px;}
-.offer a{display:block;background:#22c55e;color:white;text-decoration:none;padding:10px;border-radius:8px;text-align:center; margin-top:10px;}
-.center{text-align:center}
-#loading{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);justify-content:center;align-items:center;z-index:999}
-.loaderbox{background:#fff;color:#000;padding:25px;border-radius:15px;text-align:center}
-svg{max-width:260px; margin: 20px auto;}
-h2 { margin: 15px 0 10px; }
-@media(max-width:600px){h1{font-size:24px}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Bureau Credit Score | D-LOAN OFFERS</title>
+    <style>
+        :root {
+            --primary-blue: #1E40AF;
+            --pure-white: #ffffff;
+            --light-blue-bg: #eff6ff;
+            --border-color: #dbeafe;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+        }
 
-.top-header{position:sticky;top:0;z-index:999;background:#0f172a;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 12px rgba(0,0,0,0.15);}
-.header-left{display:flex;align-items:center;gap:12px;}
-.header-logo{width:42px;height:42px;border-radius:12px;background:white;padding:5px;object-fit:contain;}
-.app-name{color:white;font-size:24px;font-weight:900;letter-spacing:1px;}
-@media(max-width:480px){.app-name{font-size:18px;}.header-logo{width:36px;height:36px;}}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
 
-.bottom-nav{position:fixed;bottom:0;left:0;width:100%;height:70px;background:#fff;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-evenly;box-shadow:0 -4px 12px rgba(0,0,0,.12);z-index:999;}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;font-size:11px;font-weight:600;color:#64748b;white-space:nowrap;min-width:0;cursor:pointer;}
-.nav-icon{font-size:20px;margin-bottom:3px;}
-.nav-btn.active{color:#10b981;}
+        body {
+            background-color: var(--pure-white);
+            color: var(--primary-blue);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
 
-.side-menu{position:fixed;top:0;left:-280px;width:260px;height:100%;background:white;z-index:1000;padding:25px 20px;transition:0.3s;box-shadow:4px 0 15px rgba(0,0,0,0.15);}
-.side-menu.active{left:0;}
-.menu-title{font-size:20px;font-weight:700;margin-bottom:20px;}
-.menu-links{display:flex;flex-direction:column;gap:15px;}
-.menu-links a{text-decoration:none;color:#0f172a;font-weight:600;padding:12px;background:#f1f5f9;border-radius:10px;}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;display:none;}
-.overlay.active{display:block;}
-</style>
+        /* Glassmorphism Header & Layout */
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--border-color);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 2px solid var(--primary-blue);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(30, 64, 175, 0.08);
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #4b5563;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Form Controls */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 1;
+        }
+        @media (min-width: 600px) {
+            .form-group.full-width { grid-column: span 2; }
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select {
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            color: var(--primary-blue);
+            background: var(--pure-white);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary-blue);
+        }
+
+        .radio-box-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .radio-label {
+            border: 2px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        input[type="radio"]:checked + .radio-label {
+            background-color: var(--primary-blue);
+            color: var(--pure-white);
+            border-color: var(--primary-blue);
+        }
+
+        /* Main System Buttons */
+        .btn-prime {
+            background-color: var(--primary-blue);
+            color: var(--pure-white);
+            border: 2px solid var(--primary-blue);
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-prime:hover {
+            background-color: var(--pure-white);
+            color: var(--primary-blue);
+        }
+
+        .btn-prime:disabled {
+            background-color: #cbd5e1;
+            border-color: #cbd5e1;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+
+        /* Lock Alert Notification */
+        .lock-banner {
+            display: none;
+            background-color: var(--light-blue-bg);
+            border: 2px solid var(--primary-blue);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Fixed Bottom Bar Navigation UI */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-top: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 999;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .nav-item.active {
+            opacity: 1;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        /* Animation Loading Module Overlay */
+        .loader-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.95);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gauge-spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid var(--light-blue-bg);
+            border-top: 6px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body> 
-<header class="top-header">
-    <div class="header-left">
-        <img src="logo.png" class="header-logo" alt="D-LOAN OFFERS Logo">
-        <div class="app-name">D-LOAN OFFERS</div>
-    </div>
-</header>   
-  
-<div id="loading">
-    <div class="loaderbox">
-        <h2>Analyzing...</h2>
-        <p id="ltxt">Checking Profile...</p>
-    </div>
+<body>
+
+<!-- Loader Module -->
+<div class="loader-overlay" id="loader">
+    <div class="gauge-spinner"></div>
+    <h3 style="margin-top: 20px; font-weight: 800;">VERIFYING CREDENTIALS...</h3>
+    <p style="font-size: 13px; margin-top: 5px; color: #4b5563;">Fetching real-time structural bureau algorithms indicators...</p>
 </div>
+
+<nav class="navbar">
+    <div class="nav-logo">D-LOAN OFFERS</div>
+    <button onclick="clearTrackingForTesting()" style="font-size: 10px; background: none; border: none; color: inherit; cursor: pointer; opacity: 0.5;">Reset Simulation</button>
+</nav>
 
 <div class="container">
-    <div class="glass">
-        <h1>Credit Score Assessment</h1>
-
-        <div class="grid">
-            <div><label>First Name</label><input id="firstName"></div>
-            <div><label>Last Name</label><input id="lastName"></div>
-            <div><label>Age</label><input type="number" id="age"></div>
-            <div><label>Mobile Number</label><input type="tel" id="mobile"></div>
-            <div><label>PAN Number</label><input id="pan" placeholder="ABCDE1234F"></div>
-            <div><label>Monthly Income</label><input type="number" id="income"></div>
-            <div><label>Running Loan Amount</label><input type="number" id="loanAmount"></div>
-            <div><label>Current EMI</label><input type="number" id="emi"></div>
-            <div><label>City</label><input id="city"></div>
-            <div><label>Country</label><input id="country" value="India"></div>
-            <div><label>Have Credit Card</label><select id="card"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
-            <div><label>Have you Missed EMI</label><select id="missed"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select></div>
-        </div>
-
-        <button id="submitBtn" onclick="generate()">Generate Score</button>
-        <button id="resetBtn" onclick="resetAssessment()">Start New Assessment</button>
-
-        <div id="result" class="center">
-            <svg viewBox="0 0 200 120">
-                <path d="M20 100 A80 80 0 0 1 180 100" stroke="#334155" stroke-width="16" fill="none"/>
-                <path id="gauge" d="M20 100 A80 80 0 0 1 180 100" stroke="#22c55e" stroke-width="16" fill="none" stroke-dasharray="252" stroke-dashoffset="252"/>
-                <text x="100" y="95" text-anchor="middle" fill="white" font-size="26" id="score">0</text>
-            </svg>
-            <h2 id="approval"></h2>
-            <p id="date"></p>
-            <button onclick="viewFullReport()" style="background:#1E40AF; margin-bottom:15px;">View Detailed Credit Report</button>
-            <button onclick="downloadPDF()">Download PDF Report</button>
-        </div>
-
-        <div id="leadBox" class="center" style="margin-top:20px;">
-            <h3>Verify Mobile via WhatsApp System</h3>
-            <button onclick="sendWhatsApp()" style="background:#22c55e; max-width:300px; margin:10px auto;">Share Report via WhatsApp</button>
-        </div>
-
-        <h2 style="font-size:14px; text-align:center; color:#64748b; margin-top:20px;">Estimated score only. Not official CIBIL.</h2>
+    <div class="glass-card">
+        <h2 class="page-title">Credit Risk Assessment</h2>
+        <p class="page-subtitle">Check your pre-approved matrix profile score indices instantly.</p>
         
-        <div id="offers">
-            <h2>🏦 Eligible Loan Offers</h2>
-            <div class="grid" id="offerGrid"></div>
+        <!-- Lock Banner Indicator -->
+        <div class="lock-banner" id="lockBanner">
+            🔒 This profile segment is compiled and locked for 30 days. <br>
+            <span id="lockDaysText" style="font-weight: 800;"></span> remaining before re-assessment allowed.
+            <button class="btn-prime" style="padding: 6px 12px; font-size: 12px; margin-top: 10px;" onclick="redirectToReport()">View Active Report</button>
         </div>
+
+        <form id="assessmentForm" onsubmit="processScore(event)">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="firstName" required placeholder="As per PAN card">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="lastName" required placeholder="Surname">
+                </div>
+                <div class="form-group">
+                    <label>Permanent Account Number (PAN)</label>
+                    <input type="text" id="pan" maxlength="10" required placeholder="ABCDE1234F" style="text-transform: uppercase;">
+                </div>
+                <div class="form-group">
+                    <label>Mobile Reference</label>
+                    <input type="tel" id="mobile" pattern="[6-9][0-9]{9}" maxlength="10" required placeholder="10-digit mobile number">
+                </div>
+                <div class="form-group">
+                    <label>Current City</label>
+                    <input type="text" id="city" required placeholder="e.g. Mumbai, Delhi">
+                </div>
+                <div class="form-group">
+                    <label>Net Monthly Income (INR)</label>
+                    <input type="number" id="income" required placeholder="Monthly salary or profits">
+                </div>
+                <div class="form-group">
+                    <label>Current Monthly EMIs (INR)</label>
+                    <input type="number" id="emi" defaultValue="0" required placeholder="Enter 0 if none">
+                </div>
+                <div class="form-group">
+                    <label>Primary Loan Requirement</label>
+                    <select id="loanType" required>
+                        <option value="Personal Loan">Personal Loan</option>
+                        <option value="Business Loan">Business Loan</option>
+                        <option value="Home Loan">Home Loan</option>
+                        <option value="Credit Card Upgrade">Credit Card Instantly</option>
+                    </select>
+                </div>
+
+                <!-- Yes/No Matrix Framework Modules -->
+                <div class="form-group">
+                    <label>Do you have an active Credit Card?</label>
+                    <div class="radio-box-group">
+                        <div>
+                            <input type="radio" id="cc_yes" name="hasCreditCard" value="yes" checked>
+                            <label for="cc_yes" class="radio-label">Yes</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="cc_no" name="hasCreditCard" value="no">
+                            <label for="cc_no" class="radio-label">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Any missed EMI in last 12 months?</label>
+                    <div class="radio-box-group">
+                        <div>
+                            <input type="radio" id="miss_yes" name="hasMissedEmi" value="yes">
+                            <label for="miss_yes" class="radio-label">Yes</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="miss_no" name="hasMissedEmi" value="no" checked>
+                            <label for="miss_no" class="radio-label">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-prime" id="submitBtn">Generate Free Analysis Report →</button>
+        </form>
     </div>
 </div>
 
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-<div class="side-menu" id="sideMenu">
-    <div class="menu-title">Menu</div>
-    <div class="menu-links">
-        <a href="index.html">🏠 Home</a>
-        <a href="emi.html">📊 LOAN EMI Calculator</a>
-        <a href="#">🔒 Privacy Policy</a>
-        <a href="#">📄 Terms & Conditions</a>
-        <a href="#">☎ Contact Support</a>
-    </div>
-</div>
-  
+<!-- Fixed Layout Bottom Navigation Module Bar -->
 <div class="bottom-nav">
-    <div class="nav-btn" onclick="openMenu()">
-        <div class="nav-icon">☰</div>
-        <div>Menu</div>
-    </div>
-    <div class="nav-btn" onclick="showHome()">
-        <div class="nav-icon">🏠</div>
-        <div>Home</div>
-    </div>
-    <div class="nav-btn active" onclick="openCreditScore()">
-        <div class="nav-icon">📈</div>
-        <div>Score</div>
-    </div>
-    <div class="nav-btn" onclick="location.href='index.html#support'">
-        <div class="nav-icon">☎</div>
-        <div>Support</div>
-    </div>
+    <a href="index.html" class="nav-item">
+        <span class="nav-icon">🏠</span>
+        <span>Home</span>
+    </a>
+    <a href="credit-score.html" class="nav-item active">
+        <span class="nav-icon">📊</span>
+        <span>Credit Score</span>
+    </a>
+    <a href="credit-report.html" class="nav-item">
+        <span class="nav-icon">📜</span>
+        <span>Report</span>
+    </a>
 </div>
 
 <script>
-const loading = document.getElementById('loading');
-const ltxt = document.getElementById('ltxt');
-const result = document.getElementById('result');
-const offers = document.getElementById('offers');
-const leadBox = document.getElementById('leadBox');
-const offerGrid = document.getElementById('offerGrid');
-const gauge = document.getElementById('gauge');
-const scoreText = document.getElementById('score');
-const approval = document.getElementById('approval');
-const dateText = document.getElementById('date');
-const submitBtn = document.getElementById('submitBtn');
-const resetBtn = document.getElementById('resetBtn');
-
-function openMenu(){
-    document.getElementById("sideMenu").classList.add("active");
-    document.getElementById("overlay").classList.add("active");
-}
-
-function closeMenu(){
-    document.getElementById("sideMenu").classList.remove("active");
-    document.getElementById("overlay").classList.remove("active");
-}
-
-function validate(){
-    for(let el of document.querySelectorAll('input,select')){
-        if(!el.value.trim()){
-            alert('All fields are mandatory');
-            return false;
+    // Realtime capitalization/validation layer
+    const panInput = document.getElementById('pan');
+    panInput.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+        if(this.value.length === 10) {
+            checkPanLockStatus(this.value);
+        } else {
+            resetFormLockState();
         }
+    });
+
+    function checkPanLockStatus(panId) {
+        const globalStore = JSON.parse(localStorage.getItem("bureau_multi_records")) || {};
+        const userRecord = globalStore[panId];
+
+        if(userRecord) {
+            const now = new Date().getTime();
+            const difference = userRecord.expiryTimestamp - now;
+
+            if (difference > 0) {
+                const remainingDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
+                document.getElementById("lockDaysText").innerText = remainingDays + " Days";
+                document.getElementById("lockBanner").style.display = "block";
+                document.getElementById("submitBtn").disabled = true;
+                
+                // Form field lockdown elements injection setup
+                toggleFormFields(true);
+                localStorage.setItem("creditReportData", JSON.stringify(userRecord));
+                return true;
+            }
+        }
+        resetFormLockState();
+        return false;
     }
-    return true;
-}
 
-function generate(){
-    if(!validate()) return;
-
-    loading.style.display='flex';
-    let msgs=['Checking Income Stability','Analyzing Repayment Capacity','Evaluating Credit Behaviour','Generating Report'];
-    let i=0;
-    let t=setInterval(()=>{ltxt.innerText=msgs[i%msgs.length];i++;},1000);
-
-    setTimeout(()=>{
-        clearInterval(t);
-        loading.style.display='none';
-
-        let scoreVal=650;
-        if(+document.getElementById('age').value>30) scoreVal+=40;
-        if(+document.getElementById('income').value>50000) scoreVal+=50;
-        if(document.getElementById('card').value==='yes') scoreVal+=30;
-        if(document.getElementById('missed').value==='yes') scoreVal-=120;
-        scoreVal=Math.max(300,Math.min(900,scoreVal));
-
-        // Save complete shared report details to matching key
-        const reportData = {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            mobile: document.getElementById('mobile').value,
-            pan: document.getElementById('pan').value,
-            city: document.getElementById('city').value,
-            income: document.getElementById('income').value,
-            reportDate: new Date().toLocaleDateString(),
-            score: scoreVal
-        };
-        localStorage.setItem('creditReportData', JSON.stringify(reportData));
-
-        show(scoreVal);
-    },4000);
-}
-
-function show(scoreVal){
-    result.style.display='block';
-    offers.style.display='block';
-    leadBox.style.display='block';
-
-    let cur=0;
-    let anim=setInterval(()=>{
-        cur+=5;
-        if(cur>=scoreVal){cur=scoreVal;clearInterval(anim);confetti();}
-        scoreText.textContent = cur;
-        let p=(cur-300)/600;
-        gauge.style.strokeDashoffset=252-(252*p);
-    },15);
-
-    let app=Math.round(scoreVal/900*100);
-    approval.innerText=app+'% Loan Approval Chance';
-    dateText.innerText='Assessment Date: '+new Date().toLocaleDateString();
-
-    renderOffers(scoreVal);
-    lockForm();
-}
-
-function renderOffers(s){
-    let premium=s>=750;
-    offerGrid.innerHTML=(premium?[
-        'HDFC Personal Loan','ICICI Instant Loan','Axis Bank Loan','Kotak Pre-Approved'
-    ]:['Navi','MoneyView','KreditBee','True Balance'])
-    .map(x=>`<div class="offer"><h3>${x}</h3><p>Eligible Offer</p><a href="#">Apply Now</a></div>`).join('');
-}
-
-function lockForm(){
-    document.querySelectorAll('input,select').forEach(e=>{e.disabled=true;});
-    submitBtn.style.display='none';
-    resetBtn.style.display='block';
-}
-
-function resetAssessment(){
-    localStorage.removeItem('creditReportData');
-    location.reload();
-}
-
-window.onload=()=>{
-    let d=localStorage.getItem('creditReportData');
-    if(!d) return;
-    d=JSON.parse(d);
-    
-    document.getElementById('firstName').value = d.firstName || '';
-    document.getElementById('lastName').value = d.lastName || '';
-    document.getElementById('mobile').value = d.mobile || '';
-    document.getElementById('pan').value = d.pan || '';
-    document.getElementById('city').value = d.city || '';
-    document.getElementById('income').value = d.income || '';
-    
-    result.style.display='block';
-    offers.style.display='block';
-    leadBox.style.display='block';
-    scoreText.innerText=d.score;
-    let app=Math.round(d.score/900*100);
-    approval.innerText=app+'% Loan Approval Chance';
-    dateText.innerText='Assessment Date: ' + d.reportDate;
-    gauge.style.strokeDashoffset=252-(252*((d.score-300)/600));
-    renderOffers(d.score);
-    lockForm();
-}
-
-function sendWhatsApp(){
-    let n=document.getElementById('mobile').value;
-    if(!n){alert('Enter number');return;}
-    window.open('https://wa.me/'+n,'_blank');
-}
-
-function downloadPDF(){
-    window.print();
-}
-
-function viewFullReport(){
-    window.location.href="credit-report.html";
-}
-
-function confetti(){
-    if(parseInt(scoreText.innerText)<750) return;
-    for(let i=0;i<80;i++){
-        let d=document.createElement('div');
-        d.style.cssText='position:fixed;width:8px;height:8px;background:hsl('+Math.random()*360+',100%,50%);left:'+Math.random()*100+'%;top:-10px;z-index:9999';
-        document.body.appendChild(d);
-        let y=0;
-        let a=setInterval(()=>{y+=5;d.style.top=y+"px";if(y>innerHeight){clearInterval(a);d.remove();}},20);
+    function resetFormLockState() {
+        document.getElementById("lockBanner").style.display = "none";
+        document.getElementById("submitBtn").disabled = false;
+        toggleFormFields(false);
     }
-}
 
-function showHome() { window.location.href = "index.html"; }
-function openCreditScore() { window.location.href = "credit-score.html"; }
+    function toggleFormFields(status) {
+        const fields = document.querySelectorAll("#assessmentForm input, #assessmentForm select");
+        fields.forEach(field => {
+            if(field.id !== 'pan') field.disabled = status;
+        });
+    }
+
+    function redirectToReport() {
+        window.location.href = "credit-report.html";
+    }
+
+    function processScore(e) {
+        e.preventDefault();
+        
+        const panVal = document.getElementById("pan").value.trim().toUpperCase();
+        if(checkPanLockStatus(panVal)) return;
+
+        document.getElementById("loader").style.display = "flex";
+
+        setTimeout(() => {
+            // Enterprise algorithm model calculation matrix setup base components
+            let baseScore = 680;
+            const income = parseFloat(document.getElementById("income").value) || 0;
+            const emi = parseFloat(document.getElementById("emi").value) || 0;
+            const hasCC = document.querySelector('input[name="hasCreditCard"]:checked').value;
+            const hasMissed = document.querySelector('input[name="hasMissedEmi"]:checked').value;
+
+            // Compute math vectors structures indices models configurations
+            if (income > 75000) baseScore += 60;
+            else if (income > 40000) baseScore += 30;
+
+            const dtiRatio = (emi / income) * 100;
+            if (dtiRatio > 50) baseScore -= 70;
+            else if (dtiRatio > 20) baseScore -= 30;
+            else baseScore += 40;
+
+            if (hasCC === "yes") baseScore += 35;
+            if (hasMissed === "yes") baseScore -= 120; else baseScore += 45;
+
+            // Ceiling caps setup thresholds parameters bounded frameworks boundaries
+            if(baseScore > 900) baseScore = 900;
+            if(baseScore < 300) baseScore = 300;
+
+            // Approval metrics conversion logic
+            let approvalPercentage = Math.round(((baseScore - 300) / 600) * 100);
+            if(approvalPercentage < 10) approvalPercentage = 10;
+
+            const assessmentDate = new Date().toLocaleDateString('en-IN', {
+                day: '2-digit', month: 'short', year: 'numeric'
+            });
+
+            // 30 days calculation validation timestamp mappings
+            const timestampNow = new Date().getTime();
+            const thirtyDaysValidTimestamp = timestampNow + (30 * 24 * 60 * 60 * 1000);
+
+            const reportPayload = {
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                pan: panVal,
+                mobile: document.getElementById("mobile").value,
+                city: document.getElementById("city").value,
+                income: income,
+                emi: emi,
+                loanType: document.getElementById("loanType").value,
+                score: baseScore,
+                approvalChance: approvalPercentage,
+                reportDate: assessmentDate,
+                expiryTimestamp: thirtyDaysValidTimestamp
+            };
+
+            // Save records to Multiuser Mapping framework profiles store
+            const globalStore = JSON.parse(localStorage.getItem("bureau_multi_records")) || {};
+            globalStore[panVal] = reportPayload;
+            localStorage.setItem("bureau_multi_records", JSON.stringify(globalStore));
+
+            // Set current running runtime execution index pointer payload 
+            localStorage.setItem("creditReportData", JSON.stringify(reportPayload));
+            
+            window.location.href = "credit-report.html";
+        }, 2000);
+    }
+
+    function clearTrackingForTesting() {
+        localStorage.clear();
+        alert("Simulation caches flushed completely. You can now assess identical user indexes again.");
+        window.location.reload();
+    }
 </script>
 </body>
 </html>
