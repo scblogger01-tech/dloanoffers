@@ -1,251 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Report | D-LOAN OFFERS</title>
-    <style>
-        :root {
-            --bg: #0f172a;
-            --glass: rgba(255, 255, 255, .08);
-            --text: #fff;
-            --accent: #22c55e;
-            --primary: #2563eb;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: var(--text);
-            padding-bottom: 90px;
-        }
-        .top-header {
-            position: sticky; top: 0; z-index: 999; background: #0f172a;
-            padding: 14px 18px; display: flex; align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .header-logo { width: 42px; height: 42px; border-radius: 12px; background: white; padding: 5px; }
-        .app-name { color: white; font-size: 24px; font-weight: 900; margin-left: 12px; }
-        
-        .container { max-width: 1000px; margin: auto; padding: 20px; }
-        .glass {
-            background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, .1); border-radius: 20px; padding: 25px; margin-bottom: 20px;
-        }
-        
-        .center { text-align: center; }
-        svg { max-width: 240px; margin: 20px 0; }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px; }
-        .info-card { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
-        .info-label { font-size: 11px; color: #94a3b8; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .info-val { font-size: 16px; font-weight: bold; color: #f8fafc; }
-        
-        .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
-        
-        /* Inherited parsed objects styled from Index source pools */
-        .loan-card { 
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .loan-card h3 { color: #60a5fa; font-size: 18px; margin-bottom: 8px; }
-        .loan-card .meta { font-size: 13px; opacity: 0.7; margin-bottom: 15px; color: #cbd5e1; }
-        .loan-card .tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: bold; margin-bottom: 12px; width: fit-content; }
-        .card-premium { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
-        .card-medium { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-        .card-limited { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-        .apply-btn { display: block; text-align: center; background: var(--accent); color: white; text-decoration: none; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 13px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credit Report | D-LOAN OFFERS</title>
 
-        .share-row { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-        .btn-action { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 14px; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-print { background: #475569; }
-        .btn-wp { background: #128c7e; }
-        
-        /* BOTTOM NAV */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #fff;
-            display: flex; align-items: center; justify-content: space-evenly;
-            box-shadow: 0 -4px 12px rgba(0,0,0,.12); z-index: 999;
-        }
-        .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; font-size: 11px; font-weight: 600; color: #64748b; }
-        .nav-icon { font-size: 20px; margin-bottom: 3px; }
-        .nav-btn.active { color: #10b981; }
+<style>
+:root{
+    --primary:#1E40AF;
+    --success:#10b981;
+    --bg:#f8fafc;
+}
 
-        #validityBanner { font-size: 13px; font-weight: bold; margin-top: 10px; color: #f87171; text-align: center; }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
-        /* REAL PDF HIGH FIDELITY PRINT STYLING MAPS */
-        @media print {
-            .bottom-nav, .share-row, .top-header, #validityBanner { display: none !important; }
-            body { background: #ffffff !important; color: #000000 !important; }
-            .glass { background: #ffffff !important; border: 1px solid #000 !important; border-radius: 0px !important; color: #000000 !important; backdrop-filter: none !important; }
-            .info-card { background: #f1f5f9 !important; border: 1px solid #cbd5e1 !important; color: #000000 !important; }
-            .info-val { color: #0f172a !important; }
-            text { fill: #000000 !important; }
-            .loan-card { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; color: #0f172a !important; page-break-inside: avoid; }
-            .loan-card h3 { color: #1e3a8a !important; }
-            .apply-btn { background: #0f172a !important; color: #fff !important; }
-        }
-    </style>
+body{
+    background:var(--bg);
+    padding:20px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.report-card{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    color:var(--primary);
+}
+
+.score-box{
+    text-align:center;
+    padding:25px;
+}
+
+.score-circle{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#1E40AF,#2563EB);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    margin:auto;
+}
+
+.score-number{
+    font-size:48px;
+    font-weight:bold;
+}
+
+.score-label{
+    font-size:14px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.info{
+    background:#f1f5f9;
+    padding:15px;
+    border-radius:12px;
+}
+
+.info strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.btn{
+    display:inline-block;
+    background:var(--success);
+    color:white;
+    text-decoration:none;
+    padding:12px 18px;
+    border-radius:10px;
+    margin-top:15px;
+    border:none;
+    cursor:pointer;
+}
+
+.section-title{
+    margin:25px 0 15px;
+    color:var(--primary);
+}
+
+.loan-list{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+}
+
+@media(min-width:768px){
+    .loan-list{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+.loan-card{
+    background:linear-gradient(135deg,#1E40AF,#2563EB);
+    border-radius:16px;
+    padding:18px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:240px;
+}
+
+.badge{
+    position:absolute;
+    top:12px;
+    right:12px;
+    background:#d1fae5;
+    color:#065f46;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.logo-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.logo-row img{
+    width:45px;
+    height:45px;
+    border-radius:10px;
+    background:white;
+    padding:5px;
+    object-fit:contain;
+}
+
+.nbfc-name{
+    font-size:24px;
+    font-weight:800;
+}
+
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:15px 0;
+}
+
+.detail-item{
+    background:rgba(255,255,255,.15);
+    padding:10px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.detail-label{
+    font-size:12px;
+    color:#e2e8f0;
+}
+
+.detail-value{
+    font-size:14px;
+    font-weight:bold;
+}
+
+.apply-btn{
+    display:block;
+    text-align:center;
+    background:#10b981;
+    color:white;
+    padding:11px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+@media print{
+    button, .btn, .apply-btn {
+        display:none !important;
+    }
+}
+</style>
 </head>
+
 <body>
-
-<header class="top-header">
-    <div class="header-left">
-        <img src="logo.png" class="header-logo" alt="Logo">
-        <span class="app-name">D-LOAN OFFERS</span>
-    </div>
-</header>
-
 <div class="container">
-    <div class="glass center">
-        <h2 style="font-size: 24px;">Bureau Verified Assessment Summary</h2>
-        
-        <svg viewBox="0 0 200 120">
-            <path d="M20 100 A80 80 0 0 1 180 100" stroke="#334155" stroke-width="16" fill="none" stroke-linecap="round"/>
-            <path id="gauge" d="M20 100 A80 80 0 0 1 180 100" stroke="#22c55e" stroke-width="16" fill="none" stroke-dasharray="252" stroke-dashoffset="252" stroke-linecap="round" style="transition: stroke-dashoffset 1.5s ease-out;"/>
-            <text x="100" y="95" text-anchor="middle" fill="white" font-size="28" font-weight="bold" id="scoreDisplay">300</text>
-        </svg>
+    <div class="report-card">
+        <div class="header">
+            <h1>D-LOAN OFFERS</h1>
+            <p>Credit Assessment Report</p>
+        </div>
 
-        <h3 id="ratingDisplay" style="font-size: 20px; margin-bottom: 4px;">Evaluating...</h3>
-        <p id="approvalDisplay" style="color: var(--accent); font-weight: bold; margin-bottom: 5px;">0% Approval Matrix</p>
-        <p id="dateDisplay" style="font-size: 13px; opacity: 0.6;"></p>
-        <div id="validityBanner"></div>
-
-        <div class="share-row">
-            <button class="btn-action btn-print" onclick="window.print()">🖨 Download PDF Report</button>
-            <button class="btn-action btn-wp" onclick="shareWhatsApp()">💬 Share via WhatsApp</button>
+        <div class="score-box">
+            <div class="score-circle">
+                <div class="score-number" id="score">0</div>
+                <div class="score-label">Credit Score</div>
+            </div>
+            <h2 id="rating" style="margin-top:15px;"></h2>
+            <button class="btn" onclick="window.print()">🖨 Print / Save PDF</button>
         </div>
     </div>
 
-    <div class="glass">
-        <h3 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">📋 Verified Applicant Parameters</h3>
-        <div class="grid">
-            <div class="info-card"><div class="info-label">Full Name</div><div class="info-val" id="valName">N/A</div></div>
-            <div class="info-card"><div class="info-label">Associated Mobile</div><div class="info-val" id="valMobile">N/A</div></div>
-            <div class="info-card"><div class="info-label">PAN Number</div><div class="info-val" id="valPan">N/A</div></div>
-            <div class="info-card"><div class="info-label">City Profile</div><div class="info-val" id="valCity">N/A</div></div>
-            <div class="info-card"><div class="info-label">Gross Income</div><div class="info-val" id="valIncome">N/A</div></div>
-            <div class="info-card"><div class="info-label">Declared Active EMI</div><div class="info-val" id="valEmi">N/A</div></div>
+    <div class="report-card">
+        <h2>User Information</h2>
+        <div class="grid" style="margin-top:15px;">
+            <div class="info"><strong>Name</strong><span id="name"></span></div>
+            <div class="info"><strong>Mobile</strong><span id="mobile"></span></div>
+            <div class="info"><strong>PAN</strong><span id="pan"></span></div>
+            <div class="info"><strong>City</strong><span id="city"></span></div>
+            <div class="info"><strong>Income</strong><span id="income"></span></div>
+            <div class="info"><strong>Report Date</strong><span id="reportDate"></span></div>
         </div>
     </div>
 
-    <div class="glass">
-        <h3>🏦 Filtered Affiliate Loan Recommendations</h3>
-        <div class="offer-grid" id="reportOfferBucket">
-            <p style="opacity:0.5;">Compiling eligible options from central grid pools...</p>
-        </div>
+    <div class="report-card">
+        <h2 class="section-title">🏦 Recommended Loan Offers</h2>
+        <div id="loanOffers"></div>
     </div>
-</div>
-
-<div id="hiddenPool" style="display:none;"></div>
-
-<div class="bottom-nav">
-    <a href="index.html" class="nav-btn"><div class="nav-icon">🏠</div><div>Home</div></a>
-    <a href="credit-score.html" class="nav-btn"><div class="nav-icon">📈</div><div>Score</div></a>
-    <a href="#" class="nav-btn active"><div class="nav-icon">📄</div><div>Report</div></a>
 </div>
 
 <script>
-window.onload = function() {
-    const params = new URLSearchParams(window.location.search);
-    const pan = params.get("user");
-    
-    if(!pan) { alert("Missing operational security verification token."); window.location.href="credit-score.html"; return; }
-    
-    const storeObj = localStorage.getItem("REPORT_" + pan.toUpperCase());
-    if(!storeObj) { alert("Session array data structurally expired."); window.location.href="credit-score.html"; return; }
-    
-    const data = JSON.parse(storeObj);
-    
-    // Calculate Days mapping properties
-    const reportDate = new Date(data.timestamp);
-    const currentDate = new Date();
-    const activeDays = (currentDate - reportDate) / (1000 * 60 * 60 * 24);
-    const validUntil = new Date(reportDate.getTime() + (30 * 24 * 60 * 60 * 1000));
+/* Synchronized Storage Verification */
+const data = JSON.parse(localStorage.getItem("creditReportData"));
 
-    document.getElementById("validityBanner").innerText = `⏱ Report Validity Expiry: ${validUntil.toLocaleDateString()} (${Math.ceil(30 - activeDays)} Days Left)`;
+if(!data){
+    alert("No report data found. Please complete the assessment.");
+    window.location.href="credit-score.html";
+} else {
+    document.getElementById("name").innerText = (data.firstName || "") + " " + (data.lastName || "");
+    document.getElementById("mobile").innerText = data.mobile || "-";
+    document.getElementById("pan").innerText = data.pan || "-";
+    document.getElementById("city").innerText = data.city || "-";
+    document.getElementById("income").innerText = "₹" + parseFloat(data.income || 0).toLocaleString();
+    document.getElementById("reportDate").innerText = data.reportDate || "-";
+    document.getElementById("score").innerText = data.score || 650;
 
-    // Map UI
-    document.getElementById("valName").innerText = data.firstName + " " + data.lastName;
-    document.getElementById("valMobile").innerText = data.mobile;
-    document.getElementById("valPan").innerText = data.pan;
-    document.getElementById("valCity").innerText = data.city;
-    document.getElementById("valIncome").innerText = "₹" + Number(data.income).toLocaleString('en-IN');
-    document.getElementById("valEmi").innerText = "₹" + Number(data.emi).toLocaleString('en-IN');
-    document.getElementById("dateDisplay").innerText = "Generated Vector Date: " + data.dateString;
-    document.getElementById("approvalDisplay").innerText = data.app + "% Automated Approval Chance";
-    
-    // Rating string
-    let tScore = data.score;
+    const score = parseInt(data.score || 650);
     let rating = "Fair";
-    const gauge = document.getElementById("gauge");
-    
-    if(tScore >= 750) { rating = "Excellent Elite Profile"; gauge.style.stroke = "#22c55e"; }
-    else if(tScore >= 650) { rating = "Good Prime Profile"; gauge.style.stroke = "#3b82f6"; }
-    else { rating = "Needs Urgent Attention"; gauge.style.stroke = "#ef4444"; }
-    
-    document.getElementById("ratingDisplay").innerText = rating;
 
-    // Animated Needle/Gauge System
-    let cScore = 300;
-    let anim = setInterval(() => {
-        if(cScore >= tScore) { clearInterval(anim); }
-        else { cScore += 5; if(cScore > tScore) cScore = tScore; }
-        document.getElementById("scoreDisplay").textContent = cScore;
-        let percentage = (cScore - 300) / 600;
-        gauge.style.strokeDashoffset = 252 - (252 * percentage);
-    }, 12);
+    if(score >= 800) rating = "Excellent";
+    else if(score >= 750) rating = "Very Good";
+    else if(score >= 700) rating = "Good";
+    else if(score >= 650) rating = "Average";
+    else rating = "Needs Improvement";
 
-    // Cross-page auto-fetching layout logic
-    fetchOffersFromIndex(tScore);
-};
+    document.getElementById("rating").innerText = rating;
+}
 
-function fetchOffersFromIndex(score) {
-    fetch('index.html')
-    .then(res => res.text())
-    .then(htmlString => {
+/* Gracefully Fetch Local System Layout Offers */
+async function loadLoanOffers(){
+    try {
+        const response = await fetch("index.html");
+        const html = await response.text();
         const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlString, 'text/html');
-        const cards = doc.querySelectorAll('#mainLoanPool .loan-card');
-        const bucket = document.getElementById("reportOfferBucket");
-        
-        if(cards.length === 0) {
-            bucket.innerHTML = `<p style='opacity:0.5;'>Fallback default offers loaded natively.</p>`;
-            return;
-        }
+        const doc = parser.parseFromString(html, "text/html");
+        const loanList = doc.querySelector(".loan-list");
 
-        bucket.innerHTML = "";
-        cards.forEach(card => {
-            let tier = card.getAttribute("data-tier");
-            
-            // Score filtering matrix conditions
-            if(score >= 750) {
-                // Elite score gets absolutely all active cards
-                bucket.appendChild(card.cloneNode(true));
-            } else if(score >= 650 && score < 750) {
-                // Mid tier gets medium + standard limited loans
-                if(tier === "medium" || tier === "limited") bucket.appendChild(card.cloneNode(true));
-            } else {
-                // Critical risk profiles only see basic target cards
-                if(tier === "limited") bucket.appendChild(card.cloneNode(true));
-            }
-        });
-        
-        if(bucket.children.length === 0) {
-            bucket.innerHTML = "<p style='color:orange;'>Profile requires external collateral matching pipelines.</p>";
+        if(loanList){
+            document.getElementById("loanOffers").innerHTML = '<div class="loan-list">' + loanList.innerHTML + '</div>';
+        } else {
+            document.getElementById("loanOffers").innerHTML = "<p>No active loan structures found.</p>";
         }
-    })
-    .catch(err => {
-        document.getElementById("reportOfferBucket").innerHTML = "<p style='opacity:0.5;'>Cross pooling processing interrupted.</p>";
-    });
+    } catch(err) {
+        document.getElementById("loanOffers").innerHTML = "<p>Unable to load dynamic loan offers configuration.</p>";
+        console.error(err);
+    }
 }
 
-function shareWhatsApp() {
-    const scoreText = document.getElementById("scoreDisplay").innerText;
-    const ratingText = document.getElementById("ratingDisplay").innerText;
-    const textMessage = `Hello! Check out my official Credit Assessment Report on D-LOAN OFFERS.%0A%0A📈 *Credit Score:* ${scoreText}%0A📊 *Profile Status:* ${ratingText}%0A%0AAssess yours instantly here: ${window.location.href}`;
-    window.open(`https://api.whatsapp.com/send?text=${textMessage}`, '_blank');
-}
+loadLoanOffers();
 </script>
 </body>
 </html>
