@@ -3,504 +3,500 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyze Bureau Credit Score | D-LOAN OFFERS</title>
+    <title>Check Credit Score | D-LOAN OFFERS</title>
     <style>
         :root {
             --primary-blue: #1E40AF;
             --pure-white: #ffffff;
             --light-blue-bg: #eff6ff;
             --border-color: #dbeafe;
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --text-dark: #1E40AF;
+            --glass-bg: rgba(255, 255, 255, 0.9);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
             background-color: var(--pure-white);
-            color: var(--primary-blue);
+            color: var(--text-dark);
             min-height: 100vh;
             padding-bottom: 80px;
         }
 
-        /* Glassmorphism Header & Layout */
-        .navbar {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--border-color);
-            padding: 15px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-weight: 800;
-            font-size: 22px;
-            letter-spacing: 0.5px;
-        }
-
         .container {
-            max-width: 750px;
+            max-width: 650px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
-        .glass-card {
-            background: var(--glass-bg);
-            border: 2px solid var(--primary-blue);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(30, 64, 175, 0.08);
-        }
-
-        .page-title {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .page-subtitle {
-            font-size: 14px;
-            color: #4b5563;
+        .header-brand {
             text-align: center;
             margin-bottom: 30px;
+        }
+
+        .header-brand h1 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .header-brand p {
+            font-size: 14px;
+            color: #4b5563;
             font-weight: 500;
+            margin-top: 5px;
         }
 
-        /* Form Controls */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
+        /* Glassmorphism Card Style but keeping clean white/blue themes */
+        .assessment-card {
+            background: var(--glass-bg);
+            border: 2px solid var(--primary-blue);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.08);
+            position: relative;
         }
 
-        @media (min-width: 600px) {
-            .form-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-group.full-width {
-            grid-column: span 1;
-        }
-        @media (min-width: 600px) {
-            .form-group.full-width { grid-column: span 2; }
-        }
-
-        label {
-            font-size: 12px;
+        .form-section-title {
+            font-size: 18px;
             font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--light-blue-bg);
+            padding-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        input, select {
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 15px;
-            color: var(--primary-blue);
-            background: var(--pure-white);
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--primary-blue);
-        }
-
-        .radio-box-group {
+        .grid-2 {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 15px;
         }
 
-        .radio-label {
-            border: 2px solid var(--border-color);
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
+        @media(min-width: 480px) {
+            .grid-2 { grid-template-columns: 1fr 1fr; }
         }
 
-        input[type="radio"] {
-            display: none;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        input[type="radio"]:checked + .radio-label {
-            background-color: var(--primary-blue);
-            color: var(--pure-white);
-            border-color: var(--primary-blue);
-        }
-
-        /* Main System Buttons */
-        .btn-prime {
-            background-color: var(--primary-blue);
-            color: var(--pure-white);
-            border: 2px solid var(--primary-blue);
-            padding: 15px 30px;
-            font-size: 16px;
+        .form-group label {
+            display: block;
+            font-size: 13px;
             font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 25px;
+            margin-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            background-color: var(--pure-white);
+            color: var(--primary-blue);
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            outline: none;
             transition: all 0.3s ease;
         }
 
-        .btn-prime:hover {
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px var(--light-blue-bg);
+        }
+
+        /* Custom Radio/Check Grid */
+        .check-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .check-btn {
+            border: 2px solid var(--border-color);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            background: var(--pure-white);
+        }
+
+        .radio-hidden {
+            display: none;
+        }
+
+        .radio-hidden:checked + .check-btn {
+            background-color: var(--light-blue-bg);
+            border-color: var(--primary-blue);
+        }
+
+        /* Primary Styled Buttons */
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary-blue);
+            color: var(--pure-white);
+            border: 2px solid var(--primary-blue);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
             background-color: var(--pure-white);
             color: var(--primary-blue);
         }
 
-        .btn-prime:disabled {
-            background-color: #cbd5e1;
-            border-color: #cbd5e1;
-            color: #64748b;
-            cursor: not-allowed;
-        }
-
-        /* Lock Alert Notification */
+        /* Lock Notification Banner */
         .lock-banner {
             display: none;
             background-color: var(--light-blue-bg);
             border: 2px solid var(--primary-blue);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 15px;
             margin-bottom: 25px;
             text-align: center;
-            font-size: 14px;
-            font-weight: 600;
         }
 
-        /* Fixed Bottom Bar Navigation UI */
+        .lock-banner h4 { font-weight: 800; margin-bottom: 5px; }
+        .lock-banner p { font-size: 13px; font-weight: 500; }
+
+        .btn-secondary {
+            background-color: var(--primary-blue);
+            color: var(--pure-white);
+            border: 2px solid var(--primary-blue);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background-color: var(--pure-white);
+            color: var(--primary-blue);
+        }
+
+        /* Fixed Bottom Navigation Setup */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
-            right: 0;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
+            width: 100%;
+            background: var(--pure-white);
             border-top: 2px solid var(--border-color);
             display: flex;
             justify-content: space-around;
             padding: 12px 0;
-            z-index: 999;
+            z-index: 1000;
         }
 
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             text-decoration: none;
-            color: var(--primary-blue);
+            color: #64748b;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            opacity: 0.7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
         }
 
         .nav-item.active {
-            opacity: 1;
+            color: var(--primary-blue);
         }
 
-        .nav-icon {
-            font-size: 20px;
-            margin-bottom: 2px;
-        }
+        .nav-item span { font-size: 20px; }
 
-        /* Animation Loading Module Overlay */
+        /* Loader Overlay Animation */
         .loader-overlay {
-            display: none;
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.95);
-            z-index: 9999;
+            z-index: 2000;
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            display: none;
         }
-
-        .gauge-spinner {
-            width: 80px;
-            height: 80px;
-            border: 6px solid var(--light-blue-bg);
-            border-top: 6px solid var(--primary-blue);
+        .spinner {
+            width: 50px; height: 50px;
+            border: 5px solid var(--light-blue-bg);
+            border-top: 5px solid var(--primary-blue);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<!-- Loader Module -->
 <div class="loader-overlay" id="loader">
-    <div class="gauge-spinner"></div>
-    <h3 style="margin-top: 20px; font-weight: 800;">VERIFYING CREDENTIALS...</h3>
-    <p style="font-size: 13px; margin-top: 5px; color: #4b5563;">Fetching real-time structural bureau algorithms indicators...</p>
+    <div class="spinner"></div>
+    <h3 style="margin-top: 20px; color: var(--primary-blue); font-weight: 800;">SECURELY ANALYZING BUREAU REPORT...</h3>
+    <p style="font-size: 13px; margin-top: 5px; font-weight: 600;">Evaluating Risk Parameters & Credit Mix Variables</p>
 </div>
 
-<nav class="navbar">
-    <div class="nav-logo">D-LOAN OFFERS</div>
-    <button onclick="clearTrackingForTesting()" style="font-size: 10px; background: none; border: none; color: inherit; cursor: pointer; opacity: 0.5;">Reset Simulation</button>
-</nav>
-
 <div class="container">
-    <div class="glass-card">
-        <h2 class="page-title">Credit Risk Assessment</h2>
-        <p class="page-subtitle">Check your pre-approved matrix profile score indices instantly.</p>
-        
-        <!-- Lock Banner Indicator -->
-        <div class="lock-banner" id="lockBanner">
-            🔒 This profile segment is compiled and locked for 30 days. <br>
-            <span id="lockDaysText" style="font-weight: 800;"></span> remaining before re-assessment allowed.
-            <button class="btn-prime" style="padding: 6px 12px; font-size: 12px; margin-top: 10px;" onclick="redirectToReport()">View Active Report</button>
-        </div>
+    <div class="header-brand">
+        <h1>D-LOAN OFFERS</h1>
+        <p>AI Powered Multi-Bureau Credit Assessment System</p>
+    </div>
 
-        <form id="assessmentForm" onsubmit="processScore(event)">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" id="firstName" required placeholder="As per PAN card">
-                </div>
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" id="lastName" required placeholder="Surname">
-                </div>
+    <!-- 30 Days System Lock Engine Alert Box -->
+    <div class="lock-banner" id="lockBanner">
+        <h4>🔒 REPORT ACTIVE UNDER 30-DAY LOCK POLICY</h4>
+        <p id="lockMessage">You have recently generated a report using this PAN. Score regeneration is restricted to prevent structural penalty models.</p>
+        <button class="btn-secondary" onclick="redirectToReport()">View Existing Locked Report</button>
+        <button class="btn-secondary" style="background:#cbd5e1; border-color:#cbd5e1; color:#000; margin-left: 10px;" onclick="forceUnlockForm()">Start New Assessment</button>
+    </div>
+
+    <!-- Form Interface Container Wrapper -->
+    <div class="assessment-card">
+        <form id="creditForm" onsubmit="processCreditAssessment(event)">
+            
+            <div class="form-section-title">Personal Metadata Profile</div>
+            
+            <div class="form-group">
+                <label>Full Name (As per PAN Card)</label>
+                <input type="text" id="firstName" placeholder="First & Last Name" required>
+            </div>
+
+            <div class="grid-2">
                 <div class="form-group">
                     <label>Permanent Account Number (PAN)</label>
-                    <input type="text" id="pan" maxlength="10" required placeholder="ABCDE1234F" style="text-transform: uppercase;">
+                    <input type="text" id="pan" placeholder="ABCDE1234F" minlength="10" maxlength="10" required style="text-transform: uppercase;">
                 </div>
                 <div class="form-group">
-                    <label>Mobile Reference</label>
-                    <input type="tel" id="mobile" pattern="[6-9][0-9]{9}" maxlength="10" required placeholder="10-digit mobile number">
+                    <label>Mobile Reference ID</label>
+                    <input type="tel" id="mobile" placeholder="10-Digit Mobile Number" pattern="[0-9]{10}" minlength="10" maxlength="10" required>
                 </div>
+            </div>
+
+            <div class="grid-2">
                 <div class="form-group">
-                    <label>Current City</label>
-                    <input type="text" id="city" required placeholder="e.g. Mumbai, Delhi">
+                    <label>Current Residential City</label>
+                    <input type="text" id="city" placeholder="e.g. Mumbai" required>
                 </div>
                 <div class="form-group">
                     <label>Net Monthly Income (INR)</label>
-                    <input type="number" id="income" required placeholder="Monthly salary or profits">
+                    <input type="number" id="income" placeholder="e.g. 45000" required>
+                </div>
+            </div>
+
+            <div class="form-section-title">Institutional Leverage Parameters</div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Total Current Monthly EMIs Paid</label>
+                    <input type="number" id="emi" placeholder="0 if none" default="0" required>
                 </div>
                 <div class="form-group">
-                    <label>Current Monthly EMIs (INR)</label>
-                    <input type="number" id="emi" defaultValue="0" required placeholder="Enter 0 if none">
-                </div>
-                <div class="form-group">
-                    <label>Primary Loan Requirement</label>
-                    <select id="loanType" required>
-                        <option value="Personal Loan">Personal Loan</option>
-                        <option value="Business Loan">Business Loan</option>
-                        <option value="Home Loan">Home Loan</option>
-                        <option value="Credit Card Upgrade">Credit Card Instantly</option>
+                    <label>Primary Active Loan Details</label>
+                    <select id="loanDetails">
+                        <option value="none">No Active Structural Loans</option>
+                        <option value="personal">Active Personal Loan</option>
+                        <option value="home">Active Home Loan Portfolio</option>
+                        <option value="two-wheeler">Two Wheeler Asset Loan</option>
+                        <option value="multi">Multiple Hybrid Accounts</option>
                     </select>
                 </div>
+            </div>
 
-                <!-- Yes/No Matrix Framework Modules -->
+            <div class="grid-2" style="margin-bottom: 10px;">
                 <div class="form-group">
-                    <label>Do you have an active Credit Card?</label>
-                    <div class="radio-box-group">
-                        <div>
-                            <input type="radio" id="cc_yes" name="hasCreditCard" value="yes" checked>
-                            <label for="cc_yes" class="radio-label">Yes</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="cc_no" name="hasCreditCard" value="no">
-                            <label for="cc_no" class="radio-label">No</label>
-                        </div>
+                    <label>Do you own an active Credit Card?</label>
+                    <div class="check-grid">
+                        <label>
+                            <input type="radio" name="creditCard" value="yes" checked class="radio-hidden">
+                            <div class="check-btn">YES</div>
+                        </label>
+                        <label>
+                            <input type="radio" name="creditCard" value="no" class="radio-hidden">
+                            <div class="check-btn">NO</div>
+                        </label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Any missed EMI in last 12 months?</label>
-                    <div class="radio-box-group">
-                        <div>
-                            <input type="radio" id="miss_yes" name="hasMissedEmi" value="yes">
-                            <label for="miss_yes" class="radio-label">Yes</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="miss_no" name="hasMissedEmi" value="no" checked>
-                            <label for="miss_no" class="radio-label">No</label>
-                        </div>
+                    <label>Any missed EMIs in last 12 months?</label>
+                    <div class="check-grid">
+                        <label>
+                            <input type="radio" name="missedEmi" value="yes" class="radio-hidden">
+                            <div class="check-btn">YES</div>
+                        </label>
+                        <label>
+                            <input type="radio" name="missedEmi" value="no" checked class="radio-hidden">
+                            <div class="check-btn">NO</div>
+                        </label>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="btn-prime" id="submitBtn">Generate Free Analysis Report →</button>
+            <button type="submit" class="btn-submit" id="submitBtn">Generate Instant Bureau Score</button>
         </form>
     </div>
 </div>
 
-<!-- Fixed Layout Bottom Navigation Module Bar -->
-<div class="bottom-nav">
-    <a href="index.html" class="nav-item">
-        <span class="nav-icon">🏠</span>
-        <span>Home</span>
-    </a>
-    <a href="credit-score.html" class="nav-item active">
-        <span class="nav-icon">📊</span>
-        <span>Credit Score</span>
-    </a>
-    <a href="credit-report.html" class="nav-item">
-        <span class="nav-icon">📜</span>
-        <span>Report</span>
-    </a>
-</div>
+<!-- Fixed Universal Bottom Bar Navigation -->
+<nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><span>🏠</span>Home</a>
+    <a href="credit-score.html" class="nav-item active"><span>📊</span>Credit Score</a>
+    <a href="javascript:void(0)" onclick="navigateToReportSafe()" class="nav-item"><span>📋</span>Report</a>
+</nav>
 
 <script>
-    // Realtime capitalization/validation layer
-    const panInput = document.getElementById('pan');
-    panInput.addEventListener('input', function() {
-        this.value = this.value.toUpperCase();
-        if(this.value.length === 10) {
-            checkPanLockStatus(this.value);
-        } else {
-            resetFormLockState();
+    // System Initialization checking state vectors
+    let selectedActivePAN = "";
+
+    document.getElementById("pan").addEventListener("input", function() {
+        const panVal = this.value.toUpperCase().trim();
+        if(panVal.length === 10) {
+            checkPANLockStatus(panVal);
         }
     });
 
-    function checkPanLockStatus(panId) {
-        const globalStore = JSON.parse(localStorage.getItem("bureau_multi_records")) || {};
-        const userRecord = globalStore[panId];
-
-        if(userRecord) {
-            const now = new Date().getTime();
-            const difference = userRecord.expiryTimestamp - now;
-
-            if (difference > 0) {
-                const remainingDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
-                document.getElementById("lockDaysText").innerText = remainingDays + " Days";
-                document.getElementById("lockBanner").style.display = "block";
-                document.getElementById("submitBtn").disabled = true;
+    function checkPANLockStatus(pan) {
+        const storedLogs = JSON.parse(localStorage.getItem(`bureau_report_${pan}`));
+        if(storedLogs) {
+            const today = new Date();
+            const lockedUntil = new Date(storedLogs.lockExpiryDate);
+            
+            if(today < lockedUntil) {
+                selectedActivePAN = pan;
+                const diffTime = Math.abs(lockedUntil - today);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 
-                // Form field lockdown elements injection setup
-                toggleFormFields(true);
-                localStorage.setItem("creditReportData", JSON.stringify(userRecord));
+                document.getElementById("lockMessage").innerText = `PAN ${pan} is under standard lock profile. Remaining validity: ${diffDays} days left.`;
+                document.getElementById("lockBanner").style.display = "block";
+                lockFormInterface(true);
                 return true;
             }
         }
-        resetFormLockState();
+        document.getElementById("lockBanner").style.display = "none";
+        lockFormInterface(false);
         return false;
     }
 
-    function resetFormLockState() {
-        document.getElementById("lockBanner").style.display = "none";
-        document.getElementById("submitBtn").disabled = false;
-        toggleFormFields(false);
+    function lockFormInterface(status) {
+        const formElements = document.getElementById("creditForm").elements;
+        for (let i = 0; i < formElements.length; i++) {
+            if(formElements[i].id !== "submitBtn") {
+                formElements[i].disabled = status;
+            }
+        }
+        document.getElementById("submitBtn").disabled = status;
+        if(status) {
+            document.getElementById("submitBtn").style.background = "#cbd5e1";
+            document.getElementById("submitBtn").style.borderColor = "#cbd5e1";
+            document.getElementById("submitBtn").style.color = "#4b5563";
+        } else {
+            document.getElementById("submitBtn").style.background = "var(--primary-blue)";
+            document.getElementById("submitBtn").style.borderColor = "var(--primary-blue)";
+            document.getElementById("submitBtn").style.color = "var(--pure-white)";
+        }
     }
 
-    function toggleFormFields(status) {
-        const fields = document.querySelectorAll("#assessmentForm input, #assessmentForm select");
-        fields.forEach(field => {
-            if(field.id !== 'pan') field.disabled = status;
-        });
+    function forceUnlockForm() {
+        lockFormInterface(false);
+        document.getElementById("lockBanner").style.display = "none";
+        document.getElementById("creditForm").reset();
     }
 
     function redirectToReport() {
-        window.location.href = "credit-report.html";
+        if(selectedActivePAN) {
+            localStorage.setItem("active_session_pan", selectedActivePAN);
+            window.location.href = "credit-report.html";
+        }
     }
 
-    function processScore(e) {
-        e.preventDefault();
+    function navigateToReportSafe() {
+        const fallbackPan = localStorage.getItem("active_session_pan");
+        if(fallbackPan && localStorage.getItem(`bureau_report_${fallbackPan}`)) {
+            window.location.href = "credit-report.html";
+        } else {
+            alert("No computed report evaluations found inside current local workspace session. Please execute an evaluation profile sequence first.");
+        }
+    }
+
+    // Logic Matrix Rule Processor Core Module Engine
+    function processCreditAssessment(event) {
+        event.preventDefault();
         
-        const panVal = document.getElementById("pan").value.trim().toUpperCase();
-        if(checkPanLockStatus(panVal)) return;
+        const firstName = document.getElementById("firstName").value;
+        const pan = document.getElementById("pan").value.toUpperCase().trim();
+        const mobile = document.getElementById("mobile").value;
+        const city = document.getElementById("city").value;
+        const income = parseFloat(document.getElementById("income").value);
+        const emi = parseFloat(document.getElementById("emi").value || 0);
+        const hasCard = document.querySelector('input[name="creditCard"]:checked').value;
+        const hasMissed = document.querySelector('input[name="missedEmi"]:checked').value;
+        
+        if(checkPANLockStatus(pan)) return;
 
         document.getElementById("loader").style.display = "flex";
 
+        // Dynamic Algorithm parameters compilation
         setTimeout(() => {
-            // Enterprise algorithm model calculation matrix setup base components
-            let baseScore = 680;
-            const income = parseFloat(document.getElementById("income").value) || 0;
-            const emi = parseFloat(document.getElementById("emi").value) || 0;
-            const hasCC = document.querySelector('input[name="hasCreditCard"]:checked').value;
-            const hasMissed = document.querySelector('input[name="hasMissedEmi"]:checked').value;
+            let score = 710; // Baseline entry score variable anchor value
 
-            // Compute math vectors structures indices models configurations
-            if (income > 75000) baseScore += 60;
-            else if (income > 40000) baseScore += 30;
+            // Logic structural vectors configurations modification
+            if(hasCard === "yes") score += 45;
+            if(hasMissed === "yes") score -= 120; else score += 50;
 
             const dtiRatio = (emi / income) * 100;
-            if (dtiRatio > 50) baseScore -= 70;
-            else if (dtiRatio > 20) baseScore -= 30;
-            else baseScore += 40;
+            if(dtiRatio > 50) score -= 80;
+            else if(dtiRatio > 20) score -= 30;
+            else score += 40;
 
-            if (hasCC === "yes") baseScore += 35;
-            if (hasMissed === "yes") baseScore -= 120; else baseScore += 45;
+            if(income > 60000) score += 35;
+            if(score > 900) score = 900;
+            if(score < 300) score = 300;
 
-            // Ceiling caps setup thresholds parameters bounded frameworks boundaries
-            if(baseScore > 900) baseScore = 900;
-            if(baseScore < 300) baseScore = 300;
+            // Approval Calculation Engine Metrics Formulas
+            let approvalPercentage = 30;
+            if(score >= 750) approvalPercentage = Math.floor(85 + (score-750)*0.1);
+            else if(score >= 650) approvalPercentage = Math.floor(55 + (score-650)*0.3);
+            else approvalPercentage = Math.floor(20 + (score-300)*0.1);
+            if(approvalPercentage > 98) approvalPercentage = 98;
 
-            // Approval metrics conversion logic
-            let approvalPercentage = Math.round(((baseScore - 300) / 600) * 100);
-            if(approvalPercentage < 10) approvalPercentage = 10;
+            // Compute Date Logic Parameters Matrix (30 Days Configuration Guardrail Lock)
+            const currentDate = new Date();
+            const lockExpiryDate = new Date();
+            lockExpiryDate.setDate(currentDate.getDate() + 30);
 
-            const assessmentDate = new Date().toLocaleDateString('en-IN', {
-                day: '2-digit', month: 'short', year: 'numeric'
-            });
-
-            // 30 days calculation validation timestamp mappings
-            const timestampNow = new Date().getTime();
-            const thirtyDaysValidTimestamp = timestampNow + (30 * 24 * 60 * 60 * 1000);
-
-            const reportPayload = {
-                firstName: document.getElementById("firstName").value,
-                lastName: document.getElementById("lastName").value,
-                pan: panVal,
-                mobile: document.getElementById("mobile").value,
-                city: document.getElementById("city").value,
-                income: income,
-                emi: emi,
-                loanType: document.getElementById("loanType").value,
-                score: baseScore,
-                approvalChance: approvalPercentage,
-                reportDate: assessmentDate,
-                expiryTimestamp: thirtyDaysValidTimestamp
+            const assessmentPayload = {
+                firstName, pan, mobile, city, income, emi,
+                score, approvalPercentage,
+                assessmentDate: currentDate.toLocaleDateString('en-IN', {day: 'numeric', month: 'short', year: 'numeric'}),
+                lockExpiryDate: lockExpiryDate.toISOString()
             };
 
-            // Save records to Multiuser Mapping framework profiles store
-            const globalStore = JSON.parse(localStorage.getItem("bureau_multi_records")) || {};
-            globalStore[panVal] = reportPayload;
-            localStorage.setItem("bureau_multi_records", JSON.stringify(globalStore));
+            // Write into isolated independent partition framework storage array matrix mappings
+            localStorage.setItem(`bureau_report_${pan}`, JSON.stringify(assessmentPayload));
+            localStorage.setItem("active_session_pan", pan);
 
-            // Set current running runtime execution index pointer payload 
-            localStorage.setItem("creditReportData", JSON.stringify(reportPayload));
-            
+            document.getElementById("loader").style.display = "none";
             window.location.href = "credit-report.html";
         }, 2000);
-    }
-
-    function clearTrackingForTesting() {
-        localStorage.clear();
-        alert("Simulation caches flushed completely. You can now assess identical user indexes again.");
-        window.location.reload();
     }
 </script>
 </body>
