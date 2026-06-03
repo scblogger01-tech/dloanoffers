@@ -1,256 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Assessment | D-LOAN OFFERS</title>
-    <style>
-        :root {
-            --bg: #0f172a;
-            --glass: rgba(255, 255, 255, .08);
-            --text: #fff;
-            --accent: #22c55e;
-            --primary: #2563eb;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: var(--text);
-            padding-bottom: 90px;
-        }
-        .top-header {
-            position: sticky; top: 0; z-index: 999; background: #0f172a;
-            padding: 14px 18px; display: flex; align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .header-logo { width: 42px; height: 42px; border-radius: 12px; background: white; padding: 5px; }
-        .app-name { color: white; font-size: 24px; font-weight: 900; margin-left: 12px; }
-        
-        .container { max-width: 1000px; margin: auto; padding: 20px; }
-        .glass {
-            background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, .1); border-radius: 20px; padding: 25px; margin-top: 20px;
-        }
-        h1 { text-align: center; margin-bottom: 20px; font-size: 26px; }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .field { display: flex; flex-direction: column; }
-        label { margin-bottom: 6px; font-size: 13px; opacity: 0.9; font-weight: 600; }
-        input, select {
-            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.3); color: #fff; font-size: 15px; outline: none;
-        }
-        input:focus, select:focus { border-color: var(--primary); }
-        select option { background: #1e293b; color: #fff; }
-        
-        .action-btn {
-            width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px;
-        }
-        #submitBtn { background: var(--primary); color: white; }
-        #lockMessage { display: none; background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 15px; border-radius: 12px; text-align: center; margin-top: 20px; font-weight: bold; }
-        #viewActiveReportBtn { display: none; background: var(--accent); color: white; text-align: center; text-decoration: none; margin-top: 10px; }
-        
-        /* LOADING SCREEN */
-        #loading {
-            display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
-            justify-content: center; align-items: center; z-index: 9999;
-        }
-        .loaderbox { background: #1e293b; padding: 30px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.1); width: 280px; }
-        .spinner { width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); border-top: 5px solid var(--primary); border-radius: 50%; margin: 0 auto 15px; animation: spin 1s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credit Score Assessment</title>
+<style>
+:root{--bg:#0f172a;--glass:rgba(255,255,255,.08);--text:#fff;--accent:#22c55e;--primary:#1E40AF}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#0f172a,#1e293b);color:var(--text);padding-bottom:85px;}
+.container{max-width:1000px;margin:auto;padding:20px}
+.glass{background:var(--glass);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px}
+h1{text-align:center; margin-bottom: 20px;}
+label{display:block;margin:10px 0 5px}
+input,select,button{width:100%;padding:12px;border-radius:10px;border:none; outline:none;}
+input, select { background: rgba(255,255,255,0.1); color: #fff; }
+option { background: #1e293b; color: #fff; }
+button{background:#2563eb;color:#fff;font-weight:bold;cursor:pointer;margin-top:12px}
+#resetBtn{display:none;background:#dc2626}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+#result,#offers,#leadBox{display:none}
+.offer{background:rgba(255,255,255,.08);padding:15px;border-radius:15px; margin-top:10px;}
+.offer a{display:block;background:#22c55e;color:white;text-decoration:none;padding:10px;border-radius:8px;text-align:center; margin-top:10px;}
+.center{text-align:center}
+#loading{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);justify-content:center;align-items:center;z-index:999}
+.loaderbox{background:#fff;color:#000;padding:25px;border-radius:15px;text-align:center}
+svg{max-width:260px; margin: 20px auto;}
+h2 { margin: 15px 0 10px; }
+@media(max-width:600px){h1{font-size:24px}}
 
-        /* BOTTOM NAV */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #fff;
-            display: flex; align-items: center; justify-content: space-evenly;
-            box-shadow: 0 -4px 12px rgba(0,0,0,.12); z-index: 999;
-        }
-        .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; font-size: 11px; font-weight: 600; color: #64748b; }
-        .nav-icon { font-size: 20px; margin-bottom: 3px; }
-        .nav-btn.active { color: #10b981; }
-    </style>
+.top-header{position:sticky;top:0;z-index:999;background:#0f172a;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 12px rgba(0,0,0,0.15);}
+.header-left{display:flex;align-items:center;gap:12px;}
+.header-logo{width:42px;height:42px;border-radius:12px;background:white;padding:5px;object-fit:contain;}
+.app-name{color:white;font-size:24px;font-weight:900;letter-spacing:1px;}
+@media(max-width:480px){.app-name{font-size:18px;}.header-logo{width:36px;height:36px;}}
+
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;height:70px;background:#fff;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-evenly;box-shadow:0 -4px 12px rgba(0,0,0,.12);z-index:999;}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;font-size:11px;font-weight:600;color:#64748b;white-space:nowrap;min-width:0;cursor:pointer;}
+.nav-icon{font-size:20px;margin-bottom:3px;}
+.nav-btn.active{color:#10b981;}
+
+.side-menu{position:fixed;top:0;left:-280px;width:260px;height:100%;background:white;z-index:1000;padding:25px 20px;transition:0.3s;box-shadow:4px 0 15px rgba(0,0,0,0.15);}
+.side-menu.active{left:0;}
+.menu-title{font-size:20px;font-weight:700;margin-bottom:20px;}
+.menu-links{display:flex;flex-direction:column;gap:15px;}
+.menu-links a{text-decoration:none;color:#0f172a;font-weight:600;padding:12px;background:#f1f5f9;border-radius:10px;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;display:none;}
+.overlay.active{display:block;}
+</style>
 </head>
-<body>
-
+<body> 
 <header class="top-header">
     <div class="header-left">
-        <img src="logo.png" class="header-logo" alt="Logo">
-        <span class="app-name">D-LOAN OFFERS</span>
+        <img src="logo.png" class="header-logo" alt="D-LOAN OFFERS Logo">
+        <div class="app-name">D-LOAN OFFERS</div>
     </div>
-</header>
-
+</header>   
+  
 <div id="loading">
     <div class="loaderbox">
-        <div class="spinner"></div>
-        <h2 style="font-size: 20px; margin-bottom: 5px;">Analyzing Systems...</h2>
-        <p id="ltxt" style="font-size: 14px; opacity: 0.7;">Evaluating Risk Profiles...</p>
+        <h2>Analyzing...</h2>
+        <p id="ltxt">Checking Profile...</p>
     </div>
 </div>
 
 <div class="container">
     <div class="glass">
-        <h1>📊 Credit Assessment Hub</h1>
+        <h1>Credit Score Assessment</h1>
+
         <div class="grid">
-            <div class="field"><label>First Name</label><input type="text" id="firstName"></div>
-            <div class="field"><label>Last Name</label><input type="text" id="lastName"></div>
-            <div class="field"><label>Mobile Number</label><input type="tel" id="mobile" placeholder="10 digit number"></div>
-            <div class="field"><label>PAN Card Number</label><input type="text" id="pan" placeholder="ABCDE1234F"></div>
-            <div class="field"><label>Age</label><input type="number" id="age"></div>
-            <div class="field"><label>Monthly Income</label><input type="number" id="income"></div>
-            <div class="field"><label>Running Loan Amount</label><input type="number" id="loanAmount"></div>
-            <div class="field"><label>Current EMI</label><input type="number" id="emi"></div>
-            <div class="field"><label>City</label><input type="text" id="city"></div>
-            <div class="field"><label>Country</label><input type="text" id="country" value="India" disabled></div>
-            <div class="field">
-                <label>Have Active Credit Card?</label>
-                <select id="card">
-                    <option value="">Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-            <div class="field">
-                <label>Have you Missed any EMI?</label>
-                <select id="missed">
-                    <option value="">Select</option>
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
-                </select>
-            </div>
+            <div><label>First Name</label><input id="firstName"></div>
+            <div><label>Last Name</label><input id="lastName"></div>
+            <div><label>Age</label><input type="number" id="age"></div>
+            <div><label>Mobile Number</label><input type="tel" id="mobile"></div>
+            <div><label>PAN Number</label><input id="pan" placeholder="ABCDE1234F"></div>
+            <div><label>Monthly Income</label><input type="number" id="income"></div>
+            <div><label>Running Loan Amount</label><input type="number" id="loanAmount"></div>
+            <div><label>Current EMI</label><input type="number" id="emi"></div>
+            <div><label>City</label><input id="city"></div>
+            <div><label>Country</label><input id="country" value="India"></div>
+            <div><label>Have Credit Card</label><select id="card"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+            <div><label>Have you Missed EMI</label><select id="missed"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select></div>
         </div>
 
-        <div id="lockMessage"></div>
-        <button id="submitBtn" class="action-btn" onclick="processAssessment()">Generate Score Report</button>
-        <a id="viewActiveReportBtn" class="action-btn" href="#">View Active Locked Report</a>
+        <button id="submitBtn" onclick="generate()">Generate Score</button>
+        <button id="resetBtn" onclick="resetAssessment()">Start New Assessment</button>
+
+        <div id="result" class="center">
+            <svg viewBox="0 0 200 120">
+                <path d="M20 100 A80 80 0 0 1 180 100" stroke="#334155" stroke-width="16" fill="none"/>
+                <path id="gauge" d="M20 100 A80 80 0 0 1 180 100" stroke="#22c55e" stroke-width="16" fill="none" stroke-dasharray="252" stroke-dashoffset="252"/>
+                <text x="100" y="95" text-anchor="middle" fill="white" font-size="26" id="score">0</text>
+            </svg>
+            <h2 id="approval"></h2>
+            <p id="date"></p>
+            <button onclick="viewFullReport()" style="background:#1E40AF; margin-bottom:15px;">View Detailed Credit Report</button>
+            <button onclick="downloadPDF()">Download PDF Report</button>
+        </div>
+
+        <div id="leadBox" class="center" style="margin-top:20px;">
+            <h3>Verify Mobile via WhatsApp System</h3>
+            <button onclick="sendWhatsApp()" style="background:#22c55e; max-width:300px; margin:10px auto;">Share Report via WhatsApp</button>
+        </div>
+
+        <h2 style="font-size:14px; text-align:center; color:#64748b; margin-top:20px;">Estimated score only. Not official CIBIL.</h2>
+        
+        <div id="offers">
+            <h2>🏦 Eligible Loan Offers</h2>
+            <div class="grid" id="offerGrid"></div>
+        </div>
     </div>
 </div>
 
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="side-menu" id="sideMenu">
+    <div class="menu-title">Menu</div>
+    <div class="menu-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="emi.html">📊 LOAN EMI Calculator</a>
+        <a href="#">🔒 Privacy Policy</a>
+        <a href="#">📄 Terms & Conditions</a>
+        <a href="#">☎ Contact Support</a>
+    </div>
+</div>
+  
 <div class="bottom-nav">
-    <a href="index.html" class="nav-btn"><div class="nav-icon">🏠</div><div>Home</div></a>
-    <a href="credit-score.html" class="nav-btn active"><div class="nav-icon">📈</div><div>Score</div></a>
+    <div class="nav-btn" onclick="openMenu()">
+        <div class="nav-icon">☰</div>
+        <div>Menu</div>
+    </div>
+    <div class="nav-btn" onclick="showHome()">
+        <div class="nav-icon">🏠</div>
+        <div>Home</div>
+    </div>
+    <div class="nav-btn active" onclick="openCreditScore()">
+        <div class="nav-icon">📈</div>
+        <div>Score</div>
+    </div>
+    <div class="nav-btn" onclick="location.href='index.html#support'">
+        <div class="nav-icon">☎</div>
+        <div>Support</div>
+    </div>
 </div>
 
 <script>
-// Auto formatting
-document.getElementById("pan").addEventListener("input", function() {
-    this.value = this.value.toUpperCase();
-    checkPANLock(this.value.trim());
-});
-document.getElementById("mobile").addEventListener("input", function() {
-    this.value = this.value.replace(/\D/g,'').slice(0,10);
-});
+const loading = document.getElementById('loading');
+const ltxt = document.getElementById('ltxt');
+const result = document.getElementById('result');
+const offers = document.getElementById('offers');
+const leadBox = document.getElementById('leadBox');
+const offerGrid = document.getElementById('offerGrid');
+const gauge = document.getElementById('gauge');
+const scoreText = document.getElementById('score');
+const approval = document.getElementById('approval');
+const dateText = document.getElementById('date');
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetBtn');
 
-function checkPANLock(panCode) {
-    const submitBtn = document.getElementById("submitBtn");
-    const lockMsg = document.getElementById("lockMessage");
-    const viewBtn = document.getElementById("viewActiveReportBtn");
+function openMenu(){
+    document.getElementById("sideMenu").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
 
-    if(panCode.length < 10) {
-        resetFormState();
-        return;
-    }
+function closeMenu(){
+    document.getElementById("sideMenu").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
 
-    const localData = localStorage.getItem("REPORT_" + panCode);
-    if(localData) {
-        const report = JSON.parse(localData);
-        const createdTime = new Date(report.timestamp).getTime();
-        const currentTime = new Date().getTime();
-        const diffDays = (currentTime - createdTime) / (1000 * 60 * 60 * 24);
-
-        if(diffDays < 30) {
-            const remainingDays = Math.ceil(30 - diffDays);
-            lockMsg.innerHTML = `🔒 Assessment locked for this PAN card. Remaining Days: ${remainingDays} Day(s).`;
-            lockMsg.style.display = "block";
-            submitBtn.style.display = "none";
-            viewBtn.href = "credit-report.html?user=" + encodeURIComponent(panCode);
-            viewBtn.style.display = "block";
-            lockInputs(true);
-            return;
+function validate(){
+    for(let el of document.querySelectorAll('input,select')){
+        if(!el.value.trim()){
+            alert('All fields are mandatory');
+            return false;
         }
     }
-    resetFormState();
-}
-
-function lockInputs(status) {
-    const fields = ['firstName', 'lastName', 'mobile', 'age', 'income', 'loanAmount', 'emi', 'city', 'card', 'missed'];
-    fields.forEach(id => {
-        let el = document.getElementById(id);
-        if(el) el.disabled = status;
-    });
-}
-
-function resetFormState() {
-    document.getElementById("lockMessage").style.display = "none";
-    document.getElementById("submitBtn").style.display = "block";
-    document.getElementById("viewActiveReportBtn").style.display = "none";
-    lockInputs(false);
-}
-
-function validateForm() {
-    const fields = ['firstName', 'lastName', 'mobile', 'pan', 'age', 'income', 'loanAmount', 'emi', 'city', 'card', 'missed'];
-    for(let id of fields) {
-        let el = document.getElementById(id);
-        if(!el || !el.value.trim()) { alert('All operational fields are mandatory.'); el.focus(); return false; }
-    }
-    if(document.getElementById("mobile").value.length < 10) { alert('Enter valid 10-digit smartphone network profile.'); return false; }
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    if(!panRegex.test(document.getElementById("pan").value)) { alert('Invalid Structural PAN card algorithm mapping.'); return false; }
     return true;
 }
 
-function processAssessment() {
-    if(!validateForm()) return;
+function generate(){
+    if(!validate()) return;
 
-    document.getElementById("loading").style.display = "flex";
-    let msgs = ['Inspecting Profile Integrity', 'Evaluating Debt-to-Income Framework', 'Compiling Bureau Risk Assessment', 'Generating Final Vector Analytics'];
-    let idx = 0;
-    let t = setInterval(() => { document.getElementById('ltxt').innerText = msgs[idx % msgs.length]; idx++; }, 1000);
+    loading.style.display='flex';
+    let msgs=['Checking Income Stability','Analyzing Repayment Capacity','Evaluating Credit Behaviour','Generating Report'];
+    let i=0;
+    let t=setInterval(()=>{ltxt.innerText=msgs[i%msgs.length];i++;},1000);
 
-    setTimeout(() => {
+    setTimeout(()=>{
         clearInterval(t);
-        document.getElementById("loading").style.display = "none";
+        loading.style.display='none';
 
-        const PAN = document.getElementById("pan").value.trim().toUpperCase();
-        let income = +document.getElementById("income").value;
-        let emi = +document.getElementById("emi").value;
-        let card = document.getElementById("card").value;
-        let missed = document.getElementById("missed").value;
+        let scoreVal=650;
+        if(+document.getElementById('age').value>30) scoreVal+=40;
+        if(+document.getElementById('income').value>50000) scoreVal+=50;
+        if(document.getElementById('card').value==='yes') scoreVal+=30;
+        if(document.getElementById('missed').value==='yes') scoreVal-=120;
+        scoreVal=Math.max(300,Math.min(900,scoreVal));
 
-        // Structured Scoring Engine Logic
-        let score = 650;
-        if(income > 60000) score += 60;
-        if(income > 100000) score += 40;
-        if(card === "yes") score += 30;
-        if(missed === "yes") score -= 150;
-        
-        let emiRatio = (emi / income) * 100;
-        if(emiRatio > 50) score -= 50;
-        else if(emiRatio < 20) score += 30;
-
-        score = Math.max(300, Math.min(900, score));
-        let approvalChance = Math.round(((score - 300) / 600) * 100);
-        if(approvalChance < 30) approvalChance = 35;
-
-        let reportObj = {
-            firstName: document.getElementById("firstName").value.trim(),
-            lastName: document.getElementById("lastName").value.trim(),
-            mobile: document.getElementById("mobile").value.trim(),
-            pan: PAN,
-            city: document.getElementById("city").value.trim(),
-            income: income,
-            loanAmount: document.getElementById("loanAmount").value,
-            emi: emi,
-            score: score,
-            app: approvalChance,
-            timestamp: new Date().toISOString(),
-            dateString: new Date().toLocaleDateString()
+        // Save complete shared report details to matching key
+        const reportData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            mobile: document.getElementById('mobile').value,
+            pan: document.getElementById('pan').value,
+            city: document.getElementById('city').value,
+            income: document.getElementById('income').value,
+            reportDate: new Date().toLocaleDateString(),
+            score: scoreVal
         };
+        localStorage.setItem('creditReportData', JSON.stringify(reportData));
 
-        localStorage.setItem("REPORT_" + PAN, JSON.stringify(reportObj));
-        window.location.href = "credit-report.html?user=" + encodeURIComponent(PAN);
-    }, 4000);
+        show(scoreVal);
+    },4000);
 }
+
+function show(scoreVal){
+    result.style.display='block';
+    offers.style.display='block';
+    leadBox.style.display='block';
+
+    let cur=0;
+    let anim=setInterval(()=>{
+        cur+=5;
+        if(cur>=scoreVal){cur=scoreVal;clearInterval(anim);confetti();}
+        scoreText.textContent = cur;
+        let p=(cur-300)/600;
+        gauge.style.strokeDashoffset=252-(252*p);
+    },15);
+
+    let app=Math.round(scoreVal/900*100);
+    approval.innerText=app+'% Loan Approval Chance';
+    dateText.innerText='Assessment Date: '+new Date().toLocaleDateString();
+
+    renderOffers(scoreVal);
+    lockForm();
+}
+
+function renderOffers(s){
+    let premium=s>=750;
+    offerGrid.innerHTML=(premium?[
+        'HDFC Personal Loan','ICICI Instant Loan','Axis Bank Loan','Kotak Pre-Approved'
+    ]:['Navi','MoneyView','KreditBee','True Balance'])
+    .map(x=>`<div class="offer"><h3>${x}</h3><p>Eligible Offer</p><a href="#">Apply Now</a></div>`).join('');
+}
+
+function lockForm(){
+    document.querySelectorAll('input,select').forEach(e=>{e.disabled=true;});
+    submitBtn.style.display='none';
+    resetBtn.style.display='block';
+}
+
+function resetAssessment(){
+    localStorage.removeItem('creditReportData');
+    location.reload();
+}
+
+window.onload=()=>{
+    let d=localStorage.getItem('creditReportData');
+    if(!d) return;
+    d=JSON.parse(d);
+    
+    document.getElementById('firstName').value = d.firstName || '';
+    document.getElementById('lastName').value = d.lastName || '';
+    document.getElementById('mobile').value = d.mobile || '';
+    document.getElementById('pan').value = d.pan || '';
+    document.getElementById('city').value = d.city || '';
+    document.getElementById('income').value = d.income || '';
+    
+    result.style.display='block';
+    offers.style.display='block';
+    leadBox.style.display='block';
+    scoreText.innerText=d.score;
+    let app=Math.round(d.score/900*100);
+    approval.innerText=app+'% Loan Approval Chance';
+    dateText.innerText='Assessment Date: ' + d.reportDate;
+    gauge.style.strokeDashoffset=252-(252*((d.score-300)/600));
+    renderOffers(d.score);
+    lockForm();
+}
+
+function sendWhatsApp(){
+    let n=document.getElementById('mobile').value;
+    if(!n){alert('Enter number');return;}
+    window.open('https://wa.me/'+n,'_blank');
+}
+
+function downloadPDF(){
+    window.print();
+}
+
+function viewFullReport(){
+    window.location.href="credit-report.html";
+}
+
+function confetti(){
+    if(parseInt(scoreText.innerText)<750) return;
+    for(let i=0;i<80;i++){
+        let d=document.createElement('div');
+        d.style.cssText='position:fixed;width:8px;height:8px;background:hsl('+Math.random()*360+',100%,50%);left:'+Math.random()*100+'%;top:-10px;z-index:9999';
+        document.body.appendChild(d);
+        let y=0;
+        let a=setInterval(()=>{y+=5;d.style.top=y+"px";if(y>innerHeight){clearInterval(a);d.remove();}},20);
+    }
+}
+
+function showHome() { window.location.href = "index.html"; }
+function openCreditScore() { window.location.href = "credit-score.html"; }
 </script>
 </body>
 </html>
