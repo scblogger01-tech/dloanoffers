@@ -221,7 +221,17 @@ color:#64748b;
 font-size:13px;
 margin-top:20px;
 }
+#loanOffers .loan-list{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+}
 
+@media(min-width:768px){
+    #loanOffers .loan-list{
+        grid-template-columns:1fr 1fr;
+    }
+}
 </style>
 </head>
 <body>
@@ -448,7 +458,40 @@ Check Eligibility →
 </div>
 
 `).join("");
+<h2>🏦 Recommended Loan Offers</h2>
 
+<div id="loanOffers"></div>
+
+<script>
+async function loadLoanOffers() {
+
+    try {
+
+        const response = await fetch("index.html");
+        const html = await response.text();
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const loanList = doc.querySelector(".loan-list");
+
+        if(loanList){
+            document.getElementById("loanOffers").innerHTML =
+            loanList.innerHTML;
+        }
+
+    } catch(error){
+
+        document.getElementById("loanOffers").innerHTML =
+        "<p>Unable to load loan offers.</p>";
+
+        console.error(error);
+    }
+}
+
+loadLoanOffers();
+</script>
+  
 </script>
 
 </body>
