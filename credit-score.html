@@ -52,7 +52,6 @@
             margin-top: 5px;
         }
 
-        /* Glassmorphism Card Style but keeping clean white/blue themes */
         .assessment-card {
             background: var(--glass-bg);
             border: 2px solid var(--primary-blue);
@@ -112,7 +111,6 @@
             box-shadow: 0 0 0 4px var(--light-blue-bg);
         }
 
-        /* Custom Radio/Check Grid */
         .check-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -139,7 +137,6 @@
             border-color: var(--primary-blue);
         }
 
-        /* Primary Styled Buttons */
         .btn-submit {
             width: 100%;
             background-color: var(--primary-blue);
@@ -161,7 +158,6 @@
             color: var(--primary-blue);
         }
 
-        /* Lock Notification Banner */
         .lock-banner {
             display: none;
             background-color: var(--light-blue-bg);
@@ -193,7 +189,6 @@
             color: var(--primary-blue);
         }
 
-        /* Fixed Bottom Navigation Setup */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -225,7 +220,6 @@
 
         .nav-item span { font-size: 20px; }
 
-        /* Loader Overlay Animation */
         .loader-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -261,17 +255,15 @@
         <p>AI Powered Multi-Bureau Credit Assessment System</p>
     </div>
 
-    <!-- 30 Days System Lock Engine Alert Box -->
     <div class="lock-banner" id="lockBanner">
         <h4>🔒 REPORT ACTIVE UNDER 30-DAY LOCK POLICY</h4>
-        <p id="lockMessage">You have recently generated a report using this PAN. Score regeneration is restricted to prevent structural penalty models.</p>
+        <p id="lockMessage">You have recently generated a report using this PAN.</p>
         <button class="btn-secondary" onclick="redirectToReport()">View Existing Locked Report</button>
         <button class="btn-secondary" style="background:#cbd5e1; border-color:#cbd5e1; color:#000; margin-left: 10px;" onclick="forceUnlockForm()">Start New Assessment</button>
     </div>
 
-    <!-- Form Interface Container Wrapper -->
     <div class="assessment-card">
-        <form id="creditForm" onsubmit="processCreditAssessment(event)">
+        <form id="creditForm">
             
             <div class="form-section-title">Personal Metadata Profile</div>
             
@@ -307,7 +299,7 @@
             <div class="grid-2">
                 <div class="form-group">
                     <label>Total Current Monthly EMIs Paid</label>
-                    <input type="number" id="emi" placeholder="0 if none" default="0" required>
+                    <input type="number" id="emi" placeholder="0 if none" required>
                 </div>
                 <div class="form-group">
                     <label>Primary Active Loan Details</label>
@@ -356,7 +348,6 @@
     </div>
 </div>
 
-<!-- Fixed Universal Bottom Bar Navigation -->
 <nav class="bottom-nav">
     <a href="index.html" class="nav-item"><span>🏠</span>Home</a>
     <a href="credit-score.html" class="nav-item active"><span>📊</span>Credit Score</a>
@@ -364,7 +355,6 @@
 </nav>
 
 <script>
-    // System Initialization checking state vectors
     let selectedActivePAN = "";
 
     document.getElementById("pan").addEventListener("input", function() {
@@ -397,21 +387,23 @@
     }
 
     function lockFormInterface(status) {
-        const formElements = document.getElementById("creditForm").elements;
-        for (let i = 0; i < formElements.length; i++) {
-            if(formElements[i].id !== "submitBtn") {
-                formElements[i].disabled = status;
+        const form = document.getElementById("creditForm");
+        const inputs = form.querySelectorAll("input, select, button[type='submit']");
+        inputs.forEach(el => {
+            if(el.id !== "submitBtn" || status === true) {
+                el.disabled = status;
             }
-        }
-        document.getElementById("submitBtn").disabled = status;
+        });
+        
+        const submitBtn = document.getElementById("submitBtn");
         if(status) {
-            document.getElementById("submitBtn").style.background = "#cbd5e1";
-            document.getElementById("submitBtn").style.borderColor = "#cbd5e1";
-            document.getElementById("submitBtn").style.color = "#4b5563";
+            submitBtn.style.background = "#cbd5e1";
+            submitBtn.style.borderColor = "#cbd5e1";
+            submitBtn.style.color = "#4b5563";
         } else {
-            document.getElementById("submitBtn").style.background = "var(--primary-blue)";
-            document.getElementById("submitBtn").style.borderColor = "var(--primary-blue)";
-            document.getElementById("submitBtn").style.color = "var(--pure-white)";
+            submitBtn.style.background = "var(--primary-blue)";
+            submitBtn.style.borderColor = "var(--primary-blue)";
+            submitBtn.style.color = "var(--pure-white)";
         }
     }
 
@@ -433,12 +425,11 @@
         if(fallbackPan && localStorage.getItem(`bureau_report_${fallbackPan}`)) {
             window.location.href = "credit-report.html";
         } else {
-            alert("No computed report evaluations found inside current local workspace session. Please execute an evaluation profile sequence first.");
+            alert("No computed report evaluations found. Please fill out the form first.");
         }
     }
 
-    // Logic Matrix Rule Processor Core Module Engine
-    function processCreditAssessment(event) {
+    document.getElementById("creditForm").addEventListener("submit", function(event) {
         event.preventDefault();
         
         const firstName = document.getElementById("firstName").value;
@@ -454,11 +445,9 @@
 
         document.getElementById("loader").style.display = "flex";
 
-        // Dynamic Algorithm parameters compilation
         setTimeout(() => {
-            let score = 710; // Baseline entry score variable anchor value
+            let score = 710;
 
-            // Logic structural vectors configurations modification
             if(hasCard === "yes") score += 45;
             if(hasMissed === "yes") score -= 120; else score += 50;
 
@@ -471,14 +460,12 @@
             if(score > 900) score = 900;
             if(score < 300) score = 300;
 
-            // Approval Calculation Engine Metrics Formulas
             let approvalPercentage = 30;
             if(score >= 750) approvalPercentage = Math.floor(85 + (score-750)*0.1);
             else if(score >= 650) approvalPercentage = Math.floor(55 + (score-650)*0.3);
             else approvalPercentage = Math.floor(20 + (score-300)*0.1);
             if(approvalPercentage > 98) approvalPercentage = 98;
 
-            // Compute Date Logic Parameters Matrix (30 Days Configuration Guardrail Lock)
             const currentDate = new Date();
             const lockExpiryDate = new Date();
             lockExpiryDate.setDate(currentDate.getDate() + 30);
@@ -490,14 +477,13 @@
                 lockExpiryDate: lockExpiryDate.toISOString()
             };
 
-            // Write into isolated independent partition framework storage array matrix mappings
             localStorage.setItem(`bureau_report_${pan}`, JSON.stringify(assessmentPayload));
             localStorage.setItem("active_session_pan", pan);
 
             document.getElementById("loader").style.display = "none";
             window.location.href = "credit-report.html";
-        }, 2000);
-    }
+        }, 1500);
+    });
 </script>
 </body>
 </html>
