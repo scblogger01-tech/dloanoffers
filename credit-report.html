@@ -292,7 +292,32 @@ D-LOAN OFFERS
 </div>
 
 </header>
+<script>
 
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const pan =
+params.get("user");
+
+const report =
+JSON.parse(
+localStorage.getItem(
+"REPORT_" + pan
+)
+);
+
+if(!report){
+
+document.write(
+"<h2>No Report Found</h2>"
+);
+
+}
+
+</script>
 <div class="container">
 
 <div class="report-card">
@@ -300,13 +325,21 @@ D-LOAN OFFERS
 <div class="report-header">
 
 <h1>Credit Assessment Report</h1>
+<h1 id="score"></h1>
+   <script>
 
+document.getElementById(
+"score"
+).innerText =
+report.score;
+
+</script>
 <p>
 Generated Report
 </p>
 
 </div>
-
+<div id="validity"></div>
 <div class="score-section">
 
 <div class="score-circle">
@@ -608,7 +641,29 @@ scoreBox.style.background =
 "linear-gradient(135deg,#f59e0b,#d97706)";
 
 }
+const created =
+new Date(report.createdAt);
 
+const expiry =
+new Date(created);
+
+expiry.setDate(
+expiry.getDate() + 30
+);
+
+const remaining =
+Math.ceil(
+(expiry - new Date())
+/
+(1000*60*60*24)
+);
+
+document.getElementById(
+"validity"
+).innerHTML =
+"🔒 Report Locked For "
++ remaining +
+" Days";
 </script>
 <script>
 
