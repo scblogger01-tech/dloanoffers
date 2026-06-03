@@ -1,162 +1,993 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D-LOAN OFFERS | Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="verify-admitad" content="7303f90a47" />
+    <title>D-LOAN OFFERS : Instant Loan Finder</title>
+    <meta name="description" content="Compare instant personal loan offers, calculate EMI and apply online instantly.">
+    <meta name="keywords" content="instant loan, emi calculator, personal loan, online loan">
+    <meta property="og:title" content="D-LOAN OFFERS Instant Loan Finder">
+    <meta property="og:description" content="Find best instant loan offers online.">
     <style>
         :root {
-            --bg: #0f172a;
-            --glass: rgba(255, 255, 255, .08);
-            --text: #fff;
-            --accent: #22c55e;
-            --primary: #2563eb;
+            --primary: #1E40AF;
+            --dark: #1E40AF;
+            --light: #f8fafc;
+            --gray: #64748b;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: var(--light);
+            color: var(--dark);
+            padding-bottom: 85px;
+        }
+
+        #welcome-screen {
+            position: fixed;
+            inset: 0;
             background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: var(--text);
-            padding-bottom: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            z-index: 9999;
         }
+
+        .welcome-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-quote {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            max-width: 400px;
+        }
+
+        .welcome-sub {
+            color: #cbd5e1;
+            margin-bottom: 25px;
+            max-width: 350px;
+        }
+
+        .get-offer-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #main-content {
+            display: none;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .filter-track {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .filter-btn {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active {
+            background: var(--dark);
+            color: white;
+        }
+
+        .loan-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media(min-width: 768px) {
+            .loan-list {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .loan-card {
+            background: linear-gradient(135deg, #1E40AF, #2563EB);
+            border-radius: 16px;
+            padding: 18px;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+            color: white;
+        }
+
+        .loan-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .logo-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .logo-row img {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: white;
+            padding: 5px;
+            object-fit: contain;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.20);
+        }
+
+        .nbfc-name {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            margin: 0;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .detail-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px;
+            border-radius: 10px;
+            backdrop-filter: blur(4px);
+        }
+
+        .detail-label {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+
+        .detail-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .apply-btn {
+            display: block;
+            text-align: center;
+            background: #10b981;
+            color: white;
+            padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .ad-space {
+            background: #e2e8f0;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: var(--gray);
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 20px 0;
+            font-size: 12px;
+            color: var(--gray);
+            text-align: center;
+        }
+
         .top-header {
-            position: sticky; top: 0; z-index: 999; background: #0f172a;
-            padding: 14px 18px; display: flex; align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .header-logo { width: 42px; height: 42px; border-radius: 12px; background: white; padding: 5px; }
-        .app-name { color: white; font-size: 24px; font-weight: 900; margin-left: 12px; letter-spacing: 1px; }
-        
-        .container { max-width: 1000px; margin: auto; padding: 20px; }
-        .hero { text-align: center; padding: 40px 20px; }
-        .hero h1 { font-size: 36px; margin-bottom: 10px; }
-        .hero p { opacity: 0.8; font-size: 16px; }
-
-        .glass {
-            background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, .1); border-radius: 20px; padding: 25px; margin-bottom: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: #0f172a;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        /* LOAN CARDS STORAGE (Hidden template wrapper but displayed on Home) */
-        .loan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-        
-        /* Strict Structured Data Attributes for Reporting script parsing */
-        .loan-card { 
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .loan-card h3 { color: #60a5fa; font-size: 20px; margin-bottom: 8px; }
-        .loan-card .meta { font-size: 14px; opacity: 0.7; margin-bottom: 15px; }
-        .loan-card .tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 12px; width: fit-content; }
-        
-        /* Target Scoring classes used for auto extraction */
-        .card-premium { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
-        .card-medium { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
-        .card-limited { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
 
-        .apply-btn { display: block; text-align: center; background: var(--primary); color: white; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; transition: 0.2s; }
-        .apply-btn:hover { background: #1d4ed8; }
+        .header-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: white;
+            padding: 5px;
+            object-fit: contain;
+        }
 
-        .cta-section { text-align: center; margin: 30px 0; }
-        .score-check-btn { display: inline-block; padding: 15px 30px; background: var(--accent); color: white; text-decoration: none; font-weight: bold; border-radius: 12px; font-size: 18px; box-shadow: 0 4px 15px rgba(34,197,94,0.4); }
+        .app-name {
+            color: white;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
 
-        /* BOTTOM NAV */
+        @media(max-width: 480px) {
+            .app-name { font-size: 18px; }
+            .header-logo { width: 36px; height: 36px; }
+        }
+
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #fff;
-            display: flex; align-items: center; justify-content: space-evenly;
-            box-shadow: 0 -4px 12px rgba(0,0,0,.12); z-index: 999;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fff;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-evenly;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, .12);
+            z-index: 999;
         }
-        .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; font-size: 11px; font-weight: 600; color: #64748b; }
-        .nav-icon { font-size: 20px; margin-bottom: 3px; }
-        .nav-btn.active { color: #10b981; }
+
+        .nav-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            white-space: nowrap;
+            min-width: 0;
+            cursor: pointer;
+        }
+
+        .nav-btn.active {
+            color: #10b981;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 260px;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            padding: 25px 20px;
+            transition: 0.3s;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .menu-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-links a {
+            text-decoration: none;
+            color: #0f172a;
+            font-weight: 600;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .support-page {
+            display: none;
+            padding: 20px;
+        }
+
+        .support-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .support-card h2 {
+            margin-bottom: 15px;
+        }
+
+        .support-item {
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .tool-card h2 {
+            margin-bottom: 10px;
+        }
+
+        .emi-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .emi-preview div {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .tool-btn {
+            display: block;
+            text-align: center;
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .eligibility-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .eligibility-list div {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .faq-section {
+            margin-top: 30px;
+        }
+
+        .faq-section h2 {
+            margin-bottom: 15px;
+        }
+
+        .faq-section details {
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-section summary {
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .success-section {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            margin: 25px 0;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .success-section img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .success-content {
+            padding: 20px;
+        }
+
+        .success-content h2 {
+            margin-bottom: 12px;
+            color: #0f172a;
+        }
+
+        .success-content p {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .success-btn {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        #installBtn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#08122c">
+    <link rel="apple-touch-icon" href="logo.png">
 </head>
+
 <body>
+    <header class="top-header">
+        <div class="header-left">
+            <img src="logo.png" class="header-logo" alt="D-LOAN OFFERS Logo">
+            <div class="app-name">D-LOAN OFFERS</div>
+        </div>
+        <button id="installBtn" style="display:none;">📲 Install App</button>
+    </header>   
 
-<header class="top-header">
-    <div class="header-left">
-        <img src="logo.png" class="header-logo" alt="Logo">
-        <span class="app-name">D-LOAN OFFERS</span>
-    </div>
-</header>
-
-<div class="container">
-    <div class="hero">
-        <h1>Welcome to Premium Financial Hub</h1>
-        <p>Get access to pre-approved digital loans and custom credit tools instantly.</p>
-    </div>
-
-    <div class="cta-section">
-        <a href="credit-score.html" class="score-check-btn">📈 Check Free Credit Score</a>
+    <div id="welcome-screen">
+        <div class="welcome-icon">⚡</div>
+        <h1 class="welcome-quote">Emergency doesn't wait. Neither should your approval.</h1>
+        <p class="welcome-sub">Compare RBI-approved instant loan providers in 60 seconds.</p>
+        <button class="get-offer-btn" onclick="showOffers()">Get Offer Now →</button>
     </div>
 
-    <div class="glass">
-        <h2>🔥 Live Recommended Loan Offers</h2>
-        
-        <div class="loan-grid" id="mainLoanPool">
-            
-            <div class="loan-card" data-tier="premium">
-                <div>
-                    <span class="tag card-premium">Score 750+ Elite Match</span>
-                    <h3>HDFC Bank Personal Loan</h3>
-                    <p class="meta">Interest: 10.5% p.a. | Tenure up to 5 Years</p>
+    <div id="main-content">
+        <header>
+            <h1>⚡ D-LOAN OFFERS : Instant Loan Finder</h1>
+            <p>Compare pre-approved NBFC digital lending platforms</p>
+        </header>
+
+        <div class="filter-track">
+            <button id="btn-all" class="filter-btn active" onclick="filterLoans('all','btn-all')">All</button>
+            <button id="btn-instant" class="filter-btn" onclick="filterLoans('Instant','btn-instant')">Instant</button>
+            <button id="btn-low" class="filter-btn" onclick="filterLoans('Low-Interest','btn-low')">Low Interest</button>
+            <button id="btn-high" class="filter-btn" onclick="filterLoans('High-Amount','btn-high')">High Amount</button>
+        </div> 
+
+        <div style="margin:15px 0;">
+            <a href="emi.html" style="display:block; text-align:center; background:#0f172a; color:white; text-decoration:none; padding:14px; border-radius:12px; font-weight:bold; font-size:15px; margin-bottom:20px;">
+                📊 Open EMI Calculator
+            </a>
+            <a href="credit-score.html" style="display:block; text-align:center; background:#1E40AF; color:white; text-decoration:none; padding:14px; border-radius:12px; font-weight:bold; font-size:15px;">
+                📈 Check Your Credit Score
+            </a>
+        </div>
+
+        <div class="loan-list" id="mainLoanList">
+            <div class="loan-card Instant High-Amount">
+                <span class="badge">Quick Processing</span>
+                <div class="logo-row">
+                    <img src="https://static.truebalance.io/tb-website/images/img_logo-140.webp" alt="True Balance">
+                    <div class="nbfc-name">True Balance</div>
                 </div>
-                <a href="https://your-affiliate-link-here.com/hdfc" target="_blank" class="apply-btn">Apply Now</a>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹4,00,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">1.02% pm</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">10 Mins</div>
+                    </div>
+                </div>
+                <a href="https://truebalance.onelink.me/bMoN/8j1m4i44" class="apply-btn" target="_blank">Check Eligibility →</a>
             </div>
 
-            <div class="loan-card" data-tier="premium">
-                <div>
-                    <span class="tag card-premium">Score 750+ Elite Match</span>
-                    <h3>ICICI Instant Digital Credit</h3>
-                    <p class="meta">Disbursal in 30 Mins | Zero Paperwork</p>
+            <div class="loan-card Instant Low-Interest">
+                <span class="badge">Low Interest</span>
+                <div class="logo-row">
+                    <img src="pocketly.png" alt="Pocketly">
+                    <div class="nbfc-name">Pocketly</div>
                 </div>
-                <a href="https://your-affiliate-link-here.com/icici" target="_blank" class="apply-btn">Apply Now</a>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹1,00,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">1.5% pm</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">5 Mins</div>
+                    </div>
+                </div>
+                <a href="https://pocketly.sng.link/D4bv7/8nx0/g23r" class="apply-btn" target="_blank">Check Eligibility →</a>
             </div>
 
-            <div class="loan-card" data-tier="medium">
-                <div>
-                    <span class="tag card-medium">Score 650+ Mid Match</span>
-                    <h3>Navi Instant Loan</h3>
-                    <p class="meta">Flexible EMI plans | Low credit approved</p>
+            <div class="loan-card Instant">
+                <span class="badge">Fast Approval</span>
+                <div class="logo-row">
+                    <img src="mpocket.png" alt="mPokket">
+                    <div class="nbfc-name">mPokket</div>
                 </div>
-                <a href="https://your-affiliate-link-here.com/navi" target="_blank" class="apply-btn">Apply Now</a>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹45,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">2.0% pm</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">Instant</div>
+                    </div>
+                </div>
+                <a href="#" class="apply-btn" target="_blank">Check Eligibility →</a>
             </div>
 
-            <div class="loan-card" data-tier="medium">
-                <div>
-                    <span class="tag card-medium">Score 650+ Mid Match</span>
-                    <h3>MoneyView Personal Credit</h3>
-                    <p class="meta">100% Digital Process | Fast Tracking</p>
+            <div class="loan-card Instant High-Amount">
+                <span class="badge">Trusted Partner</span>
+                <div class="logo-row">
+                    <img src="navi.png" alt="Navi">
+                    <div class="nbfc-name">Navi</div>
                 </div>
-                <a href="https://your-affiliate-link-here.com/moneyview" target="_blank" class="apply-btn">Apply Now</a>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹20,00,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">9.9%</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">10 Mins</div>
+                    </div>
+                </div>
+                <a href="#" class="apply-btn" target="_blank">Check Eligibility →</a>
             </div>
 
-            <div class="loan-card" data-tier="limited">
-                <div>
-                    <span class="tag card-limited">Standard Entry Match</span>
-                    <h3>KreditBee Quick Loan</h3>
-                    <p class="meta">Small Ticket Loans | Instant Approval</p>
+            <div class="loan-card Low-Interest">
+                <span class="badge">Popular</span>
+                <div class="logo-row">
+                    <img src="five.png" alt="Fibe">
+                    <div class="nbfc-name">Fibe</div>
                 </div>
-                <a href="https://your-affiliate-link-here.com/kreditbee" target="_blank" class="apply-btn">Apply Now</a>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹5,00,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">11%</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">15 Mins</div>
+                    </div>
+                </div>
+                <a href="#" class="apply-btn" target="_blank">Check Eligibility →</a>
             </div>
 
-            <div class="loan-card" data-tier="limited">
-                <div>
-                    <span class="tag card-limited">Standard Entry Match</span>
-                    <h3>TrueBalance Micro Credit</h3>
-                    <p class="meta">No Income Proof needed for Level Up loans</p>
+            <div class="loan-card Instant">
+                <span class="badge">Safe & Secure</span>
+                <div class="logo-row">
+                    <img src="moneyview.png" alt="MoneyView">
+                    <div class="nbfc-name">MoneyView</div>
                 </div>
-                <a href="https://your-affiliate-link-here.com/truebalance" target="_blank" class="apply-btn">Apply Now</a>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹10,00,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">1.33% pm</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">Instant</div>
+                    </div>
+                </div>
+                <a href="#" class="apply-btn" target="_blank">Check Eligibility →</a>
             </div>
 
+            <div class="loan-card Instant">
+                <span class="badge">Top Rated</span>
+                <div class="logo-row">
+                    <img src="creditbee.png" alt="KreditBee">
+                    <div class="nbfc-name">KreditBee</div>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹3,00,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">1.02% pm</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">10 Mins</div>
+                    </div>
+                </div>
+                <a href="#" class="apply-btn" target="_blank">Check Eligibility →</a>
+            </div>
+
+            <div class="loan-card Instant">
+                <span class="badge">Easy EMI</span>
+                <div class="logo-row">
+                    <img src="cashe.png" alt="CASHe">
+                    <div class="nbfc-name">CASHe</div>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹4,00,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">1.5% pm</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">Instant</div>
+                    </div>
+                </div>
+                <a href="#" class="apply-btn" target="_blank">Check Eligibility →</a>
+            </div>
+
+            <div class="loan-card Instant">
+                <span class="badge">Digital Process</span>
+                <div class="logo-row">
+                    <img src="PaySense.jpg" alt="PaySense">
+                    <div class="nbfc-name">PaySense</div>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹5,00,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">1.4% pm</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">15 Mins</div>
+                    </div>
+                </div>
+                <a href="#" class="apply-btn" target="_blank">Check Eligibility →</a>
+            </div>
+
+            <div class="loan-card Instant">
+                <span class="badge">Trusted App</span>
+                <div class="logo-row">
+                    <img src="smartcoin.jpg" alt="SmartCoin">
+                    <div class="nbfc-name">SmartCoin</div>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Max Amount</div>
+                        <div class="detail-value">₹70,000</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest</div>
+                        <div class="detail-value">2.1% pm</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">Instant</div>
+                    </div>
+                </div>
+                <a href="#" class="apply-btn" target="_blank">Check Eligibility →</a>
+            </div>
+        </div>
+
+        <div class="tool-card">
+            <h2>📊 EMI Calculator</h2>
+            <p>Calculate your monthly EMI instantly before applying.</p>
+            <div class="emi-preview">
+                <div>Loan Amount<br><strong>₹1,00,000</strong></div>
+                <div>Tenure<br><strong>12 Months</strong></div>
+                <div>EMI<br><strong>₹8,884</strong></div>
+            </div>
+            <a href="emi.html" class="tool-btn">Open Full EMI Calculator →</a>
+            <div style="margin:15px 0;">
+                <a href="credit-score.html" style="display:block; text-align:center; background:#1E40AF; color:white; text-decoration:none; padding:14px; border-radius:12px; font-weight:bold; font-size:15px;">
+                    📈 Check Your Credit Score
+                </a>
+            </div>
+        </div>
+
+        <div class="tool-card">
+            <h2>✅ Loan Eligibility Checker</h2>
+            <p>Check basic eligibility instantly.</p>
+            <div class="eligibility-list">
+                <div>✔ Age: 21 - 60 Years</div>
+                <div>✔ Indian Resident</div>
+                <div>✔ PAN Card Required</div>
+                <div>✔ Aadhaar Required</div>
+                <div>✔ Monthly Income ₹10,000+</div>
+                <div>✔ Active Mobile Number</div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>❓ Frequently Asked Questions</h2>
+            <details>
+                <summary>1. What is an instant personal loan?</summary>
+                <p>An instant personal loan is a digital loan that can be approved and disbursed quickly through mobile apps or websites.</p>
+            </details>
+            <details>
+                <summary>2. How much loan can I get?</summary>
+                <p>Loan amount depends on income, credit profile and lender policies.</p>
+            </details>
+            <details>
+                <summary>3. Is PAN card mandatory?</summary>
+                <p>Yes, most lenders require PAN verification.</p>
+            </details>
+            <details>
+                <summary>4. Is Aadhaar required?</summary>
+                <p>Yes, Aadhaar is generally required for KYC verification.</p>
+            </details>
+            <details>
+                <summary>5. How long does approval take?</summary>
+                <p>Many apps provide approval within minutes.</p>
+            </details>
+            <details>
+                <summary>6. Can students apply?</summary>
+                <p>Some apps provide loans for students, subject to eligibility.</p>
+            </details>
+            <details>
+                <summary>7. Do I need a salary account?</summary>
+                <p>Not always. Many lenders accept regular bank accounts.</p>
+            </details>
+            <details>
+                <summary>8. What is the minimum credit score?</summary>
+                <p>Requirements vary by lender. Some apps also lend to new borrowers.</p>
+            </details>
+            <details>
+                <summary>9. Can I repay early?</summary>
+                <p>Many lenders allow foreclosure or early repayment.</p>
+            </details>
+            <details>
+                <summary>10. Is D-LOAN OFFERS a lender?</summary>
+                <p>No. We are a loan comparison and aggregation platform.</p>
+            </details>
+        </div>
+
+        <div class="success-section">
+            <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1200&q=80" alt="Happy Family After Loan Approval">
+            <div class="success-content">
+                <h2>🏡 Dreams Become Reality</h2>
+                <p>Thousands of users have fulfilled their dreams with instant loan approvals. Whether it's a new home, education, medical emergency or family needs, finding the right loan can make life easier.</p>
+                <a href="#top" class="success-btn">Explore Loan Offers →</a>
+            </div>
+        </div>  
+
+        <div class="ad-space">Bottom Ad Space</div>
+    </div>
+
+    <div class="support-page" id="supportPage">
+        <div class="support-card">
+            <h2>Contact Support</h2>
+            <div class="support-item">📧 Email: support@DLOANOFFERS.in</div>
+            <div class="support-item">📞 Phone: +91 9876543210</div>
+            <div class="support-item">🕒 Support Timing: 9 AM - 6 PM</div>
+            <div class="support-item">📍 India</div>
         </div>
     </div>
-</div>
 
-<div class="bottom-nav">
-    <a href="index.html" class="nav-btn active"><div class="nav-icon">🏠</div><div>Home</div></a>
-    <a href="credit-score.html" class="nav-btn"><div class="nav-icon">📈</div><div>Score</div></a>
-</div>
+    <footer>
+        Disclaimer: We are a digital aggregator platform and not a lender. Users are redirected to official RBI-approved lending partners.
+    </footer>
 
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-title">Menu</div>
+        <div class="menu-links">
+            <a href="#" onclick="closeMenu(); showHome();">🏠 Home</a>
+            <a href="emi.html">📊 LOAN EMI Calculator</a>
+            <a href="#">🔒 Privacy Policy</a>
+            <a href="#">📄 Terms & Conditions</a>
+            <a href="#" onclick="closeMenu(); showSupport();">☎ Contact Support</a>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-btn" onclick="openMenu()">
+            <div class="nav-icon">☰</div>
+            <div>Menu</div>
+        </div>
+        <div class="nav-btn active" onclick="showHome()">
+            <div class="nav-icon">🏠</div>
+            <div>Home</div>
+        </div>
+        <div class="nav-btn" onclick="openCreditScore()">
+            <div class="nav-icon">📈</div>
+            <div>Score</div>
+        </div>
+        <div class="nav-btn" onclick="showSupport()">
+            <div class="nav-icon">☎</div>
+            <div>Support</div>
+        </div>
+    </div>
+
+    <script>
+        function openMenu(){
+            document.getElementById("sideMenu").classList.add("active");
+            document.getElementById("overlay").classList.add("active");
+        }
+
+        function closeMenu(){
+            document.getElementById("sideMenu").classList.remove("active");
+            document.getElementById("overlay").classList.remove("active");
+        }
+
+        function showSupport(){
+            document.getElementById("main-content").style.display = "none";
+            document.getElementById("supportPage").style.display = "block";
+            document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
+            document.querySelector(".bottom-nav .nav-btn:last-child").classList.add("active");
+        }
+
+        function showHome(){
+            document.getElementById("main-content").style.display = "block";
+            document.getElementById("supportPage").style.display = "none";
+            document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
+            document.querySelector(".bottom-nav .nav-btn:nth-child(2)").classList.add("active");
+        }
+
+        function showOffers(){
+            document.getElementById("welcome-screen").style.display = "none";
+            document.getElementById("main-content").style.display = "block";
+            document.getElementById("supportPage").style.display = "none";
+        }
+
+        function filterLoans(category, activeBtnId) {
+            const cards = document.querySelectorAll(".loan-card");
+            cards.forEach(card => {
+                if(category === "all") {
+                    card.style.display = "flex";
+                } else {
+                    if(card.classList.contains(category)) {
+                        card.style.display = "flex";
+                    } else {
+                        card.style.display = "none";
+                    }
+                }
+            });
+            document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+            document.getElementById(activeBtnId).classList.add("active");
+        }
+
+        function openCreditScore(){
+            window.location.href="credit-score.html";
+        }
+
+        // Service Workers and PWA setup
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBtn').style.display = 'block';
+        });
+
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            document.getElementById('installBtn').style.display = 'none';
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+    </script>
 </body>
 </html>
