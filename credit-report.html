@@ -325,13 +325,13 @@ document.write(
 <div class="report-header">
 
 <h1>Credit Assessment Report</h1>
-<h1 id="score"></h1>
+<h1 id="reportScore"></h1>
    <script>
 
 document.getElementById(
-"score"
+"reportScore"
 ).innerText =
-report.score;
+reportData.score;
 
 </script>
 <p>
@@ -520,17 +520,25 @@ class="loan-list">
    LOAD REPORT DATA
 ===================== */
 
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const pan =
+params.get("user");
+
 const reportData =
 JSON.parse(
 localStorage.getItem(
-"creditReportData"
+"REPORT_" + pan
 )
 );
 
 if(!reportData){
 
 alert(
-"No report found. Please generate score first."
+"No report found"
 );
 
 window.location.href =
@@ -642,7 +650,7 @@ scoreBox.style.background =
 
 }
 const created =
-new Date(report.createdAt);
+new Date(reportData.createdAt);
 
 const expiry =
 new Date(created);
@@ -926,46 +934,7 @@ background:#059669;
 
 </style>
 
-<!-- BOTTOM NAV -->
 
-<div class="bottom-nav">
-
-<div class="nav-btn"
-onclick="window.location.href='index.html'">
-
-<span class="nav-icon">
-🏠
-</span>
-
-Home
-
-</div>
-
-<div class="nav-btn"
-onclick="window.location.href='credit-score.html'">
-
-<span class="nav-icon">
-📈
-</span>
-
-Score
-
-</div>
-
-<div class="nav-btn active">
-
-<span class="nav-icon">
-📄
-</span>
-
-Report
-
-</div>
-<a href="credit-score.html" class="back-btn">
-🔄 Check Another Credit Score
-</a>
-</div>
-   <!-- BOTTOM NAVIGATION -->
 <div class="bottom-nav">
 
     <div class="nav-btn" onclick="window.location.href='index.html'">
