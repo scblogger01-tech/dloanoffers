@@ -224,7 +224,55 @@ display:block;
 font-size:22px;
 margin-bottom:4px;
 }
+   .bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:#fff;
+display:flex;
+justify-content:space-evenly;
+align-items:center;
+box-shadow:0 -4px 12px rgba(0,0,0,.12);
+z-index:999;
+}
 
+.nav-btn{
+flex:1;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+font-size:11px;
+font-weight:600;
+color:#64748b;
+cursor:pointer;
+}
+
+.nav-icon{
+font-size:20px;
+margin-bottom:3px;
+}
+
+.nav-btn.active{
+color:#10b981;
+}
+
+body{
+padding-bottom:90px;
+}
+.back-btn{
+display:block;
+text-align:center;
+background:#2563eb;
+color:#fff;
+padding:14px;
+border-radius:12px;
+text-decoration:none;
+font-weight:700;
+margin-top:20px;
+}
 </style>
 </head>
 
@@ -649,7 +697,9 @@ Unable to load loan offers.
 });
 
 </script>
-
+<a href="credit-score.html" class="back-btn">
+🔄 Check Another Credit Score
+</a>
 <style>
 
 /* ===========================
@@ -856,6 +906,27 @@ Score
 Report
 
 </div>
+<a href="credit-score.html" class="back-btn">
+🔄 Check Another Credit Score
+</a>
+</div>
+   <!-- BOTTOM NAVIGATION -->
+<div class="bottom-nav">
+
+    <div class="nav-btn" onclick="window.location.href='index.html'">
+        <div class="nav-icon">🏠</div>
+        <div>Home</div>
+    </div>
+
+    <div class="nav-btn" onclick="window.location.href='credit-score.html'">
+        <div class="nav-icon">📈</div>
+        <div>Score</div>
+    </div>
+
+    <div class="nav-btn active">
+        <div class="nav-icon">📄</div>
+        <div>Report</div>
+    </div>
 
 </div>
 
