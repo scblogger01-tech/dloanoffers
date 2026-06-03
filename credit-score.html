@@ -1,197 +1,256 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Credit Score Assessment</title> 
-    <style> 
-        :root{--bg:#0f172a;--glass:rgba(255,255,255,.08);--text:#fff;--accent:#22c55e;--primary:#2563eb} 
-        *{box-sizing:border-box; margin:0; padding:0;} 
-        body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#0f172a,#1e293b);color:var(--text);padding-bottom:85px;} 
-        .container{max-width:1000px;margin:auto;padding:20px} 
-        .glass{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;margin-top:20px;} 
-        h1{text-align:center; margin-bottom:20px;} 
-        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px} 
-        .field{display:flex; flex-direction:column;}
-        label{display:block;margin-bottom:6px; font-weight:600; font-size:14px; opacity:0.9;} 
-        input,select,button{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:#fff; font-size:15px; outline:none;} 
-        input:focus, select:focus{border-color:var(--primary);}
-        select option{background:#1e293b; color:#fff;}
-        button{background:var(--primary);color:#fff;font-weight:bold;cursor:pointer;margin-top:25px; border:none;} 
-        button:hover{background:#1d4ed8;}
-        .center{text-align:center} 
-        .info-box{text-align:center; margin-top:15px; font-size:13px; opacity:0.6;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Assessment | D-LOAN OFFERS</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --glass: rgba(255, 255, 255, .08);
+            --text: #fff;
+            --accent: #22c55e;
+            --primary: #2563eb;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: var(--text);
+            padding-bottom: 90px;
+        }
+        .top-header {
+            position: sticky; top: 0; z-index: 999; background: #0f172a;
+            padding: 14px 18px; display: flex; align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .header-logo { width: 42px; height: 42px; border-radius: 12px; background: white; padding: 5px; }
+        .app-name { color: white; font-size: 24px; font-weight: 900; margin-left: 12px; }
         
-        #loading{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;z-index:9999} 
-        .loaderbox{background:#1e293b;color:#fff;padding:25px;border-radius:15px;text-align:center; border:1px solid rgba(255,255,255,0.1); width:280px;} 
-        .spinner {width:50px; height:50px; border:5px solid rgba(255,255,255,0.1); border-top:5px solid var(--primary); border-radius:50%; margin:0 auto 15px; animation:spin 1s linear infinite;}
-        @keyframes spin {100% {transform:rotate(360deg);}}
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        .glass {
+            background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, .1); border-radius: 20px; padding: 25px; margin-top: 20px;
+        }
+        h1 { text-align: center; margin-bottom: 20px; font-size: 26px; }
         
-        @media(max-width:600px){h1{font-size:24px}} 
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .field { display: flex; flex-direction: column; }
+        label { margin-bottom: 6px; font-size: 13px; opacity: 0.9; font-weight: 600; }
+        input, select {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.3); color: #fff; font-size: 15px; outline: none;
+        }
+        input:focus, select:focus { border-color: var(--primary); }
+        select option { background: #1e293b; color: #fff; }
         
-        /* HEADER */ 
-        .top-header{ position:sticky; top:0; z-index:999; background:#0f172a; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 4px 12px rgba(0,0,0,0.15); } 
-        .header-left{ display:flex; align-items:center; gap:12px; } 
-        .header-logo{ width:42px; height:42px; border-radius:12px; background:white; padding:5px; object-fit:contain; } 
-        .app-name{ color:white; font-size:24px; font-weight:900; letter-spacing:1px; } 
+        .action-btn {
+            width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px;
+        }
+        #submitBtn { background: var(--primary); color: white; }
+        #lockMessage { display: none; background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 15px; border-radius: 12px; text-align: center; margin-top: 20px; font-weight: bold; }
+        #viewActiveReportBtn { display: none; background: var(--accent); color: white; text-align: center; text-decoration: none; margin-top: 10px; }
         
-        @media(max-width:480px){ .app-name{ font-size:18px; } .header-logo{ width:36px; height:36px; } } 
-        
-        /* BOTTOM NAVIGATION */ 
-        .bottom-nav{ position:fixed; bottom:0; left:0; width:100%; height:70px; background:#fff; display:flex; align-items:center; justify-content:space-evenly; box-shadow:0 -4px 12px rgba(0,0,0,.12); z-index:999; } 
-        .nav-btn{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-decoration:none; font-size:11px; font-weight:600; color:#64748b; } 
-        .nav-icon{ font-size:20px; margin-bottom:3px; } 
-        .nav-btn.active{ color:#10b981; } 
-        
-        /* SIDE MENU */ 
-        .side-menu{ position:fixed; top:0; left:-280px; width:260px; height:100%; background:white; z-index:1000; padding:25px 20px; transition:0.3s; box-shadow:4px 0 15px rgba(0,0,0,0.15); } 
-        .side-menu.active{ left:0; } 
-        .menu-title{ font-size:20px; font-weight:700; margin-bottom:20px; color:#0f172a; } 
-        .menu-links{ display:flex; flex-direction:column; gap:15px; } 
-        .menu-links a{ text-decoration:none; color:#0f172a; font-weight:600; padding:12px; background:#f1f5f9; border-radius:10px; } 
-        
-        /* OVERLAY */ 
-        .overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:999; display:none; } 
-        .overlay.active{ display:block; } 
-    </style> 
-</head> 
-<body> 
+        /* LOADING SCREEN */
+        #loading {
+            display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+            justify-content: center; align-items: center; z-index: 9999;
+        }
+        .loaderbox { background: #1e293b; padding: 30px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.1); width: 280px; }
+        .spinner { width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); border-top: 5px solid var(--primary); border-radius: 50%; margin: 0 auto 15px; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-<header class="top-header"> 
-    <div class="header-left"> 
-        <img src="logo.png" class="header-logo" alt="D-LOAN OFFERS Logo"> 
-        <div class="app-name">D-LOAN OFFERS</div> 
-    </div> 
-</header> 
+        /* BOTTOM NAV */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #fff;
+            display: flex; align-items: center; justify-content: space-evenly;
+            box-shadow: 0 -4px 12px rgba(0,0,0,.12); z-index: 999;
+        }
+        .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; font-size: 11px; font-weight: 600; color: #64748b; }
+        .nav-icon { font-size: 20px; margin-bottom: 3px; }
+        .nav-btn.active { color: #10b981; }
+    </style>
+</head>
+<body>
+
+<header class="top-header">
+    <div class="header-left">
+        <img src="logo.png" class="header-logo" alt="Logo">
+        <span class="app-name">D-LOAN OFFERS</span>
+    </div>
+</header>
 
 <div id="loading">
     <div class="loaderbox">
         <div class="spinner"></div>
-        <h2>Analyzing...</h2>
-        <p id="ltxt">Checking Profile...</p>
+        <h2 style="font-size: 20px; margin-bottom: 5px;">Analyzing Systems...</h2>
+        <p id="ltxt" style="font-size: 14px; opacity: 0.7;">Evaluating Risk Profiles...</p>
     </div>
-</div> 
+</div>
 
-<div class="container"> 
-    <div class="glass"> 
-        <h1>📈 Credit Score Assessment</h1> 
-        <div class="grid"> 
-            <div class="field"><label>First Name</label><input type="text" id="firstName"></div> 
-            <div class="field"><label>Last Name</label><input type="text" id="lastName"></div> 
-            <div class="field"><label>Mobile Number</label><input type="tel" id="mobile" placeholder="10-digit number"></div>
+<div class="container">
+    <div class="glass">
+        <h1>📊 Credit Assessment Hub</h1>
+        <div class="grid">
+            <div class="field"><label>First Name</label><input type="text" id="firstName"></div>
+            <div class="field"><label>Last Name</label><input type="text" id="lastName"></div>
+            <div class="field"><label>Mobile Number</label><input type="tel" id="mobile" placeholder="10 digit number"></div>
             <div class="field"><label>PAN Card Number</label><input type="text" id="pan" placeholder="ABCDE1234F"></div>
-            <div class="field"><label>Age</label><input type="number" id="age"></div> 
-            <div class="field"><label>Monthly Income</label><input type="number" id="income"></div> 
-            <div class="field"><label>Running Loan Amount</label><input type="number" id="loanAmount"></div> 
-            <div class="field"><label>Current EMI</label><input type="number" id="emi"></div> 
-            <div class="field"><label>City</label><input type="text" id="city"></div> 
-            <div class="field"><label>Country</label><input type="text" id="country" value="India" disabled></div> 
+            <div class="field"><label>Age</label><input type="number" id="age"></div>
+            <div class="field"><label>Monthly Income</label><input type="number" id="income"></div>
+            <div class="field"><label>Running Loan Amount</label><input type="number" id="loanAmount"></div>
+            <div class="field"><label>Current EMI</label><input type="number" id="emi"></div>
+            <div class="field"><label>City</label><input type="text" id="city"></div>
+            <div class="field"><label>Country</label><input type="text" id="country" value="India" disabled></div>
             <div class="field">
-                <label>Have Credit Card?</label>
+                <label>Have Active Credit Card?</label>
                 <select id="card">
                     <option value="">Select</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                 </select>
-            </div> 
+            </div>
             <div class="field">
-                <label>Have you Missed EMI?</label>
+                <label>Have you Missed any EMI?</label>
                 <select id="missed">
                     <option value="">Select</option>
                     <option value="no">No</option>
                     <option value="yes">Yes</option>
                 </select>
-            </div> 
-        </div> 
-        <button id="submitBtn" onclick="generate()">Generate Score</button> 
-        <div class="info-box">⚠ Estimated score only. Not official CIBIL.</div> 
-    </div> 
-</div> 
+            </div>
+        </div>
 
-<div class="overlay" id="overlay" onclick="closeMenu()"></div> 
-<div class="side-menu" id="sideMenu"> 
-    <div class="menu-title">Menu</div> 
-    <div class="menu-links"> 
-        <a href="index.html">🏠 Home</a> 
-        <a href="emi.html">📊 LOAN EMI Calculator</a> 
-        <a href="#">🔒 Privacy Policy</a> 
-        <a href="#">📄 Terms & Conditions</a> 
-    </div> 
+        <div id="lockMessage"></div>
+        <button id="submitBtn" class="action-btn" onclick="processAssessment()">Generate Score Report</button>
+        <a id="viewActiveReportBtn" class="action-btn" href="#">View Active Locked Report</a>
+    </div>
 </div>
 
-<div class="bottom-nav"> 
-    <div class="nav-btn" onclick="openMenu()"><div class="nav-icon">☰</div><div>Menu</div></div> 
-    <div class="nav-btn" onclick="window.location.href='index.html'"><div class="nav-icon">🏠</div><div>Home</div></div> 
-    <div class="nav-btn active" onclick="window.location.href='credit-score.html'"><div class="nav-icon">📈</div><div>Score</div></div> 
-</div> 
+<div class="bottom-nav">
+    <a href="index.html" class="nav-btn"><div class="nav-icon">🏠</div><div>Home</div></a>
+    <a href="credit-score.html" class="nav-btn active"><div class="nav-icon">📈</div><div>Score</div></a>
+</div>
 
-<script> 
-function openMenu(){ document.getElementById("sideMenu").classList.add("active"); document.getElementById("overlay").classList.add("active"); } 
-function closeMenu(){ document.getElementById("sideMenu").classList.remove("active"); document.getElementById("overlay").classList.remove("active"); } 
+<script>
+// Auto formatting
+document.getElementById("pan").addEventListener("input", function() {
+    this.value = this.value.toUpperCase();
+    checkPANLock(this.value.trim());
+});
+document.getElementById("mobile").addEventListener("input", function() {
+    this.value = this.value.replace(/\D/g,'').slice(0,10);
+});
 
-document.getElementById("pan").addEventListener("input", function(){ this.value = this.value.toUpperCase(); });
-document.getElementById("mobile").addEventListener("input", function(){ this.value = this.value.replace(/\D/g,'').slice(0,10); });
+function checkPANLock(panCode) {
+    const submitBtn = document.getElementById("submitBtn");
+    const lockMsg = document.getElementById("lockMessage");
+    const viewBtn = document.getElementById("viewActiveReportBtn");
 
-function validate(){ 
-    const fields = ['firstName', 'lastName', 'mobile', 'pan', 'age', 'income', 'loanAmount', 'emi', 'city', 'card', 'missed'];
-    for(let id of fields){ 
+    if(panCode.length < 10) {
+        resetFormState();
+        return;
+    }
+
+    const localData = localStorage.getItem("REPORT_" + panCode);
+    if(localData) {
+        const report = JSON.parse(localData);
+        const createdTime = new Date(report.timestamp).getTime();
+        const currentTime = new Date().getTime();
+        const diffDays = (currentTime - createdTime) / (1000 * 60 * 60 * 24);
+
+        if(diffDays < 30) {
+            const remainingDays = Math.ceil(30 - diffDays);
+            lockMsg.innerHTML = `🔒 Assessment locked for this PAN card. Remaining Days: ${remainingDays} Day(s).`;
+            lockMsg.style.display = "block";
+            submitBtn.style.display = "none";
+            viewBtn.href = "credit-report.html?user=" + encodeURIComponent(panCode);
+            viewBtn.style.display = "block";
+            lockInputs(true);
+            return;
+        }
+    }
+    resetFormState();
+}
+
+function lockInputs(status) {
+    const fields = ['firstName', 'lastName', 'mobile', 'age', 'income', 'loanAmount', 'emi', 'city', 'card', 'missed'];
+    fields.forEach(id => {
         let el = document.getElementById(id);
-        if(!el || !el.value.trim()){ alert('All fields are mandatory'); el.focus(); return false; } 
-    } 
-    if(document.getElementById("mobile").value.length < 10){ alert('Enter valid mobile number'); return false; }
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    if(!panRegex.test(document.getElementById("pan").value)){ alert('Invalid PAN Card Format'); return false; }
-    return true; 
-} 
+        if(el) el.disabled = status;
+    });
+}
 
-function generate(){ 
-    if(!validate()) return; 
-    
-    const PAN = document.getElementById("pan").value.trim().toUpperCase();
-    document.getElementById('loading').style.display='flex'; 
-    
-    let msgs=['Checking Income Stability','Analyzing Repayment Capacity','Evaluating Credit Behaviour','Generating Report']; 
-    let i=0; 
-    let t=setInterval(()=>{document.getElementById('ltxt').innerText=msgs[i%msgs.length];i++;},1000); 
-    
-    setTimeout(()=>{ 
-        clearInterval(t); 
-        document.getElementById('loading').style.display='none'; 
+function resetFormState() {
+    document.getElementById("lockMessage").style.display = "none";
+    document.getElementById("submitBtn").style.display = "block";
+    document.getElementById("viewActiveReportBtn").style.display = "none";
+    lockInputs(false);
+}
+
+function validateForm() {
+    const fields = ['firstName', 'lastName', 'mobile', 'pan', 'age', 'income', 'loanAmount', 'emi', 'city', 'card', 'missed'];
+    for(let id of fields) {
+        let el = document.getElementById(id);
+        if(!el || !el.value.trim()) { alert('All operational fields are mandatory.'); el.focus(); return false; }
+    }
+    if(document.getElementById("mobile").value.length < 10) { alert('Enter valid 10-digit smartphone network profile.'); return false; }
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    if(!panRegex.test(document.getElementById("pan").value)) { alert('Invalid Structural PAN card algorithm mapping.'); return false; }
+    return true;
+}
+
+function processAssessment() {
+    if(!validateForm()) return;
+
+    document.getElementById("loading").style.display = "flex";
+    let msgs = ['Inspecting Profile Integrity', 'Evaluating Debt-to-Income Framework', 'Compiling Bureau Risk Assessment', 'Generating Final Vector Analytics'];
+    let idx = 0;
+    let t = setInterval(() => { document.getElementById('ltxt').innerText = msgs[idx % msgs.length]; idx++; }, 1000);
+
+    setTimeout(() => {
+        clearInterval(t);
+        document.getElementById("loading").style.display = "none";
+
+        const PAN = document.getElementById("pan").value.trim().toUpperCase();
+        let income = +document.getElementById("income").value;
+        let emi = +document.getElementById("emi").value;
+        let card = document.getElementById("card").value;
+        let missed = document.getElementById("missed").value;
+
+        // Structured Scoring Engine Logic
+        let score = 650;
+        if(income > 60000) score += 60;
+        if(income > 100000) score += 40;
+        if(card === "yes") score += 30;
+        if(missed === "yes") score -= 150;
         
-        let ageVal = +document.getElementById('age').value;
-        let incomeVal = +document.getElementById('income').value;
-        let cardVal = document.getElementById('card').value;
-        let missedVal = document.getElementById('missed').value;
-        
-        let score=640; 
-        if(ageVal>30) score+=40; 
-        if(incomeVal>50000) score+=50; 
-        if(incomeVal>90000) score+=40; 
-        if(cardVal==='yes') score+=30; 
-        if(missedVal==='yes') score-=130; 
-        
-        score=Math.max(300,Math.min(900,score)); 
-        let app = Math.round((score - 300) / 600 * 100);
-        if(app < 35) app = 35;
-        
-        let reportData = {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            mobile: document.getElementById('mobile').value,
+        let emiRatio = (emi / income) * 100;
+        if(emiRatio > 50) score -= 50;
+        else if(emiRatio < 20) score += 30;
+
+        score = Math.max(300, Math.min(900, score));
+        let approvalChance = Math.round(((score - 300) / 600) * 100);
+        if(approvalChance < 30) approvalChance = 35;
+
+        let reportObj = {
+            firstName: document.getElementById("firstName").value.trim(),
+            lastName: document.getElementById("lastName").value.trim(),
+            mobile: document.getElementById("mobile").value.trim(),
             pan: PAN,
-            city: document.getElementById('city').value,
-            income: incomeVal,
-            loanAmount: document.getElementById('loanAmount').value,
-            emi: document.getElementById('emi').value,
+            city: document.getElementById("city").value.trim(),
+            income: income,
+            loanAmount: document.getElementById("loanAmount").value,
+            emi: emi,
             score: score,
-            app: app,
-            date: new Date().toLocaleDateString()
+            app: approvalChance,
+            timestamp: new Date().toISOString(),
+            dateString: new Date().toLocaleDateString()
         };
-        
-        localStorage.setItem('REPORT_' + PAN, JSON.stringify(reportData));
+
+        localStorage.setItem("REPORT_" + PAN, JSON.stringify(reportObj));
         window.location.href = "credit-report.html?user=" + encodeURIComponent(PAN);
-    },4000); 
-} 
-</script> 
-</body> 
+    }, 4000);
+}
+</script>
+</body>
 </html>
