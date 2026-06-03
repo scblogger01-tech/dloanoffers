@@ -3,498 +3,762 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Credit Score Assessment</title>
+<title>Credit Score Assessment | D-LOAN OFFERS</title>
+
 <style>
-:root{--bg:#0f172a;--glass:rgba(255,255,255,.08);--text:#fff;--accent:#22c55e}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#0f172a,#1e293b);color:var(--text)}
-.container{max-width:1000px;margin:auto;padding:20px}
-.glass{background:var(--glass);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px}
-h1{text-align:center}
-label{display:block;margin:10px 0 5px}
-input,select,button{width:100%;padding:12px;border-radius:10px;border:none}
-button{background:#2563eb;color:#fff;font-weight:bold;cursor:pointer;margin-top:12px}
-#resetBtn{display:none;background:#dc2626}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-#result,#offers,#leadBox{display:none}
-.offer{background:rgba(255,255,255,.08);padding:15px;border-radius:15px}
-.offer a{display:block;background:#22c55e;color:white;text-decoration:none;padding:10px;border-radius:8px;text-align:center}
-.center{text-align:center}
-#loading{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);justify-content:center;align-items:center;z-index:999}
-.loaderbox{background:#fff;color:#000;padding:25px;border-radius:15px;text-align:center}
-svg{max-width:260px}
-@media(max-width:600px){h1{font-size:24px}}
-      /* HEADER */
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+display:none;
+z-index:998;
+}
+
+.overlay.active{
+display:block;
+}
+
+.side-menu{
+position:fixed;
+top:0;
+left:-280px;
+width:260px;
+height:100%;
+background:white;
+padding:25px 20px;
+transition:.3s;
+z-index:999;
+box-shadow:4px 0 15px rgba(0,0,0,.15);
+}
+
+.side-menu.active{
+left:0;
+}
+
+.menu-title{
+font-size:22px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.menu-links{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.menu-links a{
+text-decoration:none;
+background:#f1f5f9;
+padding:12px;
+border-radius:10px;
+color:#0f172a;
+font-weight:600;
+}
+:root{
+--primary:#1E40AF;
+--secondary:#2563EB;
+--success:#10b981;
+--dark:#0f172a;
+--light:#f8fafc;
+--text:#334155;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f8fafc;
+padding-bottom:90px;
+}
+
+/* HEADER */
 
 .top-header{
-
 position:sticky;
-
 top:0;
-
 z-index:999;
-
 background:#0f172a;
-
 padding:14px 18px;
-
 display:flex;
-
 align-items:center;
-
-justify-content:space-between;
-
-box-shadow:0 4px 12px rgba(0,0,0,0.15);
+box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
 .header-left{
-
 display:flex;
-
 align-items:center;
-
 gap:12px;
 }
 
 .header-logo{
-
 width:42px;
-
 height:42px;
-
 border-radius:12px;
-
 background:white;
-
 padding:5px;
-
 object-fit:contain;
 }
 
 .app-name{
-    color:white;
-    font-size:24px;
-    font-weight:900;
-    letter-spacing:1px;
+color:white;
+font-size:24px;
+font-weight:900;
 }
 
-@media(max-width:480px){
-
-.app-name{
-    font-size:18px;
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
 }
 
-.header-logo{
-    width:36px;
-    height:36px;
+.hero-card{
+background:linear-gradient(135deg,#1E40AF,#2563EB);
+color:white;
+padding:30px;
+border-radius:20px;
+margin-bottom:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.hero-card h1{
+font-size:32px;
+margin-bottom:10px;
+}
+
+.hero-card p{
+opacity:.9;
+}
+
+.form-card{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+.field{
+display:flex;
+flex-direction:column;
+}
+
+.field label{
+font-weight:600;
+margin-bottom:6px;
+color:#334155;
+}
+
+.field input,
+.field select{
+padding:13px;
+border:1px solid #dbeafe;
+border-radius:12px;
+font-size:15px;
+outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+border-color:#2563EB;
+}
+
+.generate-btn{
+width:100%;
+padding:16px;
+margin-top:25px;
+border:none;
+border-radius:14px;
+background:#10b981;
+color:white;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+}
+
+.generate-btn:hover{
+background:#059669;
+}
+
+.info-box{
+margin-top:20px;
+background:#eff6ff;
+padding:15px;
+border-radius:12px;
+color:#1e40af;
+font-size:14px;
+}
+
+/* LOADER */
+
+#loading{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+z-index:9999;
+justify-content:center;
+align-items:center;
+}
+
+.loader-box{
+background:white;
+padding:30px;
+border-radius:20px;
+text-align:center;
+width:320px;
+}
+
+.loader-circle{
+width:70px;
+height:70px;
+border:6px solid #dbeafe;
+border-top:6px solid #2563EB;
+border-radius:50%;
+margin:auto;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
 }
 }
-/* BOTTOM NAVIGATION */
+
+.loader-box h2{
+margin-top:15px;
+color:#1e40af;
+}
+
+.loader-box p{
+margin-top:8px;
+color:#64748b;
+}
+
+/* BOTTOM NAV */
+
 .bottom-nav{
 position:fixed;
 bottom:0;
 left:0;
 width:100%;
 height:70px;
-
 background:#fff;
-
 display:flex;
-flex-wrap:nowrap;
-
-align-items:center;
 justify-content:space-evenly;
-
+align-items:center;
 box-shadow:0 -4px 12px rgba(0,0,0,.12);
-
 z-index:999;
 }
 
 .nav-btn{
 flex:1;
-
-display:flex;
-flex-direction:column;
-
-align-items:center;
-justify-content:center;
-
-text-decoration:none;
-
-font-size:11px;
-
-font-weight:600;
-
+text-align:center;
+font-size:12px;
 color:#64748b;
-
-white-space:nowrap;
-
-min-width:0;
+cursor:pointer;
 }
 
-.nav-icon{
-font-size:20px;
-margin-bottom:3px;
-}
 .nav-btn.active{
-
 color:#10b981;
 }
 
-
-/* SIDE MENU */
-
-.side-menu{
-
-position:fixed;
-
-top:0;
-
-left:-280px;
-
-width:260px;
-
-height:100%;
-
-background:white;
-
-z-index:1000;
-
-padding:25px 20px;
-
-transition:0.3s;
-
-box-shadow:4px 0 15px rgba(0,0,0,0.15);
-}
-
-.side-menu.active{
-
-left:0;
-}
-
-.menu-title{
-
-font-size:20px;
-
-font-weight:700;
-
-margin-bottom:20px;
-}
-
-.menu-links{
-
-display:flex;
-
-flex-direction:column;
-
-gap:15px;
-}
-
-.menu-links a{
-
-text-decoration:none;
-
-color:#0f172a;
-
-font-weight:600;
-
-padding:12px;
-
-background:#f1f5f9;
-
-border-radius:10px;
-}
-
-/* OVERLAY */
-
-.overlay{
-
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,0.5);
-
-z-index:999;
-
-display:none;
-}
-
-.overlay.active{
-
+.nav-icon{
+font-size:22px;
 display:block;
+margin-bottom:4px;
 }
 
-/* SUPPORT PAGE */
+@media(max-width:768px){
 
-.support-page{
-
-display:none;
-
-padding:20px;
+.hero-card h1{
+font-size:26px;
 }
 
-.support-card{
-
-background:white;
-
-padding:20px;
-
-border-radius:16px;
-
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+.app-name{
+font-size:18px;
 }
 
-.support-card h2{
-
-margin-bottom:15px;
 }
 
-.support-item{
-
-margin-bottom:12px;
-
-font-size:15px;
-}
-
-/* BODY SPACE FOR NAVBAR */
-
-body{
-
-padding-bottom:85px;
-}
 </style>
 </head>
-<body> <header class="top-header">
+
+<body>
+
+<header class="top-header">
+
 <div class="header-left">
-<img src="logo.png" class="header-logo" alt="D-LOAN OFFERS Logo">
-<class="header-logo">
+
+<img src="logo.png"
+class="header-logo">
+
 <div class="app-name">
 D-LOAN OFFERS
 </div>
+
 </div>
-</header>   
-  
-<div id="loading"><div class="loaderbox"><h2>Analyzing...</h2><p id="ltxt">Checking Profile...</p></div></div>
+
+</header>
+
+<div id="loading">
+
+<div class="loader-box">
+
+<div class="loader-circle"></div>
+
+<h2>Generating Report...</h2>
+
+<p id="loadingText">
+Checking Credit Profile...
+</p>
+
+</div>
+
+</div>
 
 <div class="container">
-<div class="glass">
-<h1> Credit Score Assessment</h1>
+
+<div class="hero-card">
+
+<h1>📈 Credit Score Assessment</h1>
+
+<p>
+Check your estimated credit profile and get personalised loan offers instantly.
+</p>
+
+</div>
+
+<div class="form-card">
 
 <div class="grid">
-      <div><label>First Name</label><input id="First Name"></div>
-      <div><label>Last Name</label><input id="Last Name"></div>
-<div><label>Age</label><input id="age"></div>
-<div><label>Monthly Income</label><input id="income"></div>
-<div><label>Runing Loan Amount</label><input id="loan amount"></div>
-<div><label>Current EMI</label><input id="emi"></div>
-<div><label>City</label><input id="city"></div>
-<div><label>Country</label><input id="country" value="India"></div>
-<div><label>Have Credit Card</label><select id="card"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
-<div><label>Have you Missed EMI</label><select id="missed"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select></div>
+
+<div class="field">
+<label>First Name</label>
+<input type="text" id="firstName">
 </div>
 
-<button id="submitBtn" onclick="generate()">Generate Score</button>
-<button id="resetBtn" onclick="resetAssessment()">Start New Assessment</button>
-
-<div id="result" class="center">
-<svg viewBox="0 0 200 120">
-<path d="M20 100 A80 80 0 0 1 180 100" stroke="#334155" stroke-width="16" fill="none"/>
-<path id="gauge" d="M20 100 A80 80 0 0 1 180 100" stroke="#22c55e" stroke-width="16" fill="none" stroke-dasharray="252" stroke-dashoffset="252"/>
-<text x="100" y="95" text-anchor="middle" fill="white" font-size="26" id="score">0</text>
-</svg>
-<h2 id="approval"></h2>
-<p id="date"></p>
-<button onclick="downloadPDF()">Download PDF Report</button>
-</div>
-<h2>
-Estimated score only. Not official CIBIL.
-</h2>
-<div id="offers">
-<h2>🏦 Eligible Loan Offers</h2>
-<div class="grid" id="offerGrid"></div>
-</div>
-</div>
+<div class="field">
+<label>Last Name</label>
+<input type="text" id="lastName">
 </div>
 
+<div class="field">
+<label>Mobile Number</label>
+<input type="tel" id="mobile">
+</div>
+
+<div class="field">
+<label>PAN Number</label>
+<input type="text" id="pan">
+</div>
+
+<div class="field">
+<label>Age</label>
+<input type="number" id="age">
+</div>
+
+<div class="field">
+<label>City</label>
+<input type="text" id="city">
+</div>
+
+<div class="field">
+<label>Monthly Income</label>
+<input type="number" id="income">
+</div>
+
+<div class="field">
+<label>Current Loan Amount</label>
+<input type="number" id="loanAmount">
+</div>
+
+<div class="field">
+<label>Current EMI</label>
+<input type="number" id="emi">
+</div>
+
+<div class="field">
+<label>Employment Type</label>
+
+<select id="employment">
+
+<option value="">Select</option>
+
+<option>Salaried</option>
+
+<option>Self Employed</option>
+
+<option>Business Owner</option>
+
+<option>Student</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Credit Card Available?</label>
+
+<select id="card">
+
+<option value="">Select</option>
+
+<option value="yes">Yes</option>
+
+<option value="no">No</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Any EMI Missed?</label>
+
+<select id="missed">
+
+<option value="">Select</option>
+
+<option value="no">No</option>
+
+<option value="yes">Yes</option>
+
+</select>
+
+</div>
+
+</div>
+
+<button class="generate-btn"
+onclick="generateScore()">
+
+Generate Credit Report
+
+</button>
+
+<div class="info-box">
+
+⚠ This is an estimated credit assessment and not an official CIBIL report.
+
+</div>
+
+</div>
+
+</div>
 <script>
-  function openMenu(){
 
-document.getElementById("sideMenu")
-.classList.add("active");
+/* =========================
+   NAVIGATION
+========================= */
 
-document.getElementById("overlay")
-.classList.add("active");
+function showHome(){
+window.location.href="index.html";
 }
 
-function closeMenu(){
-
-document.getElementById("sideMenu")
-.classList.remove("active");
-
-document.getElementById("overlay")
-.classList.remove("active");
+function openCreditScore(){
+window.location.href="credit-score.html";
 }
 
-function validate(){
-for(let el of document.querySelectorAll('input,select')){
-if(el.id==='mobile') continue;
-if(!el.value.trim()){alert('All fields are mandatory');return false;}
+/* =========================
+   VALIDATION
+========================= */
+
+function validateForm(){
+
+const required = [
+"firstName",
+"lastName",
+"mobile",
+"pan",
+"age",
+"city",
+"income",
+"loanAmount",
+"emi",
+"employment",
+"card",
+"missed"
+];
+
+for(let id of required){
+
+const value =
+document.getElementById(id).value.trim();
+
+if(!value){
+
+alert("Please fill all fields");
+
+document.getElementById(id).focus();
+
+return false;
 }
+}
+
+if(
+document.getElementById("mobile")
+.value.length < 10
+){
+alert("Enter valid mobile number");
+return false;
+}
+
 return true;
 }
 
-function generate(){
-if(!validate()) return;
+/* =========================
+   GENERATE SCORE
+========================= */
 
-loading.style.display='flex';
-let msgs=['Checking Income Stability','Analyzing Repayment Capacity','Evaluating Credit Behaviour','Generating Report'];
-let i=0;
-let t=setInterval(()=>{ltxt.innerText=msgs[i%msgs.length];i++;},1000);
+function generateScore(){
+
+if(!validateForm()) return;
+
+document.getElementById("loading")
+.style.display = "flex";
+
+const messages = [
+
+"Checking Income Stability...",
+"Verifying Credit Behaviour...",
+"Calculating Risk Profile...",
+"Checking Repayment Capacity...",
+"Generating Credit Report..."
+
+];
+
+let i = 0;
+
+const loadingInterval =
+setInterval(()=>{
+
+document.getElementById("loadingText")
+.innerText =
+messages[i % messages.length];
+
+i++;
+
+},1000);
 
 setTimeout(()=>{
-clearInterval(t);
-loading.style.display='none';
 
-let score=650;
-if(+age.value>30) score+=40;
-if(+income.value>50000) score+=50;
-if(card.value==='yes') score+=30;
-if(missed.value==='yes') score-=120;
-score=Math.max(300,Math.min(900,score));
+clearInterval(loadingInterval);
 
-show(score);
-},4000);
+const age =
+parseInt(
+document.getElementById("age").value
+);
+
+const income =
+parseInt(
+document.getElementById("income").value
+);
+
+const loanAmount =
+parseInt(
+document.getElementById("loanAmount").value
+);
+
+const emi =
+parseInt(
+document.getElementById("emi").value
+);
+
+const card =
+document.getElementById("card").value;
+
+const missed =
+document.getElementById("missed").value;
+
+const employment =
+document.getElementById("employment").value;
+
+let score = 620;
+
+/* Age */
+
+if(age >= 25 && age <= 45)
+score += 40;
+
+/* Income */
+
+if(income >= 30000)
+score += 30;
+
+if(income >= 50000)
+score += 40;
+
+if(income >= 100000)
+score += 50;
+
+/* Employment */
+
+if(employment === "Salaried")
+score += 40;
+
+if(employment === "Business Owner")
+score += 25;
+
+if(employment === "Self Employed")
+score += 20;
+
+/* Credit Card */
+
+if(card === "yes")
+score += 30;
+
+/* Missed EMI */
+
+if(missed === "yes")
+score -= 120;
+
+/* EMI Burden */
+
+const emiRatio =
+(emi / income) * 100;
+
+if(emiRatio < 20)
+score += 30;
+
+else if(emiRatio > 50)
+score -= 40;
+
+/* Existing Loan */
+
+if(loanAmount > 1000000)
+score -= 30;
+
+/* Final Limit */
+
+score =
+Math.max(
+300,
+Math.min(900,score)
+);
+
+/* Approval Chance */
+
+let approval = 55;
+
+if(score >= 750)
+approval = 95;
+
+else if(score >= 700)
+approval = 85;
+
+else if(score >= 650)
+approval = 75;
+
+else if(score >= 600)
+approval = 65;
+
+/* Rating */
+
+let rating = "Fair";
+
+if(score >= 800)
+rating = "Excellent";
+
+else if(score >= 750)
+rating = "Very Good";
+
+else if(score >= 700)
+rating = "Good";
+
+else if(score >= 650)
+rating = "Average";
+
+else
+rating = "Needs Improvement";
+
+/* Save Report */
+
+const reportData = {
+
+firstName:
+document.getElementById("firstName").value,
+
+lastName:
+document.getElementById("lastName").value,
+
+mobile:
+document.getElementById("mobile").value,
+
+pan:
+document.getElementById("pan").value,
+
+age:
+document.getElementById("age").value,
+
+city:
+document.getElementById("city").value,
+
+income:
+document.getElementById("income").value,
+
+loanAmount:
+document.getElementById("loanAmount").value,
+
+emi:
+document.getElementById("emi").value,
+
+employment:
+document.getElementById("employment").value,
+
+card:
+document.getElementById("card").value,
+
+missed:
+document.getElementById("missed").value,
+
+score:score,
+
+approval:approval,
+
+rating:rating,
+
+reportDate:
+new Date().toLocaleDateString()
+
+};
+
+localStorage.setItem(
+"creditReportData",
+JSON.stringify(reportData)
+);
+
+document.getElementById("loading")
+.style.display = "none";
+
+/* Redirect */
+
+window.location.href =
+"credit-report.html";
+
+},5000);
+
 }
 
-function show(scoreVal){
-result.style.display='block';
-offers.style.display='block';
-leadBox.style.display='block';
-
-let cur=0;
-let anim=setInterval(()=>{
-cur+=5;
-if(cur>=scoreVal){cur=scoreVal;clearInterval(anim);confetti();}
-document.getElementById("score").textContent = cur;
-let p=(cur-300)/600;
-gauge.style.strokeDashoffset=252-(252*p);
-},15);
-
-let app=Math.round(scoreVal/900*100);
-approval.innerText=app+'% Loan Approval Chance';
-date.innerText='Assessment Date: '+new Date().toLocaleDateString();
-
-localStorage.setItem('creditData',JSON.stringify({score:scoreVal,app,date:date.innerText}));
-renderOffers(scoreVal);
-lockForm();
-}
-
-function renderOffers(s){
-let premium=s>=750;
-offerGrid.innerHTML=(premium?[
-'HDFC Personal Loan','ICICI Instant Loan','Axis Bank Loan','Kotak Pre-Approved'
-]:['Navi','MoneyView','KreditBee','True Balance'])
-.map(x=>`<div class="offer"><h3>${x}</h3><p>Eligible Offer</p><a href="#">Apply Now</a></div>`).join('');
-}
-
-function lockForm(){
-document.querySelectorAll('input,select').forEach(e=>{if(e.id!=='mobile')e.disabled=true;});
-submitBtn.style.display='none';
-resetBtn.style.display='block';
-}
-
-function resetAssessment(){
-localStorage.removeItem('creditData');
-location.reload();
-}
-
-window.onload=()=>{
-let d=localStorage.getItem('creditData');
-if(!d) return;
-d=JSON.parse(d);
-result.style.display='block';
-offers.style.display='block';
-leadBox.style.display='block';
-score.innerText=d.score;
-approval.innerText=d.app+'% Loan Approval Chance';
-date.innerText=d.date;
-gauge.style.strokeDashoffset=252-(252*((d.score-300)/600));
-renderOffers(d.score);
-lockForm();
-}
-
-function sendWhatsApp(){
-let n=document.getElementById('mobile').value;
-if(!n){alert('Enter number');return;}
-window.open('https://wa.me/'+n,'_blank');
-}
-
-function downloadPDF(){
-window.print();
-}
-
-function confetti(){
-if(parseInt(document.getElementById("score").innerText)<750) return;
-for(let i=0;i<80;i++){
-let d=document.createElement('div');
-d.style.cssText='position:fixed;width:8px;height:8px;background:hsl('+Math.random()*360+',100%,50%);left:'+Math.random()*100+'%;top:-10px;z-index:9999';
-document.body.appendChild(d);
-let y=0;
-let a=setInterval(()=>{y+=5;d.style.top=y+"px";if(y>innerHeight){clearInterval(a);d.remove();}},20);
-}
-}
-      function openCreditScore(){
-    window.location.href = "credit-score.html";
-}
-function showHome() {
-    window.location.href = "index.html";
-}
-
-function openCreditScore() {
-    window.location.href = "credit-score.html";
-}
-
- function openMenu(){
-
-document.getElementById("sideMenu")
-.classList.add("active");
-
-document.getElementById("overlay")
-.classList.add("active");
-}
-
-function closeMenu(){
-
-document.getElementById("sideMenu")
-.classList.remove("active");
-
-document.getElementById("overlay")
-.classList.remove("active");
-}
-
-function showSupport(){
-
-document.querySelector(".loan-list").style.display = "none";
-document.getElementById("supportPage").style.display = "block";
-
-document.querySelectorAll(".nav-btn")
-.forEach(btn=>btn.classList.remove("active"));
-
-document.querySelector(".bottom-nav .nav-btn:last-child")
-.classList.add("active");
-}
-
-      
 </script>
-<!-- OVERLAY -->
-
-<div class="overlay" id="overlay"
-onclick="closeMenu()"></div>
+      <!-- OVERLAY -->
+<div class="overlay"
+id="overlay"
+onclick="closeMenu()">
+</div>
 
 <!-- SIDE MENU -->
 
-<div class="side-menu" id="sideMenu">
+<div class="side-menu"
+id="sideMenu">
 
 <div class="menu-title">
 Menu
@@ -507,7 +771,11 @@ Menu
 </a>
 
 <a href="emi.html">
-📊 LOAN EMI Calculator
+📊 EMI Calculator
+</a>
+
+<a href="credit-score.html">
+📈 Credit Score
 </a>
 
 <a href="#">
@@ -523,29 +791,172 @@ Menu
 </a>
 
 </div>
-  
+
+</div>
+
 <!-- BOTTOM NAV -->
+
 <div class="bottom-nav">
 
-<div class="nav-btn" onclick="openMenu()">
-<div class="nav-icon">☰</div>
-<div>Menu</div>
+<div class="nav-btn"
+onclick="openMenu()">
+
+<span class="nav-icon">
+☰
+</span>
+
+Menu
+
 </div>
 
-<div class="nav-btn active" onclick="showHome()">
-<div class="nav-icon">🏠</div>
-<div>Home</div>
+<div class="nav-btn"
+onclick="showHome()">
+
+<span class="nav-icon">
+🏠
+</span>
+
+Home
+
 </div>
 
-<div class="nav-btn" onclick="openCreditScore()">
-<div class="nav-icon">📈</div>
-<div>Score</div>
+<div class="nav-btn active"
+onclick="openCreditScore()">
+
+<span class="nav-icon">
+📈
+</span>
+
+Score
+
 </div>
 
-<div class="nav-btn" onclick="showSupport()">
-<div class="nav-icon">☎</div>
-<div>Support</div>
+<div class="nav-btn">
+
+<span class="nav-icon">
+📄
+</span>
+
+Report
+
 </div>
-<!-- BOTTOM NAV -->
+
+</div>
+
+<script>
+
+/* =========================
+   SIDE MENU
+========================= */
+
+function openMenu(){
+
+document
+.getElementById("sideMenu")
+.classList.add("active");
+
+document
+.getElementById("overlay")
+.classList.add("active");
+
+}
+
+function closeMenu(){
+
+document
+.getElementById("sideMenu")
+.classList.remove("active");
+
+document
+.getElementById("overlay")
+.classList.remove("active");
+
+}
+
+/* =========================
+   AUTO UPPERCASE PAN
+========================= */
+
+const panField =
+document.getElementById("pan");
+
+if(panField){
+
+panField.addEventListener(
+"input",
+function(){
+
+this.value =
+this.value.toUpperCase();
+
+}
+);
+
+}
+
+/* =========================
+   MOBILE VALIDATION
+========================= */
+
+const mobileField =
+document.getElementById("mobile");
+
+if(mobileField){
+
+mobileField.addEventListener(
+"input",
+function(){
+
+this.value =
+this.value.replace(/\D/g,'');
+
+if(this.value.length > 10){
+
+this.value =
+this.value.slice(0,10);
+
+}
+
+}
+);
+
+}
+
+/* =========================
+   PAN VALIDATION
+========================= */
+
+function validatePAN(pan){
+
+const regex =
+/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+return regex.test(pan);
+
+}
+
+document
+.getElementById("pan")
+.addEventListener(
+"blur",
+function(){
+
+if(
+this.value &&
+!validatePAN(this.value)
+){
+
+alert(
+"Please enter a valid PAN number"
+);
+
+}
+
+}
+);
+
+</script>
+
 </body>
 </html>
+      
