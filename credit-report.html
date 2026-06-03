@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Report Summary | D-LOAN OFFERS</title>
+    <title>Credit Report | D-LOAN OFFERS</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -38,18 +38,28 @@
         
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px; }
         .info-card { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
-        .info-label { font-size: 12px; color: #94a3b8; margin-bottom: 4px; text-transform: uppercase; }
-        .info-val { font-size: 16px; font-weight: bold; }
+        .info-label { font-size: 11px; color: #94a3b8; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-val { font-size: 16px; font-weight: bold; color: #f8fafc; }
         
-        .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px; }
-        .offer { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
-        .offer h3 { margin-bottom: 10px; font-size: 18px; color: #60a5fa; }
-        .offer a { display: block; background: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 8px; margin-top: 12px; font-weight: bold; }
+        .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
         
-        .action-btns { display: flex; gap: 15px; margin-top: 20px; }
-        .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 15px; }
-        .btn-print { background: #64748b; color: white; }
-        .btn-new { background: var(--primary); color: white; }
+        /* Inherited parsed objects styled from Index source pools */
+        .loan-card { 
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .loan-card h3 { color: #60a5fa; font-size: 18px; margin-bottom: 8px; }
+        .loan-card .meta { font-size: 13px; opacity: 0.7; margin-bottom: 15px; color: #cbd5e1; }
+        .loan-card .tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: bold; margin-bottom: 12px; width: fit-content; }
+        .card-premium { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+        .card-medium { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .card-limited { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .apply-btn { display: block; text-align: center; background: var(--accent); color: white; text-decoration: none; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 13px; }
+
+        .share-row { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .btn-action { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 14px; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-print { background: #475569; }
+        .btn-wp { background: #128c7e; }
         
         /* BOTTOM NAV */
         .bottom-nav {
@@ -60,12 +70,20 @@
         .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; font-size: 11px; font-weight: 600; color: #64748b; }
         .nav-icon { font-size: 20px; margin-bottom: 3px; }
         .nav-btn.active { color: #10b981; }
-        
+
+        #validityBanner { font-size: 13px; font-weight: bold; margin-top: 10px; color: #f87171; text-align: center; }
+
+        /* REAL PDF HIGH FIDELITY PRINT STYLING MAPS */
         @media print {
-            .bottom-nav, .action-btns, .top-header { display: none !important; }
-            body { background: white; color: black; }
-            .glass { border: none; background: none; color: black; }
-            .info-card { border: 1px solid #ccc; color: black; }
+            .bottom-nav, .share-row, .top-header, #validityBanner { display: none !important; }
+            body { background: #ffffff !important; color: #000000 !important; }
+            .glass { background: #ffffff !important; border: 1px solid #000 !important; border-radius: 0px !important; color: #000000 !important; backdrop-filter: none !important; }
+            .info-card { background: #f1f5f9 !important; border: 1px solid #cbd5e1 !important; color: #000000 !important; }
+            .info-val { color: #0f172a !important; }
+            text { fill: #000000 !important; }
+            .loan-card { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; color: #0f172a !important; page-break-inside: avoid; }
+            .loan-card h3 { color: #1e3a8a !important; }
+            .apply-btn { background: #0f172a !important; color: #fff !important; }
         }
     </style>
 </head>
@@ -80,45 +98,51 @@
 
 <div class="container">
     <div class="glass center">
-        <h2 style="font-size: 24px;">Your Credit Assessment Report</h2>
+        <h2 style="font-size: 24px;">Bureau Verified Assessment Summary</h2>
         
         <svg viewBox="0 0 200 120">
             <path d="M20 100 A80 80 0 0 1 180 100" stroke="#334155" stroke-width="16" fill="none" stroke-linecap="round"/>
-            <path id="gauge" d="M20 100 A80 80 0 0 1 180 100" stroke="#22c55e" stroke-width="16" fill="none" stroke-dasharray="252" stroke-dashoffset="252" stroke-linecap="round" style="transition: stroke-dashoffset 1s ease-out;"/>
+            <path id="gauge" d="M20 100 A80 80 0 0 1 180 100" stroke="#22c55e" stroke-width="16" fill="none" stroke-dasharray="252" stroke-dashoffset="252" stroke-linecap="round" style="transition: stroke-dashoffset 1.5s ease-out;"/>
             <text x="100" y="95" text-anchor="middle" fill="white" font-size="28" font-weight="bold" id="scoreDisplay">300</text>
         </svg>
 
-        <h3 id="approvalDisplay" style="color: var(--accent); margin-bottom: 5px;">0% Loan Approval Chance</h3>
+        <h3 id="ratingDisplay" style="font-size: 20px; margin-bottom: 4px;">Evaluating...</h3>
+        <p id="approvalDisplay" style="color: var(--accent); font-weight: bold; margin-bottom: 5px;">0% Approval Matrix</p>
         <p id="dateDisplay" style="font-size: 13px; opacity: 0.6;"></p>
+        <div id="validityBanner"></div>
 
-        <div class="action-btns">
-            <button class="btn btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
-            <a href="credit-score.html" class="btn btn-new">🔄 New Check</a>
+        <div class="share-row">
+            <button class="btn-action btn-print" onclick="window.print()">🖨 Download PDF Report</button>
+            <button class="btn-action btn-wp" onclick="shareWhatsApp()">💬 Share via WhatsApp</button>
         </div>
     </div>
 
     <div class="glass">
-        <h3 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">📋 Applicant Profile</h3>
+        <h3 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">📋 Verified Applicant Parameters</h3>
         <div class="grid">
-            <div class="info-card"><div class="info-label">Name</div><div class="info-val" id="valName">N/A</div></div>
-            <div class="info-card"><div class="info-label">Mobile</div><div class="info-val" id="valMobile">N/A</div></div>
-            <div class="info-card"><div class="info-label">PAN Card</div><div class="info-val" id="valPan">N/A</div></div>
-            <div class="info-card"><div class="info-label">City</div><div class="info-val" id="valCity">N/A</div></div>
-            <div class="info-card"><div class="info-label">Monthly Income</div><div class="info-val" id="valIncome">N/A</div></div>
-            <div class="info-card"><div class="info-label">Existing Loan EMI</div><div class="info-val" id="valEmi">N/A</div></div>
+            <div class="info-card"><div class="info-label">Full Name</div><div class="info-val" id="valName">N/A</div></div>
+            <div class="info-card"><div class="info-label">Associated Mobile</div><div class="info-val" id="valMobile">N/A</div></div>
+            <div class="info-card"><div class="info-label">PAN Number</div><div class="info-val" id="valPan">N/A</div></div>
+            <div class="info-card"><div class="info-label">City Profile</div><div class="info-val" id="valCity">N/A</div></div>
+            <div class="info-card"><div class="info-label">Gross Income</div><div class="info-val" id="valIncome">N/A</div></div>
+            <div class="info-card"><div class="info-label">Declared Active EMI</div><div class="info-val" id="valEmi">N/A</div></div>
         </div>
     </div>
 
     <div class="glass">
-        <h3>🏦 Recommended Loan Offers For You</h3>
-        <div class="offer-grid" id="offerGrid"></div>
+        <h3>🏦 Filtered Affiliate Loan Recommendations</h3>
+        <div class="offer-grid" id="reportOfferBucket">
+            <p style="opacity:0.5;">Compiling eligible options from central grid pools...</p>
+        </div>
     </div>
 </div>
 
+<div id="hiddenPool" style="display:none;"></div>
+
 <div class="bottom-nav">
-    <div class="nav-btn" onclick="window.location.href='index.html'"><div class="nav-icon">🏠</div><div>Home</div></div>
-    <div class="nav-btn" onclick="window.location.href='credit-score.html'"><div class="nav-icon">📈</div><div>Score</div></div>
-    <div class="nav-btn active"><div class="nav-icon">📄</div><div>Report</div></div>
+    <a href="index.html" class="nav-btn"><div class="nav-icon">🏠</div><div>Home</div></a>
+    <a href="credit-score.html" class="nav-btn"><div class="nav-icon">📈</div><div>Score</div></a>
+    <a href="#" class="nav-btn active"><div class="nav-icon">📄</div><div>Report</div></a>
 </div>
 
 <script>
@@ -126,58 +150,102 @@ window.onload = function() {
     const params = new URLSearchParams(window.location.search);
     const pan = params.get("user");
     
-    if(!pan) { alert("User profile target missing!"); window.location.href="credit-score.html"; return; }
+    if(!pan) { alert("Missing operational security verification token."); window.location.href="credit-score.html"; return; }
     
-    const dataString = localStorage.getItem("REPORT_" + pan.toUpperCase());
-    if(!dataString) { alert("No stored session report found for this PAN!"); window.location.href="credit-score.html"; return; }
+    const storeObj = localStorage.getItem("REPORT_" + pan.toUpperCase());
+    if(!storeObj) { alert("Session array data structurally expired."); window.location.href="credit-score.html"; return; }
     
-    const data = JSON.parse(dataString);
+    const data = JSON.parse(storeObj);
     
-    // UI mapping
+    // Calculate Days mapping properties
+    const reportDate = new Date(data.timestamp);
+    const currentDate = new Date();
+    const activeDays = (currentDate - reportDate) / (1000 * 60 * 60 * 24);
+    const validUntil = new Date(reportDate.getTime() + (30 * 24 * 60 * 60 * 1000));
+
+    document.getElementById("validityBanner").innerText = `⏱ Report Validity Expiry: ${validUntil.toLocaleDateString()} (${Math.ceil(30 - activeDays)} Days Left)`;
+
+    // Map UI
     document.getElementById("valName").innerText = data.firstName + " " + data.lastName;
     document.getElementById("valMobile").innerText = data.mobile;
     document.getElementById("valPan").innerText = data.pan;
     document.getElementById("valCity").innerText = data.city;
     document.getElementById("valIncome").innerText = "₹" + Number(data.income).toLocaleString('en-IN');
     document.getElementById("valEmi").innerText = "₹" + Number(data.emi).toLocaleString('en-IN');
-    document.getElementById("dateDisplay").innerText = "Assessment Date: " + data.date;
-    document.getElementById("approvalDisplay").innerText = data.app + "% Loan Approval Chance";
+    document.getElementById("dateDisplay").innerText = "Generated Vector Date: " + data.dateString;
+    document.getElementById("approvalDisplay").innerText = data.app + "% Automated Approval Chance";
     
-    // Gauge Animation logic 
-    let currentScore = 300;
-    let targetScore = data.score;
-    let interval = setInterval(() => {
-        if(currentScore >= targetScore) {
-            clearInterval(interval);
-        } else {
-            currentScore += 5;
-            if(currentScore > targetScore) currentScore = targetScore;
-        }
-        document.getElementById("scoreDisplay").textContent = currentScore;
-        let percentage = (currentScore - 300) / 600;
-        document.getElementById("gauge").style.strokeDashoffset = 252 - (252 * percentage);
-    }, 15);
-    
-    // Colorful Gauge Logic based on target 
+    // Rating string
+    let tScore = data.score;
+    let rating = "Fair";
     const gauge = document.getElementById("gauge");
-    if(targetScore >= 750) gauge.style.stroke = "#22c55e"; // Green
-    else if(targetScore >= 650) gauge.style.stroke = "#3b82f6"; // Blue
-    else gauge.style.stroke = "#f59e0b"; // Yellow/Orange
+    
+    if(tScore >= 750) { rating = "Excellent Elite Profile"; gauge.style.stroke = "#22c55e"; }
+    else if(tScore >= 650) { rating = "Good Prime Profile"; gauge.style.stroke = "#3b82f6"; }
+    else { rating = "Needs Urgent Attention"; gauge.style.stroke = "#ef4444"; }
+    
+    document.getElementById("ratingDisplay").innerText = rating;
 
-    // Offers Mapping logic
-    let offers = targetScore >= 700 ? 
-        ['HDFC Bank Personal Loan', 'ICICI Instant Digital Credit', 'Axis Financial Loan', 'Kotak Pre-Approved Offer'] : 
-        ['Navi Instant Loan', 'MoneyView Personal Credit', 'KreditBee Quick Loan', 'TrueBalance Credit'];
-        
-    const offerGrid = document.getElementById("offerGrid");
-    offerGrid.innerHTML = offers.map(provider => `
-        <div class="offer">
-            <h3>${provider}</h3>
-            <p style="font-size:13px; opacity:0.7;">Pre-evaluated Match</p>
-            <a href="#">Apply Now</a>
-        </div>
-    `).join('');
+    // Animated Needle/Gauge System
+    let cScore = 300;
+    let anim = setInterval(() => {
+        if(cScore >= tScore) { clearInterval(anim); }
+        else { cScore += 5; if(cScore > tScore) cScore = tScore; }
+        document.getElementById("scoreDisplay").textContent = cScore;
+        let percentage = (cScore - 300) / 600;
+        gauge.style.strokeDashoffset = 252 - (252 * percentage);
+    }, 12);
+
+    // Cross-page auto-fetching layout logic
+    fetchOffersFromIndex(tScore);
 };
+
+function fetchOffersFromIndex(score) {
+    fetch('index.html')
+    .then(res => res.text())
+    .then(htmlString => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, 'text/html');
+        const cards = doc.querySelectorAll('#mainLoanPool .loan-card');
+        const bucket = document.getElementById("reportOfferBucket");
+        
+        if(cards.length === 0) {
+            bucket.innerHTML = `<p style='opacity:0.5;'>Fallback default offers loaded natively.</p>`;
+            return;
+        }
+
+        bucket.innerHTML = "";
+        cards.forEach(card => {
+            let tier = card.getAttribute("data-tier");
+            
+            // Score filtering matrix conditions
+            if(score >= 750) {
+                // Elite score gets absolutely all active cards
+                bucket.appendChild(card.cloneNode(true));
+            } else if(score >= 650 && score < 750) {
+                // Mid tier gets medium + standard limited loans
+                if(tier === "medium" || tier === "limited") bucket.appendChild(card.cloneNode(true));
+            } else {
+                // Critical risk profiles only see basic target cards
+                if(tier === "limited") bucket.appendChild(card.cloneNode(true));
+            }
+        });
+        
+        if(bucket.children.length === 0) {
+            bucket.innerHTML = "<p style='color:orange;'>Profile requires external collateral matching pipelines.</p>";
+        }
+    })
+    .catch(err => {
+        document.getElementById("reportOfferBucket").innerHTML = "<p style='opacity:0.5;'>Cross pooling processing interrupted.</p>";
+    });
+}
+
+function shareWhatsApp() {
+    const scoreText = document.getElementById("scoreDisplay").innerText;
+    const ratingText = document.getElementById("ratingDisplay").innerText;
+    const textMessage = `Hello! Check out my official Credit Assessment Report on D-LOAN OFFERS.%0A%0A📈 *Credit Score:* ${scoreText}%0A📊 *Profile Status:* ${ratingText}%0A%0AAssess yours instantly here: ${window.location.href}`;
+    window.open(`https://api.whatsapp.com/send?text=${textMessage}`, '_blank');
+}
 </script>
 </body>
 </html>
