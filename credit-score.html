@@ -803,9 +803,9 @@ document.getElementById("loading")
 .style.display = "none";
 
 /* Redirect */
-
 window.location.href =
-"credit-report.html";
+"credit-report.html?user=" +
+encodeURIComponent(PAN);
 
 },5000);
 
