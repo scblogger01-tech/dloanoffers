@@ -460,13 +460,36 @@ function openCreditScore() {
     window.location.href = "credit-score.html";
 }
 
-function openMenu() {
-    alert("Menu Open");
+ function openMenu(){
+
+document.getElementById("sideMenu")
+.classList.add("active");
+
+document.getElementById("overlay")
+.classList.add("active");
 }
 
-function showSupport() {
-    alert("Support Page");
-}   
+function closeMenu(){
+
+document.getElementById("sideMenu")
+.classList.remove("active");
+
+document.getElementById("overlay")
+.classList.remove("active");
+}
+
+function showSupport(){
+
+document.querySelector(".loan-list").style.display = "none";
+document.getElementById("supportPage").style.display = "block";
+
+document.querySelectorAll(".nav-btn")
+.forEach(btn=>btn.classList.remove("active"));
+
+document.querySelector(".bottom-nav .nav-btn:last-child")
+.classList.add("active");
+}
+
       
 </script>
 <!-- OVERLAY -->
