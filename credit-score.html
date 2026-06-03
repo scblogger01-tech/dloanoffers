@@ -357,9 +357,9 @@ Check your estimated credit profile and get personalised loan offers instantly.
 <input type="tel" id="mobile">
 </div>
 
-<div class="field">
-<label>PAN Number</label>
-<input type="text" id="pan">
+<div>
+<label>PAN Card Number</label>
+<input id="pan" placeholder="ABCDE1234F">
 </div>
 
 <div class="field">
@@ -520,7 +520,47 @@ return true;
 ========================= */
 
 function generateScore(){
+const PAN =
+document.getElementById("pan")
+.value.trim()
+.toUpperCase();
 
+const USER_KEY =
+"REPORT_" + PAN;
+
+let existing =
+localStorage.getItem(USER_KEY);
+
+if(existing){
+
+let data =
+JSON.parse(existing);
+
+let created =
+new Date(data.createdAt);
+
+let now =
+new Date();
+
+let days =
+(now - created) /
+(1000*60*60*24);
+
+if(days < 30){
+
+alert(
+"Report already generated. Same report available for 30 days."
+);
+
+window.location.href =
+"credit-report.html?user=" +
+encodeURIComponent(PAN);
+
+return;
+
+}
+
+}
 if(!validateForm()) return;
 
 document.getElementById("loading")
@@ -731,8 +771,31 @@ new Date().toLocaleDateString()
 
 };
 
+const PAN =
+document.getElementById("pan")
+.value.trim()
+.toUpperCase();
+
+const reportData = {
+
+pan: PAN,
+
+name:
+document.getElementById("firstName").value +
+" " +
+document.getElementById("lastName").value,
+
+score: scoreVal,
+
+approval: app,
+
+createdAt:
+new Date().toISOString()
+
+};
+
 localStorage.setItem(
-"creditReportData",
+"REPORT_" + PAN,
 JSON.stringify(reportData)
 );
 
@@ -747,7 +810,29 @@ window.location.href =
 },5000);
 
 }
+function premiumOffers(score){
 
+if(score >= 750){
+
+return [
+"HDFC Personal Loan",
+"ICICI Instant Loan",
+"Axis Bank Loan",
+"Kotak Personal Loan"
+];
+
+}
+
+return [
+
+"Navi",
+"MoneyView",
+"KreditBee",
+"True Balance"
+
+];
+
+}
 </script>
       <!-- OVERLAY -->
 <div class="overlay"
