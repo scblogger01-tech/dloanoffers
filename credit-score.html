@@ -452,6 +452,22 @@ let a=setInterval(()=>{y+=5;d.style.top=y+"px";if(y>innerHeight){clearInterval(a
       function openCreditScore(){
     window.location.href = "credit-score.html";
 }
+function showHome() {
+    window.location.href = "index.html";
+}
+
+function openCreditScore() {
+    window.location.href = "credit-score.html";
+}
+
+function openMenu() {
+    alert("Menu Open");
+}
+
+function showSupport() {
+    alert("Support Page");
+}   
+      
 </script>
 <!-- OVERLAY -->
 
@@ -493,29 +509,25 @@ Menu
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
 
-    <div class="nav-btn" onclick="openMenu()">
-        <div class="nav-icon">☰</div>
-        <div>Menu</div>
-    </div>
-
-    <div class="nav-btn active" onclick="window.location.href='index.html'">
-        <div class="nav-icon">🏠</div>
-        <div>Home</div>
-    </div>
-
-    <div class="nav-btn" onclick="window.location.href='credit-score.html'">
-        <div class="nav-icon">📈</div>
-        <div>Score</div>
-    </div>
-
-    <div class="nav-btn" onclick="showSupport()">
-        <div class="nav-icon">☎</div>
-        <div>Support</div>
-    </div>
-
+<div class="nav-btn" onclick="openMenu()">
+<div class="nav-icon">☰</div>
+<div>Menu</div>
 </div>
 
+<div class="nav-btn active" onclick="showHome()">
+<div class="nav-icon">🏠</div>
+<div>Home</div>
 </div>
 
+<div class="nav-btn" onclick="openCreditScore()">
+<div class="nav-icon">📈</div>
+<div>Score</div>
+</div>
+
+<div class="nav-btn" onclick="showSupport()">
+<div class="nav-icon">☎</div>
+<div>Support</div>
+</div>
+<!-- BOTTOM NAV -->
 </body>
 </html>
