@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credit Report | D-LOAN OFFERS</title>
+
+<style>
+
+:root{
+--primary:#1E40AF;
+--secondary:#2563EB;
+--success:#10B981;
+--light:#F8FAFC;
+--dark:#0F172A;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f1f5f9;
+padding-bottom:90px;
+}
+
+.top-header{
+background:#0f172a;
+padding:15px;
+display:flex;
+align-items:center;
+gap:10px;
+color:white;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.header-logo{
+width:40px;
+height:40px;
+background:white;
+padding:4px;
+border-radius:10px;
+}
+
+.app-name{
+font-size:22px;
+font-weight:900;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+border-radius:18px;
+padding:20px;
+box-shadow:0 4px 15px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+
+.title{
+font-size:24px;
+font-weight:700;
+margin-bottom:20px;
+color:var(--primary);
+}
+
+.profile-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.info-box{
+background:#f8fafc;
+padding:14px;
+border-radius:12px;
+}
+
+.info-label{
+font-size:13px;
+color:#64748b;
+}
+
+.info-value{
+font-size:16px;
+font-weight:700;
+margin-top:5px;
+}
+
+.score-card{
+background:linear-gradient(135deg,#1E40AF,#2563EB);
+color:white;
+text-align:center;
+padding:30px;
+border-radius:20px;
+}
+
+.score-circle{
+width:180px;
+height:180px;
+border-radius:50%;
+background:white;
+color:#1E40AF;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:48px;
+font-weight:900;
+margin:auto;
+margin-bottom:15px;
+}
+
+.approval{
+font-size:24px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.status{
+display:inline-block;
+padding:8px 18px;
+border-radius:30px;
+background:#10B981;
+margin-top:12px;
+font-weight:bold;
+}
+
+.loan-list{
+display:grid;
+grid-template-columns:1fr;
+gap:20px;
+}
+
+.loan-card{
+background:linear-gradient(
+135deg,
+#1E40AF,
+#2563EB
+);
+border-radius:16px;
+padding:18px;
+color:white;
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+.badge{
+background:#d1fae5;
+color:#065f46;
+padding:5px 10px;
+border-radius:20px;
+display:inline-block;
+font-size:12px;
+font-weight:bold;
+margin-bottom:12px;
+}
+
+.nbfc-name{
+font-size:24px;
+font-weight:800;
+margin-bottom:15px;
+}
+
+.details-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:15px;
+}
+
+.detail-item{
+background:rgba(255,255,255,.15);
+padding:10px;
+border-radius:10px;
+text-align:center;
+}
+
+.detail-label{
+font-size:12px;
+}
+
+.detail-value{
+font-weight:bold;
+margin-top:4px;
+}
+
+.apply-btn{
+display:block;
+background:#10B981;
+color:white;
+text-decoration:none;
+padding:12px;
+border-radius:10px;
+font-weight:bold;
+text-align:center;
+}
+
+.download-btn{
+background:#10B981;
+color:white;
+border:none;
+padding:14px;
+width:100%;
+border-radius:12px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.footer-note{
+text-align:center;
+color:#64748b;
+font-size:13px;
+margin-top:20px;
+}
+
+</style>
+</head>
+<body>
+
+<header class="top-header">
+<img src="logo.png" class="header-logo">
+<div class="app-name">
+D-LOAN OFFERS
+</div>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<div class="title">
+📄 Credit Assessment Report
+</div>
+
+<div class="profile-grid">
+
+<div class="info-box">
+<div class="info-label">Full Name</div>
+<div class="info-value" id="r_name"></div>
+</div>
+
+<div class="info-box">
+<div class="info-label">Mobile</div>
+<div class="info-value" id="r_mobile"></div>
+</div>
+
+<div class="info-box">
+<div class="info-label">PAN Number</div>
+<div class="info-value" id="r_pan"></div>
+</div>
+
+<div class="info-box">
+<div class="info-label">City</div>
+<div class="info-value" id="r_city"></div>
+</div>
+
+<div class="info-box">
+<div class="info-label">Monthly Income</div>
+<div class="info-value" id="r_income"></div>
+</div>
+
+<div class="info-box">
+<div class="info-label">Current EMI</div>
+<div class="info-value" id="r_emi"></div>
+</div>
+
+</div>
+
+</div>
+
+<div class="score-card">
+
+<div class="score-circle" id="scoreBox">
+750
+</div>
+
+<h2>
+Estimated Credit Score
+</h2>
+
+<div class="approval" id="approvalBox">
+85% Approval Chance
+</div>
+
+<div class="status" id="statusBox">
+Excellent Profile
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+🏦 Recommended Loan Offers
+</div>
+
+<div class="loan-list" id="loanOffers">
+
+</div>
+
+</div>
+
+<div class="card">
+
+<button class="download-btn" onclick="window.print()">
+📥 Download Report
+</button>
+
+</div>
+
+<div class="footer-note">
+This is an estimated score and not an official CIBIL report.
+</div>
+
+</div>
+
+<script>
+
+const data =
+JSON.parse(localStorage.getItem("creditReport"));
+
+if(!data){
+
+document.body.innerHTML=
+"<h2 style='text-align:center;padding:50px'>No Report Found</h2>";
+
+}
+
+document.getElementById("r_name").innerText =
+data.name || "-";
+
+document.getElementById("r_mobile").innerText =
+data.mobile || "-";
+
+document.getElementById("r_pan").innerText =
+data.pan || "-";
+
+document.getElementById("r_city").innerText =
+data.city || "-";
+
+document.getElementById("r_income").innerText =
+"₹" + Number(data.income).toLocaleString();
+
+document.getElementById("r_emi").innerText =
+"₹" + Number(data.emi).toLocaleString();
+
+document.getElementById("scoreBox").innerText =
+data.score;
+
+document.getElementById("approvalBox").innerText =
+data.approval + "% Approval Chance";
+
+let status = "Needs Improvement";
+
+if(data.score >= 750)
+status = "Excellent Profile";
+
+else if(data.score >= 650)
+status = "Good Profile";
+
+else if(data.score >= 550)
+status = "Average Profile";
+
+document.getElementById("statusBox").innerText =
+status;
+
+const offers = [
+
+{
+name:"True Balance",
+amount:"₹4,00,000",
+interest:"1.02% pm",
+time:"10 Mins",
+link:"#"
+},
+
+{
+name:"Pocketly",
+amount:"₹1,00,000",
+interest:"1.5% pm",
+time:"5 Mins",
+link:"#"
+},
+
+{
+name:"Navi",
+amount:"₹20,00,000",
+interest:"9.9%",
+time:"10 Mins",
+link:"#"
+},
+
+{
+name:"MoneyView",
+amount:"₹10,00,000",
+interest:"1.33% pm",
+time:"Instant",
+link:"#"
+}
+
+];
+
+document.getElementById("loanOffers").innerHTML =
+offers.map(o=>`
+
+<div class="loan-card">
+
+<div class="badge">
+Recommended
+</div>
+
+<div class="nbfc-name">
+${o.name}
+</div>
+
+<div class="details-grid">
+
+<div class="detail-item">
+<div class="detail-label">Amount</div>
+<div class="detail-value">${o.amount}</div>
+</div>
+
+<div class="detail-item">
+<div class="detail-label">Interest</div>
+<div class="detail-value">${o.interest}</div>
+</div>
+
+<div class="detail-item">
+<div class="detail-label">Time</div>
+<div class="detail-value">${o.time}</div>
+</div>
+
+</div>
+
+<a href="${o.link}" class="apply-btn">
+Check Eligibility →
+</a>
+
+</div>
+
+`).join("");
+
+</script>
+
+</body>
+</html>
