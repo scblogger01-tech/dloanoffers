@@ -510,11 +510,15 @@
             font-weight: bold;
             cursor: pointer;
         }
+        
+        @keyframes popScale {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#08122c">
     <link rel="apple-touch-icon" href="logo.png">
-
 </head>
 
 <body>
@@ -834,30 +838,6 @@
                 <summary>4. Is Aadhaar required?</summary>
                 <p>Yes, Aadhaar is generally required for KYC verification.</p>
             </details>
-            <details>
-                <summary>5. How long does approval take?</summary>
-                <p>Many apps provide approval within minutes.</p>
-            </details>
-            <details>
-                <summary>6. Can students apply?</summary>
-                <p>Some apps provide loans for students, subject to eligibility.</p>
-            </details>
-            <details>
-                <summary>7. Do I need a salary account?</summary>
-                <p>Not always. Many lenders accept regular bank accounts.</p>
-            </details>
-            <details>
-                <summary>8. What is the minimum credit score?</summary>
-                <p>Requirements vary by lender. Some apps also lend to new borrowers.</p>
-            </details>
-            <details>
-                <summary>9. Can I repay early?</summary>
-                <p>Many lenders allow foreclosure or early repayment.</p>
-            </details>
-            <details>
-                <summary>10. Is D-LOAN OFFERS a lender?</summary>
-                <p>No. We are a loan comparison and aggregation platform.</p>
-            </details>
         </div>
 
         <div class="success-section">
@@ -870,6 +850,9 @@
         </div>  
 
         <div class="ad-space">Bottom Ad Space</div>
+        <footer>
+            Disclaimer: We are a digital aggregator platform and not a lender. Users are redirected to official RBI-approved lending partners.
+        </footer>
     </div>
 
     <div class="support-page" id="supportPage">
@@ -881,10 +864,6 @@
             <div class="support-item">📍 India</div>
         </div>
     </div>
-
-    <footer>
-        Disclaimer: We are a digital aggregator platform and not a lender. Users are redirected to official RBI-approved lending partners.
-    </footer>
 
     <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
@@ -904,7 +883,7 @@
             <div class="nav-icon">☰</div>
             <div>Menu</div>
         </div>
-        <div class="nav-btn active" onclick="showHome()">
+        <div class="nav-btn active" id="nav-home" onclick="showHome()">
             <div class="nav-icon">🏠</div>
             <div>Home</div>
         </div>
@@ -912,13 +891,44 @@
             <div class="nav-icon">📈</div>
             <div>Score</div>
         </div>
-        <div class="nav-btn" onclick="showSupport()">
+        <div class="nav-btn" id="nav-support" onclick="showSupport()">
             <div class="nav-icon">☎</div>
             <div>Support</div>
         </div>
     </div>
 
+    <div id="pwa-install-overlay" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.85); z-index:10000; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(5px);">
+        <div style="background:#ffffff; color:#0f172a; max-width:400px; width:100%; border-radius:20px; padding:25px; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.3); animation: popScale 0.3s ease-out;">
+            <div style="font-size:50px; margin-bottom:15px;">📲</div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:10px; color:#1E40AF;">Install Official App</h3>
+            <p style="font-size:14px; color:#64748b; margin-bottom:20px; line-height:1.5;">Get faster credit score evaluations and real-time loan approval notifications directly from your homescreen.</p>
+            
+            <div style="display:flex; gap:10px; flex-direction:column;">
+                <button id="pwa-confirm-btn" style="background:#10b981; color:#fff; font-weight:bold; padding:14px; border-radius:12px; border:none; cursor:pointer; font-size:15px; width:100%;">INSTALL NOW (FREE)</button>
+                <button id="pwa-cancel-btn" style="background:#f1f5f9; color:#64748b; font-weight:600; padding:12px; border-radius:12px; border:none; cursor:pointer; font-size:13px; width:100%;">Maybe Later</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        let deferredPrompt = null;
+        let popupShown = false;
+
+        // 1. Service Worker Activation
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(err => console.log("SW Reg Error:", err));
+        }
+
+        // 2. Intercept Native Installer
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Native header link button display condition toggle
+            const headerInstallBtn = document.getElementById('installBtn');
+            if (headerInstallBtn) headerInstallBtn.style.display = 'block';
+        });
+
+        // 3. UI Navigation Logic Controller Functions
         function openMenu(){
             document.getElementById("sideMenu").classList.add("active");
             document.getElementById("overlay").classList.add("active");
@@ -929,55 +939,102 @@
             document.getElementById("overlay").classList.remove("active");
         }
 
-        function showSupport(){
-            document.getElementById("main-content").style.display = "none";
-            document.getElementById("supportPage").style.display = "block";
-            document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
-            document.querySelector(".bottom-nav .nav-btn:last-child").classList.add("active");
+        function showOffers() {
+            document.getElementById("welcome-screen").style.display = "none";
+            document.getElementById("main-content").style.display = "block";
         }
 
         function showHome(){
-            document.getElementById("main-content").style.display = "block";
-            document.getElementById("supportPage").style.display = "none";
-            document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
-            document.querySelector(".bottom-nav .nav-btn:nth-child(2)").classList.add("active");
-        }
-
-        function showOffers(){
             document.getElementById("welcome-screen").style.display = "none";
             document.getElementById("main-content").style.display = "block";
             document.getElementById("supportPage").style.display = "none";
+            document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
+            document.getElementById("nav-home").classList.add("active");
         }
 
-        function filterLoans(category, activeBtnId) {
+        function showSupport(){
+            document.getElementById("welcome-screen").style.display = "none";
+            document.getElementById("main-content").style.display = "none";
+            document.getElementById("supportPage").style.display = "block";
+            document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
+            document.getElementById("nav-support").classList.add("active");
+        }
+
+        function openCreditScore() {
+            window.location.href = "credit-score.html";
+        }
+
+        // 4. Data Filter Operations Engine
+        function filterLoans(category, btnId) {
+            document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+            document.getElementById(btnId).classList.add("active");
+
             const cards = document.querySelectorAll(".loan-card");
             cards.forEach(card => {
-                if(category === "all") {
+                if (category === 'all' || card.classList.contains(category)) {
                     card.style.display = "flex";
                 } else {
-                    if(card.classList.contains(category)) {
-                        card.style.display = "flex";
-                    } else {
-                        card.style.display = "none";
-                    }
+                    card.style.display = "none";
                 }
             });
-            document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
-            document.getElementById(activeBtnId).classList.add("active");
         }
 
-        function openCreditScore(){
-            window.location.href="credit-score.html";
+        // 5. Smart PWA Dynamic Modal Handlers
+        function openInstallPopup() {
+            if (popupShown || sessionStorage.getItem('pwa_prompt_dismissed') === 'true') return;
+            const pwaOverlay = document.getElementById('pwa-install-overlay');
+            if (pwaOverlay) {
+                pwaOverlay.style.display = 'flex';
+                popupShown = true;
+            }
         }
 
-        // Service Workers and PWA setup
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installBtn').style.display = 'block';
+        function closeInstallPopup() {
+            const pwaOverlay = document.getElementById('pwa-install-overlay');
+            if (pwaOverlay) pwaOverlay.style.display = 'none';
+        }
+
+        // Trigger Scenario A: 5-Sec Timeout Engine
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if (deferredPrompt) openInstallPopup();
+            }, 5000);
         });
 
+        // Trigger Scenario B: Desktop Mouse Leave (Exit Intent)
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY < 20 && deferredPrompt) {
+                openInstallPopup();
+            }
+        });
+
+        // Trigger Scenario C: Mobile Hardware Back Button Guard
+        window.addEventListener('load', () => {
+            window.history.pushState({ pwa_state: true }, "");
+        });
+
+        window.addEventListener('popstate', (e) => {
+            if (deferredPrompt && !popupShown && sessionStorage.getItem('pwa_prompt_dismissed') !== 'true') {
+                window.history.pushState({ pwa_state: true }, ""); 
+                openInstallPopup();
+            }
+        });
+
+        // Button Click Triggers
+        document.getElementById('pwa-confirm-btn').addEventListener('click', async () => {
+            closeInstallPopup();
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            await deferredPrompt.userChoice;
+            deferredPrompt = null;
+        });
+
+        document.getElementById('pwa-cancel-btn').addEventListener('click', () => {
+            closeInstallPopup();
+            sessionStorage.setItem('pwa_prompt_dismissed', 'true');
+        });
+
+        // Header Action Button Link Handler
         document.getElementById('installBtn').addEventListener('click', async () => {
             if (!deferredPrompt) return;
             deferredPrompt.prompt();
@@ -985,112 +1042,6 @@
             deferredPrompt = null;
             document.getElementById('installBtn').style.display = 'none';
         });
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
-        }
-let deferredPrompt = null;
-let popupShown = false;
-
-// 1. Service Worker and Manifest Verification Link
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-}
-
-// 2. Browser ka original native prompt capture karke variables me hold karna
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e; // Native event saved
-});
-
-// Popup open karne ka central control engine
-function openInstallPopup() {
-    // Agar user ne session me pehle cancel kiya hai ya popup chal chuka hai, toh stop karein
-    if (popupShown || sessionStorage.getItem('pwa_prompt_dismissed') === 'true') return;
-    
-    const overlay = document.getElementById('pwa-install-overlay');
-    if (overlay) {
-        overlay.style.display = 'flex';
-        popupShown = true;
-    }
-}
-
-// Popup close function
-function closeInstallPopup() {
-    const overlay = document.getElementById('pwa-install-overlay');
-    if (overlay) overlay.style.display = 'none';
-}
-
-// --- LOGIC A: 5 SECONDS AUTOMATIC DELAY ---
-window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        if (deferredPrompt) openInstallPopup();
-    }, 5000); // Thik 5 seconds baad run hoga
-});
-
-// --- LOGIC B: DESKTOP EXIT INTENT (Mouse Leave) ---
-document.addEventListener('mouseleave', (e) => {
-    if (e.clientY < 20 && deferredPrompt) { // User cursor ko top tab/URL bar pe le gaya
-        openInstallPopup();
-    }
-});
-
-// --- LOGIC C: MOBILE EXIT INTENT (Hardware Back Button Trick) ---
-window.addEventListener('load', () => {
-    // Fake browser history state inject karna entry par
-    window.history.pushState({ pwa_state: true }, "");
-});
-
-window.addEventListener('popstate', (e) => {
-    // Jab user hardware ya browser back click karega
-    if (deferredPrompt && !popupShown && sessionStorage.getItem('pwa_prompt_dismissed') !== 'true') {
-        // Back navigation rokein aur popup show karein
-        window.history.pushState({ pwa_state: true }, ""); 
-        openInstallPopup();
-    }
-});
-
-// --- BUTTON INTERACTIONS MANAGEMENT ---
-document.getElementById('pwa-confirm-btn').addEventListener('click', async () => {
-    closeInstallPopup();
-    if (!deferredPrompt) return;
-    
-    // Native browser prompt show karein
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-        console.log('User installed the PWA app');
-    }
-    deferredPrompt = null;
-});
-
-document.getElementById('pwa-cancel-btn').addEventListener('click', () => {
-    closeInstallPopup();
-    // Session token save karein taaki is browser session me user bar-bar irritate na ho
-    sessionStorage.setItem('pwa_prompt_dismissed', 'true');
-});
-        
     </script>
-<div id="pwa-install-overlay" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.85); z-index:10000; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(5px);">
-    <div style="background:#ffffff; color:#0f172a; max-width:400px; width:100%; border-radius:20px; padding:25px; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.3); animation: popScale 0.3s ease-out;">
-        <div style="font-size:50px; margin-bottom:15px;">📲</div>
-        <h3 style="font-size:20px; font-weight:800; margin-bottom:10px; color:#1E40AF;">Install Official App</h3>
-        <p style="font-size:14px; color:#64748b; margin-bottom:20px; line-height:1.5;">Get faster credit score evaluations and real-time loan approval notifications directly from your homescreen.</p>
-        
-        <div style="display:flex; gap:10px; flex-direction:column;">
-            <button id="pwa-confirm-btn" style="background:#10b981; color:#fff; font-weight:bold; padding:14px; border-radius:12px; border:none; cursor:pointer; font-size:15px; width:100%;">INSTALL NOW (FREE)</button>
-            <button id="pwa-cancel-btn" style="background:#f1f5f9; color:#64748b; font-weight:600; padding:12px; border-radius:12px; border:none; cursor:pointer; font-size:13px; width:100%;">Maybe Later</button>
-        </div>
-    </div>
-</div>
-
-<style>
-@keyframes popScale {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-</style>
-    
 </body>
 </html>
