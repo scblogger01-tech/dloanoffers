@@ -240,7 +240,6 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
-    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
@@ -354,38 +353,103 @@
     <a href="credit-score.html" class="nav-item active"><span>📊</span>Credit Score</a>
     <a href="javascript:void(0)" onclick="navigateToReportSafe()" class="nav-item"><span>📋</span>Report</a>
 </nav>
+
 <script>
-    function validateForm() {
-        const inputs = document.querySelectorAll('#bureauForm input');
-        for(let input of inputs) {
-            if(!input.value.trim()) {
-                alert('All fields are mandatory to trigger official matching.');
-                return false;
+    let selectedActivePAN = "";
+
+    document.getElementById("pan").addEventListener("input", function() {
+        const panVal = this.value.toUpperCase().trim();
+        if(panVal.length === 10) {
+            checkPANLockStatus(panVal);
+        }
+    });
+
+    function checkPANLockStatus(pan) {
+        const storedLogs = JSON.parse(localStorage.getItem(`bureau_report_${pan}`));
+        if(storedLogs) {
+            const today = new Date();
+            const lockedUntil = new Date(storedLogs.lockExpiryDate);
+            
+            if(today < lockedUntil) {
+                selectedActivePAN = pan;
+                const diffTime = Math.abs(lockedUntil - today);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                document.getElementById("lockMessage").innerText = `PAN ${pan} is under standard lock profile. Remaining validity: ${diffDays} days left.`;
+                document.getElementById("lockBanner").style.display = "block";
+                lockFormInterface(true);
+                return true;
             }
         }
-        return true;
+        document.getElementById("lockBanner").style.display = "none";
+        lockFormInterface(false);
+        return false;
     }
 
-    function checkCreditScore() {
-        if(!validateForm()) return;
+    function lockFormInterface(status) {
+        const form = document.getElementById("creditForm");
+        const inputs = form.querySelectorAll("input, select, button[type='submit']");
+        inputs.forEach(el => {
+            if(el.id !== "submitBtn" || status === true) {
+                el.disabled = status;
+            }
+        });
+        
+        const submitBtn = document.getElementById("submitBtn");
+        if(status) {
+            submitBtn.style.background = "#cbd5e1";
+            submitBtn.style.borderColor = "#cbd5e1";
+            submitBtn.style.color = "#4b5563";
+        } else {
+            submitBtn.style.background = "var(--primary-blue)";
+            submitBtn.style.borderColor = "var(--primary-blue)";
+            submitBtn.style.color = "var(--pure-white)";
+        }
+    }
 
-        const firstName = document.getElementById("firstName").value.trim();
-        const pan = document.getElementById("pan").value.trim().toUpperCase();
-        const mobile = document.getElementById("mobile").value.trim();
-        const city = document.getElementById("city").value.trim();
-        const income = parseInt(document.getElementById("income").value) || 0;
-        const emi = parseInt(document.getElementById("emi").value) || 0;
+    function forceUnlockForm() {
+        lockFormInterface(false);
+        document.getElementById("lockBanner").style.display = "none";
+        document.getElementById("creditForm").reset();
+    }
 
-        // FIXED: Popup loader element reference handled correctly
-        const loader = document.getElementById("loader");
-        if(loader) loader.style.display = "flex";
+    function redirectToReport() {
+        if(selectedActivePAN) {
+            localStorage.setItem("active_session_pan", selectedActivePAN);
+            window.location.href = "credit-report.html";
+        }
+    }
+
+    function navigateToReportSafe() {
+        const fallbackPan = localStorage.getItem("active_session_pan");
+        if(fallbackPan && localStorage.getItem(`bureau_report_${fallbackPan}`)) {
+            window.location.href = "credit-report.html";
+        } else {
+            alert("No computed report evaluations found. Please fill out the form first.");
+        }
+    }
+
+    document.getElementById("creditForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        const firstName = document.getElementById("firstName").value;
+        const pan = document.getElementById("pan").value.toUpperCase().trim();
+        const mobile = document.getElementById("mobile").value;
+        const city = document.getElementById("city").value;
+        const income = parseFloat(document.getElementById("income").value);
+        const emi = parseFloat(document.getElementById("emi").value || 0);
+        const hasCard = document.querySelector('input[name="creditCard"]:checked').value;
+        const hasMissed = document.querySelector('input[name="missedEmi"]:checked').value;
+        
+        if(checkPANLockStatus(pan)) return;
+
+        document.getElementById("loader").style.display = "flex";
 
         setTimeout(() => {
-            // UNCHANGED: Your exact original calculation algorithms preserved
-            let score = 620;
-            
-            if (income > 40000) score += 60;
-            if (emi === 0) score += 70;
+            let score = 710;
+
+            if(hasCard === "yes") score += 45;
+            if(hasMissed === "yes") score -= 120; else score += 50;
 
             const dtiRatio = (emi / income) * 100;
             if(dtiRatio > 50) score -= 80;
@@ -405,58 +469,21 @@
             const currentDate = new Date();
             const lockExpiryDate = new Date();
             lockExpiryDate.setDate(currentDate.getDate() + 30);
-            
-            const reportDateStr = currentDate.toLocaleDateString('en-IN', {day: 'numeric', month: 'short', year: 'numeric'});
 
             const assessmentPayload = {
-                firstName: firstName,
-                lastName: "",
-                pan: pan,
-                mobile: mobile,
-                city: city,
-                income: income,
-                emi: emi,
-                score: score,
-                approvalPercentage: approvalPercentage,
-                assessmentDate: reportDateStr,
-                reportDate: reportDateStr, // Fallback property to sync legacy parameters
+                firstName, pan, mobile, city, income, emi,
+                score, approvalPercentage,
+                assessmentDate: currentDate.toLocaleDateString('en-IN', {day: 'numeric', month: 'short', year: 'numeric'}),
                 lockExpiryDate: lockExpiryDate.toISOString()
             };
 
-            // FIXED: Set both storage channels sequentially to prevent target crash
             localStorage.setItem(`bureau_report_${pan}`, JSON.stringify(assessmentPayload));
-            localStorage.setItem("active_bureau_pan", pan);
-            localStorage.setItem("creditData", JSON.stringify(assessmentPayload));
+            localStorage.setItem("active_session_pan", pan);
 
-            // Hide modal loader and transition screen safely
-            if(loader) loader.style.display = "none";
+            document.getElementById("loader").style.display = "none";
             window.location.href = "credit-report.html";
-        }, 2500);
-    }
-
-    function openMenu() {
-        document.getElementById("sideMenu").classList.add("active");
-        document.getElementById("overlay").classList.add("active");
-    }
-
-    function closeMenu() {
-        document.getElementById("sideMenu").classList.remove("active");
-        document.getElementById("overlay").classList.remove("active");
-    }
-
-    function showSupport() {
-        // FIXED: Safeguard selector elements mapping to keep pages alive
-        const mainFormCard = document.getElementById("formMainView");
-        if(mainFormCard) mainFormCard.style.display = "none";
-        
-        const supportSection = document.getElementById("supportPage");
-        if(supportSection) supportSection.style.display = "block";
-
-        document.querySelectorAll(".nav-item").forEach(btn => btn.classList.remove("active"));
-        const lastBtn = document.querySelector(".bottom-nav .nav-item:last-child");
-        if(lastBtn) lastBtn.classList.add("active");
-    }
+        }, 1500);
+    });
 </script>
-
 </body>
 </html>
