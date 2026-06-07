@@ -989,6 +989,108 @@
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(() => {});
         }
+let deferredPrompt = null;
+let popupShown = false;
+
+// 1. Service Worker and Manifest Verification Link
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+}
+
+// 2. Browser ka original native prompt capture karke variables me hold karna
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e; // Native event saved
+});
+
+// Popup open karne ka central control engine
+function openInstallPopup() {
+    // Agar user ne session me pehle cancel kiya hai ya popup chal chuka hai, toh stop karein
+    if (popupShown || sessionStorage.getItem('pwa_prompt_dismissed') === 'true') return;
+    
+    const overlay = document.getElementById('pwa-install-overlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        popupShown = true;
+    }
+}
+
+// Popup close function
+function closeInstallPopup() {
+    const overlay = document.getElementById('pwa-install-overlay');
+    if (overlay) overlay.style.display = 'none';
+}
+
+// --- LOGIC A: 5 SECONDS AUTOMATIC DELAY ---
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        if (deferredPrompt) openInstallPopup();
+    }, 5000); // Thik 5 seconds baad run hoga
+});
+
+// --- LOGIC B: DESKTOP EXIT INTENT (Mouse Leave) ---
+document.addEventListener('mouseleave', (e) => {
+    if (e.clientY < 20 && deferredPrompt) { // User cursor ko top tab/URL bar pe le gaya
+        openInstallPopup();
+    }
+});
+
+// --- LOGIC C: MOBILE EXIT INTENT (Hardware Back Button Trick) ---
+window.addEventListener('load', () => {
+    // Fake browser history state inject karna entry par
+    window.history.pushState({ pwa_state: true }, "");
+});
+
+window.addEventListener('popstate', (e) => {
+    // Jab user hardware ya browser back click karega
+    if (deferredPrompt && !popupShown && sessionStorage.getItem('pwa_prompt_dismissed') !== 'true') {
+        // Back navigation rokein aur popup show karein
+        window.history.pushState({ pwa_state: true }, ""); 
+        openInstallPopup();
+    }
+});
+
+// --- BUTTON INTERACTIONS MANAGEMENT ---
+document.getElementById('pwa-confirm-btn').addEventListener('click', async () => {
+    closeInstallPopup();
+    if (!deferredPrompt) return;
+    
+    // Native browser prompt show karein
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+        console.log('User installed the PWA app');
+    }
+    deferredPrompt = null;
+});
+
+document.getElementById('pwa-cancel-btn').addEventListener('click', () => {
+    closeInstallPopup();
+    // Session token save karein taaki is browser session me user bar-bar irritate na ho
+    sessionStorage.setItem('pwa_prompt_dismissed', 'true');
+});
+        
     </script>
+<div id="pwa-install-overlay" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.85); z-index:10000; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(5px);">
+    <div style="background:#ffffff; color:#0f172a; max-width:400px; width:100%; border-radius:20px; padding:25px; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.3); animation: popScale 0.3s ease-out;">
+        <div style="font-size:50px; margin-bottom:15px;">📲</div>
+        <h3 style="font-size:20px; font-weight:800; margin-bottom:10px; color:#1E40AF;">Install Official App</h3>
+        <p style="font-size:14px; color:#64748b; margin-bottom:20px; line-height:1.5;">Get faster credit score evaluations and real-time loan approval notifications directly from your homescreen.</p>
+        
+        <div style="display:flex; gap:10px; flex-direction:column;">
+            <button id="pwa-confirm-btn" style="background:#10b981; color:#fff; font-weight:bold; padding:14px; border-radius:12px; border:none; cursor:pointer; font-size:15px; width:100%;">INSTALL NOW (FREE)</button>
+            <button id="pwa-cancel-btn" style="background:#f1f5f9; color:#64748b; font-weight:600; padding:12px; border-radius:12px; border:none; cursor:pointer; font-size:13px; width:100%;">Maybe Later</button>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes popScale {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+</style>
+    
 </body>
 </html>
