@@ -510,6 +510,61 @@
             font-weight: bold;
             cursor: pointer;
         }
+        /* Flex container header ko design karne ke liye */
+.top-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Isse brand left me aur button right me ho jayega */
+    padding: 10px 20px;
+    background: #0f172a; /* Aapke theme ke mutabik background */
+}
+
+/* Play Store Real Vector Badge Structure */
+.playstore-badge-tab {
+    background: #000000;
+    border: 1px solid #a3a3a3;
+    border-radius: 7px;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #ffffff;
+    min-width: 135px;
+    transition: background 0.2s;
+}
+.playstore-badge-tab:hover {
+    background: #171717;
+}
+.playstore-badge-tab svg {
+    width: 20px;
+    height: 20px;
+}
+.badge-tab-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    text-align: left;
+}
+.badge-tab-text .get-it-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #e5e5e5;
+}
+.badge-tab-text .store-title-label {
+    font-size: 13px;
+    font-weight: 700;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Mobile Devices par adjustment */
+@media(max-width: 480px) {
+    .playstore-badge-tab { padding: 4px 8px; min-width: 110px; gap: 5px; }
+    .playstore-badge-tab svg { width: 16px; height: 16px; }
+    .badge-tab-text .get-it-label { font-size: 7px; }
+    .badge-tab-text .store-title-label { font-size: 11px; }
+}
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#08122c">
